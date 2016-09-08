@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<!--
+    Robot Configuration Launch File
+    See http://wiki.ros.org/navigation/Tutorials/RobotSetup
+-->
+<launch>
+
+    <arg name="has_sensors" default="false"/>
+    <arg name="has_odom" default="false"/>
+    <arg name="has_tf" default="true"/>
+
+
+    <group ns="/futurakart">
+
+        <group if="$(arg has_sensors)">
+            <node pkg="sensor_node_pkg" type="sensor_node_type" name="sensor_node_name" output="screen">
+                <param name="sensor_param" value="param_value" />
+            </node>
+        </group>
+
+        <group if="$(arg has_sensors)">
+            <node pkg="odom_node_pkg" type="odom_node_type" name="odom_node" output="screen">
+                <param name="odom_param" value="param_value" />
+            </node>
+        </group>
+
+        <group if="$(arg has_tf)">
+            <include file="$(find futurakart)/launch/robot_setup_tf.launch" />
+        </group>
+
+    </group>
+
+</launch>
