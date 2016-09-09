@@ -5,20 +5,29 @@
 -->
 <launch>
 
-    <arg name="has_sensors" default="false"/>
+    <arg name="has_sensors" default="true"/>
+    <arg name="moc_sensors" default="true"/>
+
     <arg name="has_odom" default="false"/>
     <arg name="has_tf" default="true"/>
 
 
     <group ns="/futurakart">
 
+        <!--Setup sensors-->
         <group if="$(arg has_sensors)">
-            <node pkg="sensor_node_pkg" type="sensor_node_type" name="sensor_node_name" output="screen">
-                <param name="sensor_param" value="param_value" />
-            </node>
+            <group if="$(arg moc_sensors)">
+                <include file="$(find moc_sensors)/launch/moc_sensors_setup.launch" />
+            </group>
+            <group unless="$(arg moc_sensors)">
+                <node pkg="sensor_node_pkg" type="sensor_node_type" name="sensor_node_name" output="screen">
+                    <param name="sensor_param" value="param_value" />
+                </node>
+            </group>
         </group>
 
-        <group if="$(arg has_sensors)">
+
+        <group if="$(arg has_odom)">
             <node pkg="odom_node_pkg" type="odom_node_type" name="odom_node" output="screen">
                 <param name="odom_param" value="param_value" />
             </node>

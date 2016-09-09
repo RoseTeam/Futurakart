@@ -45,4 +45,6 @@ The navigation stack assumes that it can send velocity commands using a geometry
 see an [example](http://wiki.ros.org/pr2_mechanism_controllers)
 
 
+## Troubleshooting
 
+- If you start a python file from .launch as <node name="myname" pkg="mypkg" type"myscrip.py"/>, do not forget `chmod +x myscript.py`  
