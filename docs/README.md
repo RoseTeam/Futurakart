@@ -4,6 +4,10 @@
 
 Install :
 
+- ROS Navigation stack:
+    - move_base : `sudo apt-get install ros-indigo-move-base`
+    - 
+    
 - [freenect_launch](http://wiki.ros.org/freenect_launch)
 -
 
@@ -17,12 +21,14 @@ See [here](http://wiki.ros.org/navigation/Tutorials/RobotSetup)
 - launch/robot_setup_tf.launch 
 
 ```
-base_link -> base_kinect
-          -> base_us_1
-          -> base_us_2
-          ...
-          -> base_ir_1
-          -> base_ir_2
+base_link 
+    -> base_kinect
+    -> base_us_1
+    -> base_us_2
+    ...
+    -> base_us_6
+    -> base_ir_1
+    -> base_ir_2
 ```        
 
 ### Sensor Information (sensor sources)

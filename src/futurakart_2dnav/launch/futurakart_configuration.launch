@@ -25,7 +25,7 @@
         </group>
 
         <group if="$(arg has_tf)">
-            <include file="$(find futurakart)/launch/robot_setup_tf.launch" />
+            <include file="$(find futurakart_2dnav)/launch/robot_setup_tf.launch" />
         </group>
 
     </group>
