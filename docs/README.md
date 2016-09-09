@@ -5,11 +5,10 @@
 Install :
 
 - ROS Navigation stack:
-    - move_base : `sudo apt-get install ros-indigo-move-base`
-    - 
-    
+    * move_base : `sudo apt-get install ros-indigo-move-base`
+    * 
 - [freenect_launch](http://wiki.ros.org/freenect_launch)
--
+- etc
 
 
 ## Robot Setup 
