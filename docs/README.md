@@ -47,4 +47,4 @@ see an [example](http://wiki.ros.org/pr2_mechanism_controllers)
 
 ## Troubleshooting
 
-- If you start a python file from .launch as `<node name="myname" pkg="mypkg" type"myscrip.py"/>`, do not forget `chmod +x myscript.py`  
+- If you want to start a python script from a file .launch as `<node name="myname" pkg="mypkg" type"myscript.py"/>`, do not forget `chmod +x myscript.py`  
