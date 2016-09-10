@@ -8,7 +8,8 @@ import cv2
 
 # ROS
 import rospy
-from sensor_msgs.msg import Image, PointCloud2
+from sensor_msgs import point_cloud2
+from sensor_msgs.msg import Image, PointCloud2, PointField
 from std_msgs.msg import Header
 
 # Project
@@ -69,24 +70,11 @@ class MocKinectNode(BaseNode):
         self.depth_image_pub.publish(depth_msg)
 
     def publish_depth_points(self):
-        depth = MocKinectNode._create_depth_image()
-        points = PointCloud2()
-        points.header = Header()
-        points.header.frame_id = 'mockinect_depth_frame'
-        points.height = depth.shape[0]
-        points.width = depth.shape[1]
-        points.point_step = 3
-        points.row_step = points.point_step * depth.shape[1]
-        points.is_dense = False
-        data = np.zeros(depth.shape[:2] + (3,), dtype=np.uint8)
-        for i in range(depth.shape[0]):
-            for j in range(depth.shape[0]):
-                data[i, j, 0] = i
-                data[i, j, 1] = j
-                data[i, j, 2] = depth[i, j]
-        points.data = data.flatten().tolist()
-        # !!! SOMETHING IS STILL MISSING !!!
-        self.depth_points_pub.publish(points)
+        points = MocKinectNode._create_depth_points()
+        header = Header()
+        header.frame_id = 'mockinect_depth_frame'
+        points_msg = point_cloud2.create_cloud_xyz32(header, points)
+        self.depth_points_pub.publish(points_msg)
 
     @staticmethod
     def _create_rgb_image():
@@ -114,6 +102,23 @@ class MocKinectNode(BaseNode):
         data = (255.0 * (data - data.min()) / (data.max() - data.min())).astype(np.uint8)
         return data
 
+    @staticmethod
+    def _create_depth_points():
+        points = np.zeros((DEPTH_IMAGE_HEIGHT, DEPTH_IMAGE_WIDTH, 3), dtype=np.float32)
+
+        points[0:2*DEPTH_IMAGE_HEIGHT/3, 0:3*DEPTH_IMAGE_WIDTH/4, 2] = 1.0
+        points[2*DEPTH_IMAGE_HEIGHT/3:, 0:3*DEPTH_IMAGE_WIDTH/4, 2] = 0.6
+        points[2*DEPTH_IMAGE_HEIGHT/3:, 3*DEPTH_IMAGE_WIDTH/4:, 2] = 1.2
+        points[0:2*DEPTH_IMAGE_HEIGHT/3:, 3*DEPTH_IMAGE_WIDTH/4:, 2] = 0.7
+
+        for i in range(DEPTH_IMAGE_HEIGHT):
+            points[i, :, 0] = (i - 0.5 * DEPTH_IMAGE_HEIGHT) * 0.01
+        for i in range(DEPTH_IMAGE_WIDTH):
+            points[:, i, 1] = (i - 0.5 * DEPTH_IMAGE_WIDTH) * 0.01
+        points[..., 2] += 0.01*np.random.randn(DEPTH_IMAGE_HEIGHT, DEPTH_IMAGE_WIDTH)
+        points = points.reshape((points.shape[0]*points.shape[1], points.shape[2]))
+        return points
+
 
 if __name__ == '__main__':
     try:
@@ -123,9 +128,18 @@ if __name__ == '__main__':
 
 
     ## Partial tests:
+    # pts = MocKinectNode._create_depth_points()
+    # print pts[0:15, :], pts.shape
+    #
+    # header = Header()
+    # header.frame_id = 'id0'
+    # pts_msg = point_cloud2.create_cloud_xyz32(header, pts)
+    # exit(1)
+    #
     # img = MocKinectNode._create_rgb_image()
     # cv2.imshow("RGB", img)
     # dpt = MocKinectNode._create_depth_image()
     # cv2.imshow("Depth", dpt)
     # cv2.waitKey()
     # cv2.destroyAllWindows()
+
