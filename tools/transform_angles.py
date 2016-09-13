@@ -35,6 +35,7 @@ if __name__ == "__main__":
         a = inverse_transform(q0, q1, q2, q3)
         print a[0] * 180.0/math.pi, a[1] * 180.0/math.pi, a[2] * 180.0/math.pi
     else:
+        print "Script to transform Euler's Roll/Pitch/Yaw angles in degrees to Quaternions"
         print "Usage : angles to quat: transform_angles.py roll pitch yaw"
         print "Usage : quat to angles : transform_angles.py q0 q1 q2 q3"
 

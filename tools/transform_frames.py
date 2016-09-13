@@ -31,6 +31,7 @@ if __name__ == "__main__":
         print trans[0], trans[1], trans[2], angles[0]* 180.0/math.pi, angles[1]* 180.0/math.pi, angles[2]* 180.0/math.pi
 
     else:
+        print "Script to compute inverse transform from one frame to another    "
         print "Usage : transform_frames.py x y z rollDeg pitchDeg yawDeg "
         print "         -> x' y' z' q0' q1' q2' q3'"
         print "         -> x' y' z' rollDeg' pitchDeg' yawDeg'"

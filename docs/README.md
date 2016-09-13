@@ -4,9 +4,11 @@
 
 Install :
 
+- ROS indigo
+
 - ROS Navigation stack:
     * move_base : `sudo apt-get install ros-indigo-move-base`
-    * 
+    * RGBD to laser scan : `sudo apt-get install ros-indigo-depthimage-to-laserscan` 
 - [freenect_launch](http://wiki.ros.org/freenect_launch)
 - etc
 
