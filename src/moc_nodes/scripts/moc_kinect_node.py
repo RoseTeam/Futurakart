@@ -3,9 +3,6 @@
 # Numpy
 import numpy as np
 
-# Opencv
-import cv2
-
 # ROS
 import rospy
 from sensor_msgs import point_cloud2
@@ -86,7 +83,7 @@ class MocKinectNode(BaseNode):
         depth_msg2.header.frame_id = 'kinect_depth_frame'
         depth_msg2.height = depth.shape[0]
         depth_msg2.width = depth.shape[1]
-        depth_msg2.step = 4 * depth.shape[1] * depth.shape[2]
+        depth_msg2.step = depth.shape[1] * depth.shape[2]
         depth_msg2.encoding = '32FC1'
         depth_msg2.data = list(bytearray(depth.flatten()))
 
@@ -122,18 +119,21 @@ class MocKinectNode(BaseNode):
         data[2*DEPTH_IMAGE_HEIGHT/3:, 3*DEPTH_IMAGE_WIDTH/4:, 0] = 3.61
         data[0:2*DEPTH_IMAGE_HEIGHT/3:, 3*DEPTH_IMAGE_WIDTH/4:, 0] = 4.5
 
-        # data += 40*np.random.randn(DEPTH_IMAGE_HEIGHT, DEPTH_IMAGE_WIDTH, 1)
+        data += 0.05*np.random.randn(DEPTH_IMAGE_HEIGHT, DEPTH_IMAGE_WIDTH, 1)
         return data
 
     @staticmethod
     def _create_depth_points():
+        """
+        :return points array [(x0, y0, z0), (x1, y1, z1), (x2, y2, z2), ...]
+        """
         points = np.zeros((DEPTH_IMAGE_HEIGHT, DEPTH_IMAGE_WIDTH, 3), dtype=np.float32)
         points[..., 2] = MocKinectNode._create_depth_image()[..., 0]
 
         for i in range(DEPTH_IMAGE_HEIGHT):
-            points[i, :, 0] = (i - 0.5 * DEPTH_IMAGE_HEIGHT) * 0.01
+            points[i, :, 1] = (i - 0.5 * DEPTH_IMAGE_HEIGHT) * 0.01
         for i in range(DEPTH_IMAGE_WIDTH):
-            points[:, i, 1] = (i - 0.5 * DEPTH_IMAGE_WIDTH) * 0.01
+            points[:, i, 0] = (i - 0.5 * DEPTH_IMAGE_WIDTH) * 0.01
         points[..., 2] += 0.01*np.random.randn(DEPTH_IMAGE_HEIGHT, DEPTH_IMAGE_WIDTH)
         points = points.reshape((points.shape[0]*points.shape[1], points.shape[2]))
         return points

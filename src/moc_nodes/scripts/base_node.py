@@ -6,6 +6,7 @@ import signal
 # ROS
 import rospy
 
+
 class BaseNode:
     """
     A python base node that can be stopped catching SIG_INT

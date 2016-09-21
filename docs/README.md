@@ -4,11 +4,13 @@
 
 Install :
 
-- ROS indigo
+- ROS indigo or kinetic
 
 - ROS Navigation stack:
-    * move_base : `sudo apt-get install ros-indigo-move-base`
-    * RGBD to laser scan : `sudo apt-get install ros-indigo-depthimage-to-laserscan` 
+    * move_base : `sudo apt-get install ros-$ROS_DISTRO-move-base`
+    * RGBD to laser scan : `sudo apt-get install ros-$ROS_DISTRO-depthimage-to-laserscan` 
+    * Map server : `sudo apt-get install ros-$ROS_DISTRO-map-server`
+    * SLAM gmapping : `sudo apt-get install ros-$ROS_DISTRO-gmapping`
 - [freenect_launch](http://wiki.ros.org/freenect_launch)
 - etc
 
@@ -24,6 +26,8 @@ See ROS documentation [here](http://wiki.ros.org/navigation/Tutorials/RobotSetup
 ```
 base_link 
     -> base_kinect
+        -> kinect_rgb_frame
+        -> kinect_depth_frame
     -> base_us_1
     -> base_us_2
     ...
@@ -36,9 +40,14 @@ base_link
 
 The navigation stack uses information from sensors to avoid obstacles in the world, it assumes that these sensors are publishing either sensor_msgs/LaserScan or sensor_msgs/PointCloud messages over ROS.
 
+In `moc_nodes` package we have moc_kinect_node to simulate kinect output
+
 ### Odometry Information (odometry source)
 
 The navigation stack requires that odometry information be published using tf and the nav_msgs/Odometry message.
+
+In `moc_nodes` package we have moc_odom_node to simulate odometry output
+
 
 ### Base Controller (base controller)
 

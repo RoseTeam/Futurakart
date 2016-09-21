@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<!--
+
+-->
+<launch>
+
+    <node name="slam_gmapping" pkg="gmapping" output="screen">
+        <param name="scan" value="/camera/laserscan"/>
+    </node>
+
+</launch>
