@@ -1,24 +1,18 @@
 <?xml version="1.0"?>
 <!--
     
-    Robot navigation configuration :
-    
+    Create a map with rtabmap_ros
+       
     See docs/rtabmap-example.md
+    http://wiki.ros.org/rtabmap_ros/Tutorials/SetupOnYourRobot
+    
     
     Inputs : 
     - Configuration A or Configuration B
-    - Use a rosbag file (true/false)
-    - Produced laser scan topic name in 'd2l_output_laserscan' (default: /camera/laserscan)
-    - 
     
     Following topic are published :
     Both configurations (A and B)
-    
-     - /camera/rgb/image          (from Kinect)
-     - /camera/rgb/camera_info    (from Kinect)     
-     - /camera/depth/image        (from Kinect)
-     - /camera/laserscan          (from Kinect -> depthimage_to_laserscan)
-    
+
     
     Only in Configuration B :
 
