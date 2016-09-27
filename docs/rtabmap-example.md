@@ -13,6 +13,9 @@
 
 
 
+
+
+
 ### Configuration B : Kinect + PiCamera
 
 <img src="http://wiki.ros.org/rtabmap_ros/Tutorials/SetupOnYourRobot?action=AttachFile&do=get&target=setupA2.jpg"/>

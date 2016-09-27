@@ -22,32 +22,80 @@
 -->
 <launch>
 
-    <!-- Choose configuration -->
-    <arg name="conf_a" default="true"/>
-    <arg name="conf_b" default="false"/>
+    <!-- Choose configuration: -->
+    <arg name="conf_a" value="true"/>
+    <arg name="conf_b" value="false"/>
 
+    <!-- Choose valid topic names from Kinect:  -->
+    <arg name="rgb_image" value="/camera/rgb/image_color"/>
+    <arg name="depth_image" value="/cdepth_registered/image_raw"/>
+    <arg name="depth_camera_info" value="/camera/depth_registered/camera_info"/>  
+    <arg name="base_kinect_link" value="camera_link" /> <!-- tf coordinate system name from Kinect -->
+    <arg name="d2l_output_laserscan" value="/camera/laserscan"/>  
+    
+    <!-- 
+        * depthimage_to_laserscan output frame id = The frame id of the laser scan. For point clouds coming from an "optical" frame with Z forward, this value should be set to the corresponding frame with X forward and Z up. 
+         
+        * laser scan height = The number of pixels rows to use to generate the laserscan. For each column, the scan will return the minimum value for those pixels centered vertically in the image.    
+    -->
+    <arg name="d2l_output_frame_id" value="$(arg base_kinect_link)"/>
+    <arg name="d2l_scan_height" value="1"/>    
 
     <!-- ********************************************************************* -->
     <!--   Setup sensors : image from Kinect, depth from Kinect, laserscan     -->
     <!-- ********************************************************************* -->
 
-    <!-- HERE COMES CODE TO START Kinect NODE -->
-    <arg name="depth_image" default="????"/>
-    <arg name="depth_camera_info" default="????"/>  
-     
+    <!-- START Kinect -->
+    <include file="$(find freenect_launch)/launch/freenect.launch">
+
+        <!-- https://github.com/ros-drivers/freenect_stack/blob/master/freenect_launch/launch/freenect.launch -->
+
+        <arg name="depth_registration" value="true" />
+
+        <arg name="data_skip" value="0" />
+
+        <arg name="num_worker_threads" value="4" /> 
+
+        <arg name="publish_tf" value="true" />
         
-    <!-- Uncompress data -->
-    <node name="republish_depth" 
-          type="republish" 
-          pkg="image_transport" 
-          args="compressedDepth in:=$(arg depth_image) raw out:=$(arg depth_image)_relay" />
+        <!-- Calibration files -->
+        <!--arg name="rgb_camera_info_url"   value="" /-->
+        <!--arg name="depth_camera_info_url" value="" /-->
+
+        <!-- Processing Modules -->
+        <arg name="rgb_processing"                  value="true"/>
+        <arg name="ir_processing"                   value="true"/>
+        <arg name="depth_processing"                value="true"/>
+        <arg name="depth_registered_processing"     value="true"/>
+        <arg name="disparity_processing"            value="false"/>
+        <arg name="disparity_registered_processing" value="false"/>
+        <arg name="hw_registered_processing"        value="false" />
+        <arg name="sw_registered_processing"        value="false" />
+        
+
+
+    </include>
+
+    <!-- 
+        Kinect Topics published :
+            /camera/depth/camera_info
+            /camera/depth/image
+
+            /tf
+                /camera_link
+                /camera_rgb_optical_frame
+                /camera_depth_optical_frame             
+            ...
+
+    -->
+
               
     <!--RGBD to LaserScan-->
     <node pkg="depthimage_to_laserscan"
           name="depthimage_to_laserscan"
           type="depthimage_to_laserscan"
           output="screen">
-        <remap from="image" to="$(arg depth_image)_relay" />
+        <remap from="image" to="$(arg depth_image)" />
         <remap from="camera_info" to="$(arg depth_camera_info)" />
         <remap from="scan" to="$(arg d2l_output_laserscan)" />
 
@@ -59,12 +107,20 @@
     <!-- ********************************************************************* -->
     <!--  Setup visual odometry : from Kinect (conf_a), from PiCamera (conf_b) -->
     <!-- ********************************************************************* -->
+    <node pkg="rtabmap_ros" type="rgbd_odometry" name="rgbd_odometry" output="screen">
+      <remap from="rgb/image"       to="$(arg rgb_image)"/>
+      <remap from="depth/image"     to="$(arg depth_image)"/>
+      <remap from="rgb/camera_info" to="$(arg depth_camera_info)"/>
 
+      <param name="frame_id" type="string" value="base_link"/>
+    </node>
 
         
     <!-- ********************************************************************* -->
     <!--                    Setup robot transformations                        -->
     <!-- ********************************************************************* -->
-    <include file="$(find futurakart_2dnav)/launch/robot_setup_tf.launch" />
+    <include file="$(find futurakart_2dnav)/launch/includes/robot_setup_tf.launch">
+        <arg name="base_kinect_link" value="$(arg base_kinect_link)" />
+    </include>
 
 </launch>

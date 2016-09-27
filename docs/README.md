@@ -8,10 +8,12 @@ Install :
 
 - ROS Navigation stack:
     * move_base : `sudo apt-get install ros-$ROS_DISTRO-move-base`
-    * RGBD to laser scan : `sudo apt-get install ros-$ROS_DISTRO-depthimage-to-laserscan` 
-    * Map server : `sudo apt-get install ros-$ROS_DISTRO-map-server`
-    * SLAM gmapping : `sudo apt-get install ros-$ROS_DISTRO-gmapping`
-- [freenect_launch](http://wiki.ros.org/freenect_launch)
+    * [RGBD to laser scan](http://wiki.ros.org/depthimage_to_laserscan) : `sudo apt-get install ros-$ROS_DISTRO-depthimage-to-laserscan` 
+    * [RTABMap_ros](http://wiki.ros.org/rtabmap_ros/) : `sudo apt-get install ros-$ROS_DISTRO-rtabmap-ros`
+    ~~* Map server : `sudo apt-get install ros-$ROS_DISTRO-map-server`~~
+    ~~* SLAM gmapping : `sudo apt-get install ros-$ROS_DISTRO-gmapping`~~
+- [Freenect stack](http://wiki.ros.org/freenect_stack) : `sudo apt-get install ros-$ROS_DISTRO-freenect-stack`
+- [freenect_launch]
 - etc
 
 
