@@ -1,6 +1,10 @@
 
 # Created by https://www.gitignore.io/api/c++,windows,pycharm,python,ros,linux,macos,intellij
 
+# Custom 
+temp
+
+
 ### C++ ###
 # Prerequisites
 *.d
