@@ -2,15 +2,10 @@
 <!--
     
     Robot navigation configuration :
-    
-    See docs/rtabmap-example.md
-    
-    Inputs : 
-    - Configuration A or Configuration B
-    - Use a rosbag file (true/false)
-    - Produced laser scan topic name in 'd2l_output_laserscan' (default: /camera/laserscan)
-    - 
-    
+
+    Choose a configuration : conf_a (default) or conf_b
+    See docs/rtabmap-example.md for details
+     
     Following topic are published :
     Both configurations (A and B)
     
@@ -30,71 +25,46 @@
     <!-- Choose configuration -->
     <arg name="conf_a" default="true"/>
     <arg name="conf_b" default="false"/>
-    
-    <!-- Use rosbag file for simulations -->
-    <arg name="use_rosbag" default="true"/>
-    <arg name="bag_file" default="~/Downloads/demo_mapping.bag"/>
-    
-    <!-- Setup topic names -->
-    <arg name="d2l_output_laserscan" default="/camera/laserscan"/>
-    
-    <!-- Setup configuration -->
-    <arg name="d2l_scan_height" default="1"/>
-    <arg name="d2l_output_frame_id" default="/base_laser_link"/>
-       
-    
-    <group>
 
-        <!-- Start a rosbag -->
-        <group if="$(arg use_rosbag)">
+
+    <!-- ********************************************************************* -->
+    <!--   Setup sensors : image from Kinect, depth from Kinect, laserscan     -->
+    <!-- ********************************************************************* -->
+
+    <!-- HERE COMES CODE TO START Kinect NODE -->
+    <arg name="depth_image" default="????"/>
+    <arg name="depth_camera_info" default="????"/>  
+     
         
-            <node pkg="rosbag" 
-                  type="play" 
-                  name="player" 
-                  output="screen" 
-                  args="--clock $(arg bag_file)"/>
-            
-<!--           Publish topics : 
-            
-               /az3/base_controller/odom
-               /clock
-               /data_throttled_camera_info
-               /data_throttled_image/compressed
-               /data_throttled_image_depth/compressedDepth
-               /jn0/base_scan
-               /tf
--->         
-            <arg name="depth_image" default="/data_throttled_image_depth"/>
-            <arg name="depth_camera_info" default="/data_throttled_camera_info"/>  
-            
-            <!-- Uncompress data -->
-            <node name="republish_depth" 
-                  type="republish" 
-                  pkg="image_transport" 
-                  args="compressedDepth in:=$(arg depth_image) raw out:=$(arg depth_image)_relay" />
-                      
-            <!--RGBD to LaserScan-->
-            <node pkg="depthimage_to_laserscan"
-                  name="depthimage_to_laserscan"
-                  type="depthimage_to_laserscan"
-                  output="screen">
-                <remap from="image" to="$(arg depth_image)_relay" />
-                <remap from="camera_info" to="$(arg depth_camera_info)" />
-                <remap from="scan" to="$(arg d2l_output_laserscan)" />
+    <!-- Uncompress data -->
+    <node name="republish_depth" 
+          type="republish" 
+          pkg="image_transport" 
+          args="compressedDepth in:=$(arg depth_image) raw out:=$(arg depth_image)_relay" />
+              
+    <!--RGBD to LaserScan-->
+    <node pkg="depthimage_to_laserscan"
+          name="depthimage_to_laserscan"
+          type="depthimage_to_laserscan"
+          output="screen">
+        <remap from="image" to="$(arg depth_image)_relay" />
+        <remap from="camera_info" to="$(arg depth_camera_info)" />
+        <remap from="scan" to="$(arg d2l_output_laserscan)" />
 
-                <param name="scan_height" value="$(arg d2l_scan_height)"/>
-                <param name="output_frame_id" value="$(arg d2l_output_frame_id)"/>
-                <param name="_image_transport" value="compressed"/>
-            </node>
-            
-        </group>
-        <group unless="$(arg use_rosbag)">
-            
+        <param name="scan_height" value="$(arg d2l_scan_height)"/>
+        <param name="output_frame_id" value="$(arg d2l_output_frame_id)"/>
+        <param name="_image_transport" value="compressed"/>
+    </node>
+
+    <!-- ********************************************************************* -->
+    <!--  Setup visual odometry : from Kinect (conf_a), from PiCamera (conf_b) -->
+    <!-- ********************************************************************* -->
+
+
         
-        </group>
-
-        <include file="$(find futurakart_2dnav)/launch/robot_setup_tf.launch" />
-
-    </group>
+    <!-- ********************************************************************* -->
+    <!--                    Setup robot transformations                        -->
+    <!-- ********************************************************************* -->
+    <include file="$(find futurakart_2dnav)/launch/robot_setup_tf.launch" />
 
 </launch>
