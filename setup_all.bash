@@ -48,7 +48,7 @@ function search_and_add() {
 echo ""
 echo "Setup alias 'fkart'"
 
-alias_file="${HOME}/.bash_aliases3"
+alias_file="${HOME}/.bash_aliases"
 alias_cmd="alias fkart=\"cd ${CURRENT_PATH}; source devel/setup.bash\""
 
 create_backup ${alias_file}
