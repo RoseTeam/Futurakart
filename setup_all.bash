@@ -8,7 +8,7 @@ echo ""
 echo "Usage : source setup_all.bash"
 echo ""
 
-CURRENT_PATH=`pwd "$0"`
+CURRENT_PATH=`pwd`
 
 function create_backup() {
     local file_to_backup=$1
