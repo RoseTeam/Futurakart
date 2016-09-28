@@ -23,15 +23,16 @@
 <launch>
 
     <!-- Choose configuration: -->
-    <arg name="conf_a" value="true"/>
-    <arg name="conf_b" value="false"/>
+    <arg name="conf_a" default="true"/>
+    <arg name="conf_b" default="false"/>
 
     <!-- Choose valid topic names from Kinect:  -->
-    <arg name="rgb_image" value="/camera/rgb/image_color"/>
-    <arg name="depth_image" value="/cdepth_registered/image_raw"/>
-    <arg name="depth_camera_info" value="/camera/depth_registered/camera_info"/>  
-    <arg name="base_kinect_link" value="camera_link" /> <!-- tf coordinate system name from Kinect -->
-    <arg name="d2l_output_laserscan" value="/camera/laserscan"/>  
+    <arg name="rgb_image" default="/camera/rgb/image_rect_color"/>
+    <arg name="rgb_camera_info" default="/camera/rgb/camera_info"/>
+    <arg name="depth_image" default="/camera/depth_registered/image_raw"/>
+    <arg name="depth_camera_info" default="/camera/depth_registered/camera_info"/>
+    <arg name="base_kinect_link" default="camera_link" /> <!-- tf coordinate system name from Kinect -->
+    <arg name="d2l_output_laserscan" default="/camera/laserscan"/>
     
     <!-- 
         * depthimage_to_laserscan output frame id = The frame id of the laser scan. For point clouds coming from an "optical" frame with Z forward, this value should be set to the corresponding frame with X forward and Z up. 
@@ -47,12 +48,11 @@
 
     <!-- START Kinect -->
     <include file="$(find freenect_launch)/launch/freenect.launch">
-
         <!-- https://github.com/ros-drivers/freenect_stack/blob/master/freenect_launch/launch/freenect.launch -->
 
         <arg name="depth_registration" value="true" />
 
-        <arg name="data_skip" value="0" />
+        <arg name="data_skip" value="1" />
 
         <arg name="num_worker_threads" value="4" /> 
 
@@ -71,24 +71,49 @@
         <arg name="disparity_registered_processing" value="false"/>
         <arg name="hw_registered_processing"        value="false" />
         <arg name="sw_registered_processing"        value="false" />
-        
-
 
     </include>
 
     <!-- 
         Kinect Topics published :
+            /camera/debayer/parameter_descriptions
+            /camera/debayer/parameter_updates
             /camera/depth/camera_info
             /camera/depth/image
+            /camera/depth/image_raw
+            /camera/depth/image_rect
+            /camera/depth/image_rect_raw
+            /camera/depth/points
+            /camera/depth_rectify_depth/parameter_descriptions
+            /camera/depth_rectify_depth/parameter_updates
+            /camera/depth_registered/camera_info
+            /camera/depth_registered/image_raw
+            /camera/driver/parameter_descriptions
+            /camera/driver/parameter_updates
+            /camera/ir/camera_info
+            /camera/ir/image_raw
+            /camera/ir/image_rect_ir
+            /camera/projector/camera_info
+            /camera/rectify_color/parameter_descriptions
+            /camera/rectify_color/parameter_updates
+            /camera/rectify_ir/parameter_descriptions
+            /camera/rectify_ir/parameter_updates
+            /camera/rectify_mono/parameter_descriptions
+            /camera/rectify_mono/parameter_updates
+            /camera/rgb/camera_info
+            /camera/rgb/image_color
+            /camera/rgb/image_mono
+            /camera/rgb/image_raw
+            /camera/rgb/image_rect_color
+            /camera/rgb/image_rect_mono
 
             /tf
                 /camera_link
                 /camera_rgb_optical_frame
                 /camera_depth_optical_frame             
-            ...
-
+                /camera_rgb_frame
+                /camera_depth_frame
     -->
-
               
     <!--RGBD to LaserScan-->
     <node pkg="depthimage_to_laserscan"
@@ -107,15 +132,17 @@
     <!-- ********************************************************************* -->
     <!--  Setup visual odometry : from Kinect (conf_a), from PiCamera (conf_b) -->
     <!-- ********************************************************************* -->
+    <!-- see http://wiki.ros.org/rtabmap_ros#rgbd_odometry  -->
+
     <node pkg="rtabmap_ros" type="rgbd_odometry" name="rgbd_odometry" output="screen">
       <remap from="rgb/image"       to="$(arg rgb_image)"/>
+      <remap from="rgb/camera_info" to="$(arg rgb_camera_info)"/>
       <remap from="depth/image"     to="$(arg depth_image)"/>
-      <remap from="rgb/camera_info" to="$(arg depth_camera_info)"/>
 
       <param name="frame_id" type="string" value="base_link"/>
     </node>
 
-        
+
     <!-- ********************************************************************* -->
     <!--                    Setup robot transformations                        -->
     <!-- ********************************************************************* -->
