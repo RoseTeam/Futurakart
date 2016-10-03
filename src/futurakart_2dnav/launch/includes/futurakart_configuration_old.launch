@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<!--
+    Robot Configuration Launch File
+    See http://wiki.ros.org/navigation/Tutorials/RobotSetup
+-->
+<launch>
+
+    <!--****************************************-->
+    <!--CONFIGURATION-->
+    <!--****************************************-->
+    <arg name="has_sensors" default="true"/>
+        <arg name="moc_sensors" default="true"/>
+        <arg name="has_kinect" default="true"/>
+
+
+    <arg name="has_odom" default="true"/>
+        <arg name="moc_odom" default="true"/>
+
+    <arg name="has_tf" default="true"/>
+    <!--****************************************-->
+    <!--END CONFIGURATION-->
+    <!--****************************************-->
+
+    <group ns="/futurakart">
+
+        <!--Setup sensors-->
+        <group if="$(arg has_sensors)">
+
+            <group if="$(arg moc_sensors)">
+                <include file="$(find moc_nodes)/launch/moc_sensors_setup.launch" />
+            </group>
+            <group unless="$(arg moc_sensors)">
+                <node pkg="sensor_node_pkg" type="sensor_node_type" name="sensor_node_name" output="screen">
+                    <param name="sensor_param" value="param_value" />
+                </node>
+            </group>
+
+            <!--RGBD to LaserScan-->
+            <group if="$(arg has_kinect)">
+                <node pkg="depthimage_to_laserscan"
+                      name="depthimage_to_laserscan"
+                      type="depthimage_to_laserscan"
+                      output="screen">
+
+                    <remap from="image" to="/camera/depth/image_raw" />
+                    <remap from="camera_info" to="/camera/depth/camera_info" />
+                    <remap from="scan" to="/camera/laserscan" />
+
+                    <param name="scan_height" value="1"/>
+                    <!--The frame id of the laser scan. For point clouds coming from an
+                    "optical" frame with Z forward, this value should be set to the corresponding
+                    frame with X forward and Z up. -->
+                    <param name="output_frame_id" value="base_kinect"/>
+
+                </node>
+            </group>
+        </group>
+
+
+        <group if="$(arg has_odom)">
+
+            <group if="$(arg moc_odom)">
+                <include file="$(find moc_nodes)/launch/moc_odom_setup.launch" />
+            </group>
+            <group unless="$(arg moc_odom)">
+                <node pkg="odom_node_pkg" type="odom_node_type" name="odom_node" output="screen">
+                    <param name="odom_param" value="param_value" />
+                </node>
+            </group>
+        </group>
+
+        <group if="$(arg has_tf)">
+            <include file="$(find futurakart_2dnav)/launch/robot_setup_tf.launch" />
+        </group>
+
+    </group>
+
+</launch>

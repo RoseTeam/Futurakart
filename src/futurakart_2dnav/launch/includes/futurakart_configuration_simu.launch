@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<!--
+    
+    Robot navigation configuration for simulations.
+    All sensor data are coming from a rosbag file
+  
+    Following topic are published 
+    (case of configuration A from docs/rtabmap-example.md)
+     - /camera/rgb/image          (from Kinect)
+     - /camera/rgb/camera_info    (from Kinect)     
+     - /camera/depth/image        (from Kinect)
+     - /camera/laserscan          (from Kinect -> depthimage_to_laserscan)
+           
+
+-->
+<launch>
+
+    <!-- Ros bag file -->
+    <arg name="bag_file" default="~/Downloads/demo_mapping.bag"/>
+    
+    <!-- Setup topic names -->
+    <arg name="d2l_output_laserscan" default="/camera/laserscan"/>
+    
+    <!-- Setup configuration -->
+    <arg name="d2l_scan_height" default="1"/>
+    <arg name="d2l_output_frame_id" default="/base_laser_link"/>
+
+    
+    <node pkg="rosbag" 
+          type="play" 
+          name="player" 
+          output="screen" 
+          args="--clock $(arg bag_file)"/>
+    
+<!--   Published topics : 
+        
+           /az3/base_controller/odom
+           /clock
+           /data_throttled_camera_info
+           /data_throttled_image/compressed
+           /data_throttled_image_depth/jn0
+           /compressedDepth/base_scan
+           /tf
+-->         
+    <arg name="depth_image" default="/data_throttled_image_depth"/>
+    <arg name="depth_camera_info" default="/data_throttled_camera_info"/>  
+    
+    <!-- Uncompress data -->
+    <node name="republish_depth" 
+          type="republish" 
+          pkg="image_transport" 
+          args="compressedDepth in:=$(arg depth_image) raw out:=$(arg depth_image)_relay" />
+              
+    <!--RGBD to LaserScan-->
+    <node pkg="depthimage_to_laserscan"
+          name="depthimage_to_laserscan"
+          type="depthimage_to_laserscan"
+          output="screen">
+        <remap from="image" to="$(arg depth_image)_relay" />
+        <remap from="camera_info" to="$(arg depth_camera_info)" />
+        <remap from="scan" to="$(arg d2l_output_laserscan)" />
+
+        <param name="scan_height" value="$(arg d2l_scan_height)"/>
+        <param name="output_frame_id" value="$(arg d2l_output_frame_id)"/>
+        <param name="_image_transport" value="compressed"/>
+    </node>
+
+</launch>

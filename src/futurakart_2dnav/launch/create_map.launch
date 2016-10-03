@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!--
+    Launch file to create a map
+-->
+<launch>
+
+    <!-- Choose configuration: -->
+    <arg name="conf_a" value="true"/>
+    <arg name="conf_b" value="false"/>
+
+    <!-- Choose valid topic names from Kinect:  -->
+    <arg name="rgb_image" value="/camera/rgb/image_rect_color"/>
+    <arg name="rgb_camera_info" value="/camera/rgb/camera_info"/>
+    <arg name="depth_image" value="/camera/depth_registered/image_raw"/>
+    <arg name="depth_camera_info" value="/camera/depth_registered/camera_info"/>
+    <arg name="base_kinect_link" value="camera_link" /> <!-- tf coordinate system name from Kinect -->
+    <arg name="d2l_output_laserscan" value="/camera/laserscan"/>
+
+
+    <include file="$(find futurakart_2dnav)/launch/includes/futurakart_configuration.launch">
+        <arg name="conf_a" value="$(arg conf_a)"/>
+        <arg name="conf_b" value="$(arg conf_b)"/>
+        <arg name="rgb_image" value="$(arg rgb_image)"/>
+        <arg name="rgb_camera_info" value="$(arg rgb_camera_infoo)"/>
+        <arg name="depth_image" value="$(arg depth_image)"/>
+        <arg name="depth_camera_info" value="$(arg depth_camera_info)"/>
+        <arg name="base_kinect_link" value="$(arg base_kinect_link)" />
+        <arg name="d2l_output_laserscan" value="$(arg d2l_output_laser)"/>
+    </include>
+
+
+    <include file="$(find futurakart_2dnav)/launch/includes/rtabmapping.launch">
+        <arg name="rgb_image" value="$(arg rgb_image)"/>
+        <arg name="rgb_camera_info" value="$(arg rgb_camera_infoo)"/>
+        <arg name="depth_image" value="$(arg depth_image)"/>
+        <arg name="depth_camera_info" value="$(arg depth_camera_info)"/>
+        <arg name="base_kinect_link" value="$(arg base_kinect_link)" />
+        <arg name="d2l_output_laserscan" value="$(arg d2l_output_laser)"/>
+    </include>
+
+
+
+
+
+
+
+
+
+</launch>
