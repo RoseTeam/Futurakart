@@ -5,7 +5,7 @@ echo "Script to setup Futurakart Project ROS environment"
 echo "- setup alias 'fkart' : cd /to/project/dir; source devel/setup.bash"
 echo "- setup ROS_MASTER_URI, ROS_HOSTNAME from ros.conf file"
 echo ""
-echo "Usage : source setup_all.bash"
+echo "Usage : source setup_all.bash [--local]"
 echo ""
 
 CURRENT_PATH="`pwd`"
@@ -27,9 +27,11 @@ function search_and_add() {
 
     local is_found=`cat $file | grep -iE "$rx_grep_1"`
     if [ "$is_found" == "" ]; then
+        # rx_grep_1 is not found
         echo "$line" >> $file
         echo "=> Appended $task_name to the file $file"
     else
+        # rx_grep_1 is found
         local is_found=`echo $is_found | grep -iE "$rx_grep_2"`
         if [ "$is_found" == "" ]; then
             # comment previous and append new one
@@ -69,11 +71,19 @@ fi
 
 ############ Setup ROS_MASTER_URI, ROS_HOSTNAME ################################
 
+
 bashrc_file="${HOME}/.bashrc"
 
-exec 5< ros.conf
-read ros_master_uri <&5
-read ros_hostname <&5
+if [ -n "$1" ] && [ "$1" == "--local" ]; then
+    ros_master_uri="ROS_MASTER_URI=http://localhost:11311"
+    ros_hostname="ROS_HOSTNAME=localhost"
+    echo "USE LOCAL"
+else
+    exec 5< ros.conf
+    read ros_master_uri <&5
+    read ros_hostname <&5        
+fi
+
 
 echo ""
 echo "Apply ros.conf : $ros_master_uri $ros_hostname"
