@@ -36,9 +36,9 @@ ext_radius = 34.6/2;
 module dents(){
 rotate([0,0,-12])
 translate([0,-.2,0]){
-    color("White", .5)
+    union()
     {
-        cylindre(6,6.2);
+        cylindre(12,15);
         pignon(height);
     }
 }
@@ -55,13 +55,13 @@ linear_extrude(height=h)
     square(r,center=true);
 }
 
-module axe(sca=1.10, h=16)
+module axe(sca=1.10, h=40)
 {
     scale([sca, sca, sca])
-    rotate([0,0,-90])
+    rotate([0,0,90])
     difference(){
         cylindre(5.6,h);
-        translate([0,-9.7,0]){
+        translate([0,-8.6,0]){
         carreau(9.7,h);
         }
         
@@ -75,8 +75,8 @@ difference()
         axe();
     };
     translate([0,0,4])
-    rotate([0,90,0])
-    cylindre(r=2,h=35);
+        rotate([0,90,0])
+            cylindre(r=2,h=35);
 }
 //cercle(ext_radius);
 
