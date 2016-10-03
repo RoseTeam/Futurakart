@@ -22,7 +22,7 @@
     <arg name="d2l_output_laserscan" default="/camera/laserscan"/>
 
     <!-- Choose rtabmap arguments: -->
-    <arg name="rtabmap_args" default=""/> <!-- delete_db_on_start, udebug -->
+    <arg name="rtabmap_args" default="delete_db_on_start"/> <!-- delete_db_on_start, udebug -->
 
     <!-- SLAM : https://github.com/introlab/rtabmap_ros/blob/master/launch/rtabmap.launch -->
 
