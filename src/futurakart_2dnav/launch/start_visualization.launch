@@ -1,34 +1,37 @@
 <?xml version="1.0"?>
 <!--
-    Launch file to create a map
+    Launch file to start RTabMapviz application to visualize the mapping or localization
+    
+    The parameters should be the same as in the create_map.launch
 -->
    
     <!-- Choose valid topic names from Kinect:  -->
-    <arg name="rgb_image" value="/camera/rgb/image_rect_color"/>
-    <arg name="rgb_camera_info" value="/camera/rgb/camera_info"/>
-    <arg name="depth_image" value="/camera/depth_registered/image_raw"/>
-    <arg name="depth_camera_info" value="/camera/depth_registered/camera_info"/>
-    <arg name="base_kinect_link" value="camera_link" /> <!-- tf coordinate system name from Kinect -->
-    <arg name="d2l_output_laserscan" value="/camera/laserscan"/>
-    <arg name="rtm_output_vis_odom" value="/visual_odom"/>
+    <arg name="camera_name" value="camera"/> <!-- Kinect camera namespace name for output topics -->
+    <arg name="rgb_image" value="/$(arg camera_name)/rgb/image_rect_color"/> <!-- RGB image topic -->
+    <arg name="rgb_camera_info" value="/$(arg camera_name)/rgb/camera_info"/> <!-- RGB Camera info topic -->
+    <arg name="depth_image" value="/$(arg camera_name)/depth_registered/image_raw"/> <!-- Depth image topic -->
+    <arg name="depth_camera_info" value="/$(arg camera_name)/depth_registered/camera_info"/> <!-- Depth Camera info topic -->
+    <arg name="base_kinect_link" value="$(arg camera_name)_link" /> <!-- tf coordinate system name from Kinect -->
+    <arg name="d2l_output_laserscan" value="/$(arg camera_name)/laserscan"/> <!-- Laserscan topic name for depth_to_laserscan output -->
+    <arg name="rtm_output_vis_odom" value="/visual_odom"/> <!-- Odometry topic name for RTabmap rgbd visual odometry output  -->
     
 
     <!-- Visualisation RTAB-Map -->
-    <!--node pkg="rtabmap_ros" type="rtabmapviz" name="rtabmapviz" args="-d $(find rtabmap_ros)/launch/config/rgbd_gui.ini" output="screen">
+    <node pkg="rtabmap_ros" type="rtabmapviz" name="rtabmapviz" args="-d $(find futurakart_2dnav)/launch/includes/rgbd_gui.ini" output="screen">
   	  <param name="subscribe_depth"    type="bool" value="true"/>
       <param name="subscribe_scan"     type="bool" value="true"/>
-      <param name="frame_id"           type="string" value="base_footprint"/>
+      <param name="frame_id"           type="string" value="base_link"/>
       <param name="wait_for_transform" type="bool" value="true"/>
     
-      <remap from="rgb/image"       to="/data_throttled_image"/>
-      <remap from="depth/image"     to="/data_throttled_image_depth"/>
-      <remap from="rgb/camera_info" to="/data_throttled_camera_info"/>
-      <remap from="scan"            to="/jn0/base_scan"/>
-      <remap from="odom"            to="/az3/base_controller/odom"/>
+      <remap from="rgb/image"       to="$(arg rgb_image)"/>
+      <remap from="depth/image"     to="$(arg depth_image)"/>
+      <remap from="rgb/camera_info" to="$(arg rgb_camera_info)"/>
+      <remap from="scan"            to="$(arg d2l_output_laserscan)"/>
+      <remap from="odom"            to="$(arg rtm_output_vis_odom)"/>
       
       <param name="rgb/image_transport"   type="string" value="compressed"/>
       <param name="depth/image_transport" type="string" value="compressedDepth"/>
-    </node-->
+    </node>
    
 
 </launch>

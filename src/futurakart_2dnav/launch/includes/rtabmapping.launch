@@ -14,13 +14,15 @@
     <arg name="conf_b" default="false"/>
 
     <!-- Choose valid topic names from Kinect:  -->
-    <arg name="rgb_image" default="/camera/rgb/image_rect_color"/>
-    <arg name="rgb_camera_info" default="/camera/rgb/camera_info"/>
-    <arg name="depth_image" default="/camera/depth_registered/image_raw"/>
-    <arg name="depth_camera_info" default="/camera/depth_registered/camera_info"/>
-    <arg name="base_kinect_link" default="camera_link" /> <!-- tf coordinate system name from Kinect -->
-    <arg name="d2l_output_laserscan" default="/camera/laserscan"/>
+    <arg name="camera_name" default="camera"/>
+    <arg name="rgb_image" default="/$(arg camera_name)/rgb/image_rect_color"/>
+    <arg name="rgb_camera_info" default="/$(arg camera_name)/rgb/camera_info"/>
+    <arg name="depth_image" default="/$(arg camera_name)/depth_registered/image_raw"/>
+    <arg name="depth_camera_info" default="/$(arg camera_name)/depth_registered/camera_info"/>
+    <arg name="base_kinect_link" default="$(arg camera_name)_link" /> <!-- tf coordinate system name from Kinect -->
+    <arg name="d2l_output_laserscan" default="/$(arg camera_name)/laserscan"/>
     <arg name="rtm_output_vis_odom" default="/visual_odom"/>
+
 
     <!-- Choose rtabmap arguments: -->
         <!-- Localization-only mode -->
@@ -28,16 +30,19 @@
     <arg     if="$(arg localization)" name="rtabmap_args"  default=""/>
     <arg unless="$(arg localization)" name="rtabmap_args"  default="--delete_db_on_start"/>
 
-    <!-- SLAM : https://github.com/introlab/rtabmap_ros/blob/master/launch/rtabmap.launch -->
 
+    <!-- ********************************************************************* -->
+    <!-- Start rtabmap -->
+    <!-- ********************************************************************* -->
+    <!-- SLAM : https://github.com/introlab/rtabmap_ros/blob/master/launch/rtabmap.launch -->
     <group ns="rtabmap" if="$(arg conf_a)">
         <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="$(arg rtabmap_args)">
-            <param name="frame_id" type="string" value="base_footprint"/>
+            <param name="frame_id" type="string" value="base_link"/> <!-- base_link or base_footprint -->
 
             <param name="subscribe_depth" type="bool" value="true"/>
             <param name="subscribe_scan" type="bool" value="true"/>
 
-            <!--remap from="odom" to="/base_controller/odom"/-->
+            <remap from="odom" to="$(arg rtm_output_vis_odom)"/>
             <remap from="scan" to="$(arg d2l_output_laserscan)"/>
 
             <remap from="rgb/image" to="$(arg rgb_image)"/>

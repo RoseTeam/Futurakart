@@ -1,5 +1,6 @@
 # Documents 
 
+
 ## ROS dependencies
 
 Install :
@@ -25,13 +26,19 @@ See ROS documentation [here](http://wiki.ros.org/navigation/Tutorials/RobotSetup
 
 ### Transform Configuration
 
+[Coordinate system definitions](http://www.ros.org/reps/rep-0120.html#coordinate-frames)
+
 - launch/robot_setup_tf.launch 
 
 ```
-base_link 
-    -> base_kinect
-        -> kinect_rgb_frame
-        -> kinect_depth_frame
+base_link (Center of the kart)
+   -> base_footprint (Center of the kart projected on the floor) 
+   -> camera_link (Center of the camera)
+        -> camera_rgb_optical_frame
+        -> camera_depth_optical_frame             
+        -> camera_rgb_frame
+        -> camera_depth_frame
+    
     -> base_us_1
     -> base_us_2
     ...

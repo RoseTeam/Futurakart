@@ -11,14 +11,21 @@
 
     For more details, see http://wiki.ros.org/navigation/Tutorials/RobotSetup/TF 
     
+    Coordinate system definitions : http://www.ros.org/reps/rep-0120.html#coordinate-frames
      
 -->
 <launch>
 
-    <arg name="base_kinect_link" />
+    <arg name="base_kinect_link" default="camera_link"/>
+
+    <!-- Transformation between Kart center and its projection on the floor -->
+	<node name="base_link_to_footprint_tf"
+		pkg="tf" 
+		type="static_transform_publisher" 
+		args="0.0 0.0 -0.25 0.0 0.0 0.0 1.0 base_link base_footprint 20" /> 
 
     <!-- Transformation between Kart center and the Kinect sensor position -->
-	<node name="base_kinect_tf"
+	<node name="base_link_to_kinect_tf"
 		pkg="tf" 
 		type="static_transform_publisher" 
 		args="0.4 0.0 0.2 0.0 0.0 0.0 1.0 base_link $(arg base_kinect_link) 20" /> 
