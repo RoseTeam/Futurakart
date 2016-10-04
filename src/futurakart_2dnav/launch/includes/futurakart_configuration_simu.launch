@@ -16,14 +16,26 @@
 <launch>
 
     <!-- Ros bag file -->
-    <arg name="bag_file" default="~/Downloads/demo_mapping.bag"/>
+    <arg name="bag_file" default="/home/osboxes/Downloads/only_rgbd.bag"/>
     
-    <!-- Setup topic names -->
-    <arg name="d2l_output_laserscan" default="/camera/laserscan"/>
-    
-    <!-- Setup configuration -->
-    <arg name="d2l_scan_height" default="1"/>
-    <arg name="d2l_output_frame_id" default="/base_laser_link"/>
+    <!-- Choose valid topic names from Kinect:  -->
+    <arg name="camera_name" default="camera"/>
+    <arg name="rgb_image" default="/data_throttled_image"/>
+    <arg name="rgb_camera_info" default="/data_throttled_camera_info"/>
+    <arg name="depth_image" default="/data_throttled_image_depth"/>
+    <arg name="depth_camera_info" default="/data_throttled_camera_info"/>
+    <arg name="base_kinect_link" default="$(arg camera_name)_link" /> <!-- tf coordinate system name from Kinect -->
+    <arg name="d2l_output_laserscan" default="/$(arg camera_name)/laserscan"/>
+    <arg name="rtm_output_vis_odom" default="/visual_odom"/>
+
+
+    <!-- 
+        * depthimage_to_laserscan output frame id = The frame id of the laser scan. For point clouds coming from an "optical" frame with Z forward, this value should be set to the corresponding frame with X forward and Z up. 
+         
+        * laser scan height = The number of pixels rows to use to generate the laserscan. For each column, the scan will return the minimum value for those pixels centered vertically in the image.    
+    -->
+    <arg name="d2l_output_frame_id" default="$(arg base_kinect_link)"/>
+    <arg name="d2l_scan_height" default="1"/>  >
 
     
     <node pkg="rosbag" 
@@ -33,23 +45,33 @@
           args="--clock $(arg bag_file)"/>
     
 <!--   Published topics : 
-        
-           /az3/base_controller/odom
-           /clock
            /data_throttled_camera_info
            /data_throttled_image/compressed
-           /data_throttled_image_depth/jn0
-           /compressedDepth/base_scan
-           /tf
+           /data_throttled_image_depth/compressedDept
 -->         
-    <arg name="depth_image" default="/data_throttled_image_depth"/>
-    <arg name="depth_camera_info" default="/data_throttled_camera_info"/>  
     
+  	<!--node name="base_kinect_rgb_tf"
+		pkg="tf"
+		type="static_transform_publisher"
+		args="0.0 -0.05 0.0 -0.5 0.5 -0.5 0.5 camera_link openni_rgb_optical_frame 20" />
+
+	<node name="base_kinect_depth_tf"
+		pkg="tf"
+		type="static_transform_publisher"
+		args="0.0 0.05 0.0 -0.5 0.5 -0.5 0.5 camera_link openni_depth_optical_frame 20" /-->
+   
     <!-- Uncompress data -->
     <node name="republish_depth" 
           type="republish" 
           pkg="image_transport" 
           args="compressedDepth in:=$(arg depth_image) raw out:=$(arg depth_image)_relay" />
+
+    <!-- Uncompress data -->
+    <node name="republish_rgb" 
+          type="republish" 
+          pkg="image_transport" 
+          args="compressed in:=$(arg rgb_image) raw out:=$(arg rgb_image)_relay" />
+
               
     <!--RGBD to LaserScan-->
     <node pkg="depthimage_to_laserscan"
@@ -64,5 +86,28 @@
         <param name="output_frame_id" value="$(arg d2l_output_frame_id)"/>
         <param name="_image_transport" value="compressed"/>
     </node>
+
+
+    <!-- ********************************************************************* -->
+    <!--  Setup visual odometry : from Kinect (conf_a), from PiCamera (conf_b) -->
+    <!-- ********************************************************************* -->
+    <!-- see http://wiki.ros.org/rtabmap_ros#rgbd_odometry  -->
+
+    <node pkg="rtabmap_ros" type="rgbd_odometry" name="rgbd_odometry" output="screen">
+      <remap from="rgb/image"       to="$(arg rgb_image)_relay"/>
+      <remap from="rgb/camera_info" to="$(arg rgb_camera_info)"/>
+      <remap from="depth/image"     to="$(arg depth_image)_relay"/>
+
+      <param name="frame_id" type="string" value="base_link"/>
+      <param name="odom_frame_id" type="string" value="$(arg rtm_output_vis_odom)"/>
+    </node>
+
+
+    <!-- ********************************************************************* -->
+    <!--                    Setup robot transformations                        -->
+    <!-- ********************************************************************* -->
+    <include file="$(find futurakart_2dnav)/launch/includes/robot_setup_tf.launch">
+        <arg name="base_kinect_link" value="$(arg base_kinect_link)" />
+    </include>
 
 </launch>

@@ -4,21 +4,28 @@
 -->
 <launch>
 
+    <!-- ********************************************************************* -->
+    <!--  Setup configuration  -->
+    <!-- ********************************************************************* -->
     <!-- Choose configuration: -->
     <arg name="conf_a" value="true"/>
     <arg name="conf_b" value="false"/>
 
     <!-- Choose valid topic names from Kinect:  -->
-    <arg name="rgb_image" value="/camera/rgb/image_rect_color"/>
-    <arg name="rgb_camera_info" value="/camera/rgb/camera_info"/>
-    <arg name="depth_image" value="/camera/depth_registered/image_raw"/>
-    <arg name="depth_camera_info" value="/camera/depth_registered/camera_info"/>
-    <arg name="base_kinect_link" value="camera_link" /> <!-- tf coordinate system name from Kinect -->
+    <arg name="camera_name" value="camera"/> <!-- Kinect camera namespace name for output topics -->
+    <arg name="rgb_image" value="/$(arg camera_name)/rgb/image_rect_color"/> <!-- RGB image topic -->
+    <arg name="rgb_camera_info" value="/$(arg camera_name)/rgb/camera_info"/> <!-- RGB Camera info topic -->
+    <arg name="depth_image" value="/$(arg camera_name)/depth_registered/image_raw"/> <!-- Depth image topic -->
+    <arg name="depth_camera_info" value="/$(arg camera_name)/depth_registered/camera_info"/> <!-- Depth Camera info topic -->
+    <arg name="base_kinect_link" value="$(arg camera_name)_link" /> <!-- tf coordinate system name from Kinect -->
+    <arg name="d2l_output_laserscan" value="/$(arg camera_name)/laserscan"/> <!-- Laserscan topic name for depth_to_laserscan output -->
+    <arg name="rtm_output_vis_odom" value="/visual_odom"/> <!-- Odometry topic name for RTabmap rgbd visual odometry output  -->
 
-    <arg name="d2l_output_laserscan" value="/camera/laserscan"/>
-    <arg name="rtm_output_vis_odom" value="/visual_odom"/>
 
 
+    <!-- ********************************************************************* -->
+    <!--  Start sensors  -->
+    <!-- ********************************************************************* -->
     <include file="$(find futurakart_2dnav)/launch/includes/futurakart_configuration.launch">
         <arg name="conf_a" value="$(arg conf_a)"/>
         <arg name="conf_b" value="$(arg conf_b)"/>
@@ -31,8 +38,11 @@
         <arg name="rtm_output_vis_odom" value="$(arg rtm_output_vis_odom)"/>
     </include>
 
-
+    <!-- ********************************************************************* -->
+    <!--  Start mapping  -->
+    <!-- ********************************************************************* -->
     <include file="$(find futurakart_2dnav)/launch/includes/rtabmapping.launch">
+        <arg name="localization" value="false"/>
         <arg name="rgb_image" value="$(arg rgb_image)"/>
         <arg name="rgb_camera_info" value="$(arg rgb_camera_info)"/>
         <arg name="depth_image" value="$(arg depth_image)"/>
@@ -41,13 +51,6 @@
         <arg name="d2l_output_laserscan" value="$(arg d2l_output_laserscan)"/>
         <arg name="rtm_output_vis_odom" value="$(arg rtm_output_vis_odom)"/>
     </include>
-
-
-
-
-
-
-
 
 
 </launch>

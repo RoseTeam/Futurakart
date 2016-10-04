@@ -6,7 +6,10 @@ project(futurakart_2dnav)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   move_base
+  roslaunch
 )
+
+roslaunch_add_file_check(launch)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
