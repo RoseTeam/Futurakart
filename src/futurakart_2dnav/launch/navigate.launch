@@ -21,8 +21,6 @@
     <arg name="d2l_output_laserscan" value="/$(arg camera_name)/laserscan"/> <!-- Laserscan topic name for depth_to_laserscan output -->
     <arg name="rtm_output_vis_odom" value="/visual_odom"/> <!-- Odometry topic name for RTabmap rgbd visual odometry output  -->
 
-
-
     <!-- ********************************************************************* -->
     <!--  Start sensors  -->
     <!-- ********************************************************************* -->
@@ -39,10 +37,10 @@
     </include>
 
     <!-- ********************************************************************* -->
-    <!--  Start mapping  -->
+    <!--  Start map server  -->
     <!-- ********************************************************************* -->
     <include file="$(find futurakart_2dnav)/launch/includes/rtabmapping.launch">
-        <arg name="localization" value="false"/>
+        <arg name="localization" value="true"/>
         <arg name="rgb_image" value="$(arg rgb_image)"/>
         <arg name="rgb_camera_info" value="$(arg rgb_camera_info)"/>
         <arg name="depth_image" value="$(arg depth_image)"/>
@@ -52,5 +50,9 @@
         <!--<arg name="rtm_output_vis_odom" value="$(arg rtm_output_vis_odom)"/>-->
     </include>
 
+    <!-- ********************************************************************* -->
+    <!--  Start move_base  -->
+    <!-- ********************************************************************* -->
+    <include file="$(find futurakart_2dnav)/launch/includes/move_base.launch"/>
 
 </launch>

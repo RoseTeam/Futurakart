@@ -21,7 +21,7 @@
     <arg name="depth_camera_info" default="/$(arg camera_name)/depth_registered/camera_info"/>
     <arg name="base_kinect_link" default="$(arg camera_name)_link" /> <!-- tf coordinate system name from Kinect -->
     <arg name="d2l_output_laserscan" default="/$(arg camera_name)/laserscan"/>
-    <arg name="rtm_output_vis_odom" default="/visual_odom"/>
+    <!--<arg name="rtm_output_vis_odom" default="/visual_odom"/>-->
 
 
     <!-- Choose rtabmap arguments: -->
@@ -42,7 +42,8 @@
             <param name="subscribe_depth" type="bool" value="true"/>
             <param name="subscribe_scan" type="bool" value="true"/>
 
-            <remap from="odom" to="$(arg rtm_output_vis_odom)"/>
+            <!--<remap from="odom" to="$(arg rtm_output_vis_odom)"/>-->
+            <remap from="odom" to="/odom"/>
             <remap from="scan" to="$(arg d2l_output_laserscan)"/>
 
             <remap from="rgb/image" to="$(arg rgb_image)"/>
@@ -69,6 +70,7 @@
             <param name="Rtabmap/TimeThr"           type="string" value="700"/>
             <param name="Mem/RehearsalSimilarity"   type="string" value="0.45"/>
             <param name="Icp/CorrespondenceRatio"   type="string" value="0.5"/>
+
         </node>
     </group>
 

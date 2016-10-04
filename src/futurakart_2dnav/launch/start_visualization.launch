@@ -4,6 +4,7 @@
     
     The parameters should be the same as in the create_map.launch
 -->
+<launch>
    
     <!-- Choose valid topic names from Kinect:  -->
     <arg name="camera_name" value="camera"/> <!-- Kinect camera namespace name for output topics -->
@@ -27,8 +28,9 @@
       <remap from="depth/image"     to="$(arg depth_image)"/>
       <remap from="rgb/camera_info" to="$(arg rgb_camera_info)"/>
       <remap from="scan"            to="$(arg d2l_output_laserscan)"/>
-      <remap from="odom"            to="$(arg rtm_output_vis_odom)"/>
-      
+      <!--<remap from="odom"            to="$(arg rtm_output_vis_odom)"/>-->
+      <remap from="odom"            to="/odom"/>
+
       <param name="rgb/image_transport"   type="string" value="compressed"/>
       <param name="depth/image_transport" type="string" value="compressedDepth"/>
     </node>

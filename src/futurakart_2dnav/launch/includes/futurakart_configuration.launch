@@ -31,8 +31,8 @@
     <arg name="depth_camera_info" default="/$(arg camera_name)/depth_registered/camera_info"/>
     <arg name="base_kinect_link" default="$(arg camera_name)_link" /> <!-- tf coordinate system name from Kinect -->
     <arg name="d2l_output_laserscan" default="/$(arg camera_name)/laserscan"/>
-    <arg name="rtm_output_vis_odom" default="/visual_odom"/>
-    
+    <!--arg name="rtm_output_vis_odom" default="/visual_odom"/-->
+
     <!-- 
         * depthimage_to_laserscan output frame id = The frame id of the laser scan. For point clouds coming from an "optical" frame with Z forward, this value should be set to the corresponding frame with X forward and Z up. 
          
@@ -134,14 +134,13 @@
     <!--  Setup visual odometry : from Kinect (conf_a), from PiCamera (conf_b) -->
     <!-- ********************************************************************* -->
     <!-- see http://wiki.ros.org/rtabmap_ros#rgbd_odometry  -->
-
+    <!-- rosrun rtabmap_ros rgbd_odometry - -params -->
     <node pkg="rtabmap_ros" type="rgbd_odometry" name="rgbd_odometry" output="screen">
       <remap from="rgb/image"       to="$(arg rgb_image)"/>
       <remap from="rgb/camera_info" to="$(arg rgb_camera_info)"/>
       <remap from="depth/image"     to="$(arg depth_image)"/>
 
       <param name="frame_id" type="string" value="base_link"/>
-      <param name="odom_frame_id" type="string" value="$(arg rtm_output_vis_odom)"/>
     </node>
 
 
