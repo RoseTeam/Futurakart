@@ -14,7 +14,9 @@
     <arg name="depth_image" value="/camera/depth_registered/image_raw"/>
     <arg name="depth_camera_info" value="/camera/depth_registered/camera_info"/>
     <arg name="base_kinect_link" value="camera_link" /> <!-- tf coordinate system name from Kinect -->
+
     <arg name="d2l_output_laserscan" value="/camera/laserscan"/>
+    <arg name="rtm_output_vis_odom" value="/visual_odom"/>
 
 
     <include file="$(find futurakart_2dnav)/launch/includes/futurakart_configuration.launch">
@@ -26,6 +28,7 @@
         <arg name="depth_camera_info" value="$(arg depth_camera_info)"/>
         <arg name="base_kinect_link" value="$(arg base_kinect_link)" />
         <arg name="d2l_output_laserscan" value="$(arg d2l_output_laserscan)"/>
+        <arg name="rtm_output_vis_odom" value="$(arg rtm_output_vis_odom)"/>
     </include>
 
 
@@ -36,6 +39,7 @@
         <arg name="depth_camera_info" value="$(arg depth_camera_info)"/>
         <arg name="base_kinect_link" value="$(arg base_kinect_link)" />
         <arg name="d2l_output_laserscan" value="$(arg d2l_output_laserscan)"/>
+        <arg name="rtm_output_vis_odom" value="$(arg rtm_output_vis_odom)"/>
     </include>
 
 
