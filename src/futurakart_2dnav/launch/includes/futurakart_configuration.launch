@@ -33,6 +33,7 @@
     <arg name="depth_camera_info" default="/camera/depth_registered/camera_info"/>
     <arg name="base_kinect_link" default="camera_link" /> <!-- tf coordinate system name from Kinect -->
     <arg name="d2l_output_laserscan" default="/camera/laserscan"/>
+    <arg name="rtm_output_vis_odom" default="/visual_odom"/>
     
     <!-- 
         * depthimage_to_laserscan output frame id = The frame id of the laser scan. For point clouds coming from an "optical" frame with Z forward, this value should be set to the corresponding frame with X forward and Z up. 
@@ -140,6 +141,7 @@
       <remap from="depth/image"     to="$(arg depth_image)"/>
 
       <param name="frame_id" type="string" value="base_link"/>
+      <param name="odom_frame_id" type="string" value="$(arg rtm_output_vis_odom)"/>
     </node>
 
 

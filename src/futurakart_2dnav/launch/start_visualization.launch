@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<!--
+    Launch file to create a map
+-->
+   
+    <!-- Choose valid topic names from Kinect:  -->
+    <arg name="rgb_image" value="/camera/rgb/image_rect_color"/>
+    <arg name="rgb_camera_info" value="/camera/rgb/camera_info"/>
+    <arg name="depth_image" value="/camera/depth_registered/image_raw"/>
+    <arg name="depth_camera_info" value="/camera/depth_registered/camera_info"/>
+    <arg name="base_kinect_link" value="camera_link" /> <!-- tf coordinate system name from Kinect -->
+    <arg name="d2l_output_laserscan" value="/camera/laserscan"/>
+    <arg name="rtm_output_vis_odom" value="/visual_odom"/>
+    
+
+    <!-- Visualisation RTAB-Map -->
+    <!--node pkg="rtabmap_ros" type="rtabmapviz" name="rtabmapviz" args="-d $(find rtabmap_ros)/launch/config/rgbd_gui.ini" output="screen">
+  	  <param name="subscribe_depth"    type="bool" value="true"/>
+      <param name="subscribe_scan"     type="bool" value="true"/>
+      <param name="frame_id"           type="string" value="base_footprint"/>
+      <param name="wait_for_transform" type="bool" value="true"/>
+    
+      <remap from="rgb/image"       to="/data_throttled_image"/>
+      <remap from="depth/image"     to="/data_throttled_image_depth"/>
+      <remap from="rgb/camera_info" to="/data_throttled_camera_info"/>
+      <remap from="scan"            to="/jn0/base_scan"/>
+      <remap from="odom"            to="/az3/base_controller/odom"/>
+      
+      <param name="rgb/image_transport"   type="string" value="compressed"/>
+      <param name="depth/image_transport" type="string" value="compressedDepth"/>
+    </node-->
+   
+
+</launch>
