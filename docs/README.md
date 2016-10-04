@@ -8,6 +8,8 @@ Install :
 
 - ROS Navigation stack:
     * move_base : `sudo apt-get install ros-$ROS_DISTRO-move-base`
+        - **! IS MISING IN ARMHF !**
+        - http://answers.ros.org/question/235521/move_base-for-kinetic-armhf/
     * [RGBD to laser scan](http://wiki.ros.org/depthimage_to_laserscan) : `sudo apt-get install ros-$ROS_DISTRO-depthimage-to-laserscan` 
     * [RTABMap_ros](http://wiki.ros.org/rtabmap_ros/) : `sudo apt-get install ros-$ROS_DISTRO-rtabmap-ros`
     ~~* Map server : `sudo apt-get install ros-$ROS_DISTRO-map-server`~~
