@@ -20,6 +20,7 @@
     <arg name="depth_camera_info" default="/camera/depth_registered/camera_info"/>
     <arg name="base_kinect_link" default="camera_link" /> <!-- tf coordinate system name from Kinect -->
     <arg name="d2l_output_laserscan" default="/camera/laserscan"/>
+    <arg name="rtm_output_vis_odom" default="/visual_odom"/>
 
     <!-- Choose rtabmap arguments: -->
         <!-- Localization-only mode -->
@@ -29,7 +30,7 @@
 
     <!-- SLAM : https://github.com/introlab/rtabmap_ros/blob/master/launch/rtabmap.launch -->
 
-    <group ns="rtabmap">
+    <group ns="rtabmap" if="$(arg conf_a)">
         <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="$(arg rtabmap_args)">
             <param name="frame_id" type="string" value="base_footprint"/>
 
