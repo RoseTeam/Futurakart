@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+    Launch file to create a map using gmapping
+-->
+<launch>
+
+    <!-- ********************************************************************* -->
+    <!--  Start sensors from a rosbag -->
+    <!-- ********************************************************************* -->
+    <include file="$(find futurakart_2dnav)/launch/simulations/futurakart_configuration_simu.launch"/>
+
+    <!-- ********************************************************************* -->
+    <!--  Start mapping  -->
+    <!-- ********************************************************************* -->
+    <include file="$(find futurakart_2dnav)/launch/includes/gmapping.launch">
+        <arg name="scan_topic"  value="/camera/laserscan" />
+        <arg name="base_frame"  value="neck_bracket_link"/>
+        <arg name="odom_frame"  value="odom"/>
+    </include>
+
+</launch>

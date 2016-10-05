@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+    Launch file to create a map using gmapping
+-->
+<launch>
+
+    <!-- ********************************************************************* -->
+    <!--  Start sensors from a rosbag -->
+    <!-- ********************************************************************* -->
+    <include file="$(find futurakart_2dnav)/launch/simulations/futurakart_configuration_simu.launch"/>
+
+<!-- ********************************************************************* -->
+    <!--  Start mapping  -->
+    <!-- ********************************************************************* -->
+    <include file="$(find futurakart_2dnav)/launch/includes/rtabmapping.launch">
+        <arg name="localization" value="false"/>
+        <arg name="debug" value="false"/>
+        <arg name="rgb_image" value="/data_throttled_image"/>
+        <arg name="rgb_camera_info" value="/data_throttled_camera_info"/>
+        <arg name="depth_image" value="/data_throttled_image_depth"/>
+        <arg name="depth_camera_info" value="/data_throttled_camera_info"/>
+        <arg name="d2l_output_laserscan" value="/camera/laserscan"/>
+        <arg name="base_link" value="base_footprint" />
+        <!--<arg name="rtm_output_vis_odom" value="$(arg rtm_output_vis_odom)"/>-->
+        
+        <arg name="conf_a" value="true"/>
+    </include>
+
+</launch>
