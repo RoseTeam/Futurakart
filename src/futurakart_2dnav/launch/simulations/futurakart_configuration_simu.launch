@@ -31,7 +31,7 @@
     <arg name="rgb_camera_info" default="/data_throttled_camera_info"/>
     <arg name="depth_image" default="/data_throttled_image_depth"/>
     <arg name="depth_camera_info" default="/data_throttled_camera_info"/>
-    <arg name="d2l_output_laserscan" default="/camera/laserscan"/>
+    <arg name="laserscan_topic" default="/camera/laserscan"/>
     <!--arg name="rtm_output_vis_odom" default="/visual_odom"/-->
 
     <!-- 
@@ -80,7 +80,7 @@
           output="screen">
         <remap from="image" to="$(arg depth_image)_relay" />
         <remap from="camera_info" to="$(arg depth_camera_info)" />
-        <remap from="scan" to="$(arg d2l_output_laserscan)" />
+        <remap from="scan" to="$(arg laserscan_topic)" />
 
         <param name="scan_height" value="$(arg d2l_scan_height)"/>
         <param name="output_frame_id" value="$(arg d2l_output_frame_id)"/>

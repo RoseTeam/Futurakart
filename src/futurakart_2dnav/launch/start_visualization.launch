@@ -13,7 +13,7 @@
     <arg name="depth_image" value="/$(arg camera_name)/depth_registered/image_raw"/> <!-- Depth image topic -->
     <arg name="depth_camera_info" value="/$(arg camera_name)/depth_registered/camera_info"/> <!-- Depth Camera info topic -->
     <arg name="base_kinect_link" value="$(arg camera_name)_link" /> <!-- tf coordinate system name from Kinect -->
-    <arg name="d2l_output_laserscan" value="/$(arg camera_name)/laserscan"/> <!-- Laserscan topic name for depth_to_laserscan output -->
+    <arg name="laserscan_topic" value="/$(arg camera_name)/laserscan"/> <!-- Laserscan topic name for depth_to_laserscan output -->
     <arg name="rtm_output_vis_odom" value="/visual_odom"/> <!-- Odometry topic name for RTabmap rgbd visual odometry output  -->
     
 
@@ -27,7 +27,7 @@
       <remap from="rgb/image"       to="$(arg rgb_image)"/>
       <remap from="depth/image"     to="$(arg depth_image)"/>
       <remap from="rgb/camera_info" to="$(arg rgb_camera_info)"/>
-      <remap from="scan"            to="$(arg d2l_output_laserscan)"/>
+      <remap from="scan"            to="$(arg laserscan_topic)"/>
       <!--<remap from="odom"            to="$(arg rtm_output_vis_odom)"/>-->
       <remap from="odom"            to="/odom"/>
 

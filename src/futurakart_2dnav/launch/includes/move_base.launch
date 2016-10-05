@@ -1,21 +1,38 @@
 <?xml version="1.0"?>
 <!--
-    Robot Configuration Launch File
-    See http://wiki.ros.org/navigation/Tutorials/RobotSetup
-        2.5 Creating a Launch File for the Navigation Stack
+Robot Configuration Launch File
+See http://wiki.ros.org/navigation/Tutorials/RobotSetup
+2.5 Creating a Launch File for the Navigation Stack
 
 -->
 <launch>
-  <master auto="start"/>
+    <master auto="start"/>
 
-  <!--- Run AMCL -->
-  <include file="$(find amcl)/examples/amcl_omni.launch" />
+    <arg name="laserscan_frame" default="scan_frame"/>
+    <arg name="laserscan_topic" default="scan"/>
+    <arg name="depth_points" default="points"/>
+    <arg name="depth_points_frame" default="depth_frame"/>
 
-  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-    <rosparam file="$(find futurakart_2dnav)/resources/costmap_common_params.yaml" command="load" ns="global_costmap" />
-    <rosparam file="$(find futurakart_2dnav)/resources/costmap_common_params.yaml" command="load" ns="local_costmap" />
-    <rosparam file="$(find futurakart_2dnav)/resources/local_costmap_params.yaml" command="load" />
-    <rosparam file="$(find futurakart_2dnav)/resources/global_costmap_params.yaml" command="load" />
-    <rosparam file="$(find futurakart_2dnav)/resources/base_local_planner_params.yaml" command="load" />
-  </node>
+    <!--- Run AMCL -->
+    <!--<include file="$(find amcl)/examples/amcl_omni.launch" />-->
+
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+        <rosparam file="$(find futurakart_2dnav)/param/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find futurakart_2dnav)/param/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find futurakart_2dnav)/param/local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find futurakart_2dnav)/param/global_costmap_params.yaml" command="load" />
+        <rosparam file="$(find futurakart_2dnav)/param/base_local_planner_params.yaml" command="load" />
+
+        <param name="global_costmap/global_frame" value="/map"/>
+        <param name="global_costmap/robot_base_frame" value="base_link"/>
+
+        <param name="local_costmap/global_frame" value="odom"/>
+        <param name="local_costmap/robot_base_frame" value="base_link"/>
+
+        <remap from="scan" to="$(arg laserscan_topic)"/>
+        <param name="laser_scan/sensor_frame" value="$(arg laserscan_frame)"/>
+        <remap from="points" to="$(arg depth_points)"/>
+        <param name="depth_points/sensor_frame" value="$(arg depth_points_frame)"/>
+    </node>
+
 </launch>

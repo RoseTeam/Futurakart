@@ -18,8 +18,9 @@
     <arg name="depth_image" value="/$(arg camera_name)/depth_registered/image_raw"/> <!-- Depth image topic -->
     <arg name="depth_camera_info" value="/$(arg camera_name)/depth_registered/camera_info"/> <!-- Depth Camera info topic -->
     <arg name="base_kinect_link" value="$(arg camera_name)_link" /> <!-- tf coordinate system name from Kinect -->
-    <arg name="d2l_output_laserscan" value="/$(arg camera_name)/laserscan"/> <!-- Laserscan topic name for depth_to_laserscan output -->
-    <arg name="rtm_output_vis_odom" value="/visual_odom"/> <!-- Odometry topic name for RTabmap rgbd visual odometry output  -->
+    <arg name="laserscan_topic" value="/$(arg camera_name)/laserscan"/> <!-- Laserscan topic name for depth_to_laserscan output -->
+    <!--<arg name="rtm_output_vis_odom" value="/visual_odom"/> &lt;!&ndash; Odometry topic name for RTabmap rgbd visual odometry output  &ndash;&gt;-->
+    <arg name="database_path" value="$(find futurakart_2dnav)/maps/_rtabmap.db"/> <!-- Path of the RTAB-Map's database -->
 
     <!-- ********************************************************************* -->
     <!--  Start sensors  -->
@@ -32,8 +33,7 @@
         <arg name="depth_image" value="$(arg depth_image)"/>
         <arg name="depth_camera_info" value="$(arg depth_camera_info)"/>
         <arg name="base_kinect_link" value="$(arg base_kinect_link)" />
-        <arg name="d2l_output_laserscan" value="$(arg d2l_output_laserscan)"/>
-        <!--<arg name="rtm_output_vis_odom" value="$(arg rtm_output_vis_odom)"/>-->
+        <arg name="laserscan_topic" value="$(arg laserscan_topic)"/>
     </include>
 
     <!-- ********************************************************************* -->
@@ -45,14 +45,14 @@
         <arg name="rgb_camera_info" value="$(arg rgb_camera_info)"/>
         <arg name="depth_image" value="$(arg depth_image)"/>
         <arg name="depth_camera_info" value="$(arg depth_camera_info)"/>
-        <arg name="base_kinect_link" value="$(arg base_kinect_link)" />
-        <arg name="d2l_output_laserscan" value="$(arg d2l_output_laserscan)"/>
-        <!--<arg name="rtm_output_vis_odom" value="$(arg rtm_output_vis_odom)"/>-->
+        <arg name="base_link" value="base_link" />
+        <arg name="laserscan_topic" value="$(arg laserscan_topic)"/>
+        <arg name="database_path" value="$(arg database_path)"/>
     </include>
 
     <!-- ********************************************************************* -->
     <!--  Start move_base  -->
     <!-- ********************************************************************* -->
-    <include file="$(find futurakart_2dnav)/launch/includes/move_base.launch"/>
+    <!--<include file="$(find futurakart_2dnav)/launch/includes/move_base.launch"/>-->
 
 </launch>

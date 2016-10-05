@@ -30,16 +30,13 @@
     <arg name="depth_image" default="/$(arg camera_name)/depth_registered/image_raw"/>
     <arg name="depth_camera_info" default="/$(arg camera_name)/depth_registered/camera_info"/>
     <arg name="base_kinect_link" default="$(arg camera_name)_link" /> <!-- tf coordinate system name from Kinect -->
-    <arg name="d2l_output_laserscan" default="/$(arg camera_name)/laserscan"/>
+    <arg name="laserscan_topic" default="/$(arg camera_name)/laserscan"/>
     <!--arg name="rtm_output_vis_odom" default="/visual_odom"/-->
 
     <!-- 
         * depthimage_to_laserscan output frame id = The frame id of the laser scan. For point clouds coming from an "optical" frame with Z forward, this value should be set to the corresponding frame with X forward and Z up. 
-         
-        * laser scan height = The number of pixels rows to use to generate the laserscan. For each column, the scan will return the minimum value for those pixels centered vertically in the image.    
     -->
-    <arg name="d2l_output_frame_id" default="$(arg base_kinect_link)"/>
-    <arg name="d2l_scan_height" default="1"/>    
+    <arg name="laserscan_frame" default="$(arg base_kinect_link)"/>
 
     <!-- ********************************************************************* -->
     <!--   Setup sensors : image from Kinect, depth from Kinect, laserscan     -->
@@ -123,10 +120,13 @@
           output="screen">
         <remap from="image" to="$(arg depth_image)" />
         <remap from="camera_info" to="$(arg depth_camera_info)" />
-        <remap from="scan" to="$(arg d2l_output_laserscan)" />
+        <remap from="scan" to="$(arg laserscan_topic)" />
 
-        <param name="scan_height" value="$(arg d2l_scan_height)"/>
-        <param name="output_frame_id" value="$(arg d2l_output_frame_id)"/>
+        <!-- laser scan height = The number of pixels rows to use to generate the laserscan.
+        For each column, the scan will return the minimum value for those pixels centered vertically in the image.    -->
+        <param name="scan_height" value="1"/>
+
+        <param name="output_frame_id" value="$(arg laserscan_frame)"/>
         <param name="_image_transport" value="compressed"/>
     </node>
 
@@ -136,11 +136,13 @@
     <!-- see http://wiki.ros.org/rtabmap_ros#rgbd_odometry  -->
     <!-- rosrun rtabmap_ros rgbd_odometry - -params -->
     <node pkg="rtabmap_ros" type="rgbd_odometry" name="rgbd_odometry" output="screen">
-      <remap from="rgb/image"       to="$(arg rgb_image)"/>
-      <remap from="rgb/camera_info" to="$(arg rgb_camera_info)"/>
-      <remap from="depth/image"     to="$(arg depth_image)"/>
+        <remap from="rgb/image"       to="$(arg rgb_image)"/>
+        <remap from="rgb/camera_info" to="$(arg rgb_camera_info)"/>
+        <remap from="depth/image"     to="$(arg depth_image)"/>
 
-      <param name="frame_id" type="string" value="base_link"/>
+        <param name="Reg/Force3DoF" type="string" value="true"/> <!-- (x, y, theta) instead of (x, y, z, roll, pitch, yaw) -->
+
+        <param name="frame_id" type="string" value="base_link"/>
     </node>
 
 

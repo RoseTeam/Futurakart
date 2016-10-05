@@ -19,7 +19,7 @@
         <arg name="rgb_camera_info" value="/data_throttled_camera_info"/>
         <arg name="depth_image" value="/data_throttled_image_depth"/>
         <arg name="depth_camera_info" value="/data_throttled_camera_info"/>
-        <arg name="d2l_output_laserscan" value="/camera/laserscan"/>
+        <arg name="laserscan_topic" value="/camera/laserscan"/>
         <arg name="base_link" value="base_footprint" />
         <!--<arg name="rtm_output_vis_odom" value="$(arg rtm_output_vis_odom)"/>-->
         

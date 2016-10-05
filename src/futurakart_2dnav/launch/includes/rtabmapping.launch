@@ -20,8 +20,8 @@
     <arg name="depth_image" default="/$(arg camera_name)/depth_registered/image_raw"/>
     <arg name="depth_camera_info" default="/$(arg camera_name)/depth_registered/camera_info"/>
     <arg name="base_link" default="base_link" /> <!-- tf coordinate system name of robot: base_link or base_footprint -->
-    <arg name="d2l_output_laserscan" default="/$(arg camera_name)/laserscan"/>
-    <!--<arg name="rtm_output_vis_odom" default="/visual_odom"/>-->
+    <arg name="laserscan_topic" default="/$(arg camera_name)/laserscan"/>
+    <arg name="database_path" default=""/>
 
 
     <!-- Choose rtabmap arguments: -->
@@ -49,7 +49,7 @@
 
             <!--<remap from="odom" to="$(arg rtm_output_vis_odom)"/>-->
             <remap from="odom" to="/odom"/>
-            <remap from="scan" to="$(arg d2l_output_laserscan)"/>
+            <remap from="scan" to="$(arg laserscan_topic)"/>
 
             <remap from="rgb/image" to="$(arg rgb_image)"/>
             <remap from="depth/image" to="$(arg depth_image)"/>
@@ -57,9 +57,12 @@
 
             <param name="queue_size" type="int" value="10"/>
 
+            <param name="database_path" value="$(arg database_path)"/>
+
             <!-- localization mode -->
             <param     if="$(arg localization)" name="Mem/IncrementalMemory" type="string" value="false"/>
             <param unless="$(arg localization)" name="Mem/IncrementalMemory" type="string" value="true"/>
+            <param name="Mem/InitWMWithAllNodes" type="string" value="$(arg localization)"/>
 
             <!-- RTAB-Map's parameters -->
             <param name="RGBD/ProximityBySpace"     type="string" value="false"/>
@@ -75,6 +78,8 @@
             <param name="Rtabmap/TimeThr"           type="string" value="700"/>
             <param name="Mem/RehearsalSimilarity"   type="string" value="0.45"/>
             <param name="Icp/CorrespondenceRatio"   type="string" value="0.5"/>
+
+            <param name="Reg/Force3DoF" type="string" value="true"/> <!-- (x, y, theta) instead of (x, y, z, roll, pitch, yaw) -->
 
         </node>
     </group>
