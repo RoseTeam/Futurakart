@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<robot name="futurakart" xmlns:xacro="http://ros.org/wiki/xacro">
+
+  <!-- Model -->
+  <xacro:include filename="$(find futurakart_description)/urdf/model/model.urdf.xacro" />
+
+  <!-- Bring in simulation data for Gazebo. -->
+  <xacro:include filename="$(find futurakart_description)/urdf/properties/futurakart.gazebo" />
+
+</robot>

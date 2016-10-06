@@ -1,0 +1,133 @@
+<?xml version="1.0" ?>
+<!--
+     Futurakart model description
+ -->
+<robot name="xacro_properties" xmlns:xacro="http://ros.org/wiki/xacro">
+
+
+    <!-- Include common properties -->
+    <xacro:include filename="$(find futurakart_description)/urdf/properties/common.urdf.xacro" />
+
+    <!-- Include dimensions -->
+    <xacro:include filename="$(find futurakart_description)/urdf/model/dimensions.urdf.xacro" />
+
+    <!-- Sensors -->
+    <xacro:include filename="$(find futurakart_description)/urdf/sensors/kinect.urdf.xacro" />
+
+
+    <!--**************************************************************************-->
+    <!--Define macro to define wheels  -->
+    <!--**************************************************************************-->
+    <xacro:macro name="wheel" params="prefix *joint_pose">
+
+        <link name="${prefix}_wheel_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+                <geometry>
+                    <mesh filename="package://futurakart_description/meshes/futurakart-wheel.stl"/>
+                </geometry>
+                <material name="black" />
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+                <geometry>
+                    <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="0.477"/>
+                <inertia
+                        ixx="0.0013" ixy="0" ixz="0"
+                        iyy="0.0024" iyz="0"
+                        izz="0.0013"/>
+            </inertial>
+        </link>
+
+        <gazebo reference="${prefix}_wheel_link">
+            <material>Gazebo/DarkGrey</material>
+        </gazebo>
+
+        <joint name="${prefix}_wheel" type="continuous">
+            <parent link="chassis_link"/>
+            <child link="${prefix}_wheel_link" />
+            <xacro:insert_block name="joint_pose" />
+            <axis xyz="0 1 0" />
+        </joint>
+
+        <!-- In reality, Futurakart has only two motors, one per side. However, it's more
+             straightforward for Gazebo to simulate as if there's an actuator per wheel. -->
+        <transmission name="${prefix}_wheel_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="${prefix}_wheel">
+                <hardwareInterface>VelocityJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="${prefix}_actuator">
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+    </xacro:macro>
+
+
+    <!--**************************************************************************-->
+    <!--Define 4 wheels-->
+    <!--**************************************************************************-->
+
+    <xacro:wheel prefix="front_left">
+        <origin xyz="${wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+    </xacro:wheel>
+    <xacro:wheel prefix="front_right">
+        <origin xyz="${wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+    </xacro:wheel>
+    <xacro:wheel prefix="rear_left">
+        <origin xyz="${-wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+    </xacro:wheel>
+    <xacro:wheel prefix="rear_right">
+        <origin xyz="${-wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+    </xacro:wheel>
+
+
+    <!--**************************************************************************-->
+    <!--Define links and joints -->
+    <!--**************************************************************************-->
+
+    <link name="base_link"/>
+
+    <joint name="base_link_joint" type="fixed">
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <parent link="base_link"/>
+        <child link="chassis_link" />
+    </joint>
+
+    <link name="chassis_link">
+        <visual>
+            <origin xyz="0 0 ${footprint_vertical_offset}" rpy="${PI/2} 0 ${PI/2}"/>
+            <geometry>
+                <mesh filename="package://futurakart_description/meshes/futurakart-base.stl"/>
+            </geometry>
+            <material name="dark_grey" />
+        </visual>
+        <collision>
+            <origin xyz="0 0 ${chassis_height/2}"/>
+            <geometry>
+                <box size="${chassis_length} ${chassis_width} ${chassis_height}"/>
+            </geometry>
+        </collision>
+        <inertial>
+            <!-- Center of mass -->
+            <origin xyz="0.012  0.002 0.067" rpy="0 0 0"/>
+            <mass value="16.523"/>
+            <!-- Moments of inertia: ( chassis without wheels ) -->
+            <inertia
+                    ixx="0.3136" ixy="-0.0008" ixz="0.0164"
+                    iyy="0.3922" iyz="-0.0009"
+                    izz="0.4485"/>
+        </inertial>
+    </link>
+
+    <!--**************************************************************************-->
+    <!--Define sensors -->
+    <!--**************************************************************************-->
+    <xacro:sensor_kinect parent="base_link"/>
+
+</robot>
