@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<!--
+    Launch file to create a map
+-->
+<launch>
+
+    <!-- ********************************************************************* -->
+    <!--  Setup configuration  -->
+    <!-- ********************************************************************* -->
+    <!-- Choose configuration: -->
+    <arg name="conf_a" value="true"/>
+    <arg name="conf_b" value="false"/>
+
+    <arg name="from_new" default="false"/>
+    <arg name="conf_file" default="$(find futurakart_2dnav)/launch/includes/futurakart_configuration.launch"/>
+    <arg name="localization" default="true"/>
+
+
+    <!-- Choose valid topic names from Kinect:  -->
+    <arg name="camera_name" default="camera"/> <!-- Kinect camera namespace name for output topics -->
+    <arg name="rgb_image" default="/$(arg camera_name)/rgb/image_rect_color"/> <!-- RGB image topic -->
+    <arg name="rgb_camera_info" default="/$(arg camera_name)/rgb/camera_info"/> <!-- RGB Camera info topic -->
+    <arg name="depth_image" default="/$(arg camera_name)/depth_registered/image_raw"/> <!-- Depth image topic -->
+    <arg name="depth_camera_info" default="/$(arg camera_name)/depth_registered/camera_info"/> <!-- Depth Camera info topic -->
+    <arg name="base_kinect_link" default="$(arg camera_name)_link" /> <!-- tf coordinate system name from Kinect -->
+    <arg name="laserscan_topic" default="/$(arg camera_name)/laserscan"/> <!-- Laserscan topic name for depth_to_laserscan output -->
+    <arg name="laserscan_frame" default="$(arg base_kinect_link)"/>
+    <arg name="database_path" default="$(find futurakart_2dnav)/maps/_map.db"/> <!-- Path of the RTAB-Map's database -->
+    <arg name="rtabmap_frame_id" value="$(arg base_kinect_link)" />
+
+
+    <!-- ********************************************************************* -->
+    <!--  Start sensors  -->
+    <!-- ********************************************************************* -->
+    <include file="$(arg conf_file)">
+        <!--<arg name="conf_a" value="$(arg conf_a)"/>-->
+        <!--<arg name="conf_b" value="$(arg conf_b)"/>-->
+        <arg name="rgb_image" value="$(arg rgb_image)"/>
+        <arg name="rgb_camera_info" value="$(arg rgb_camera_info)"/>
+        <arg name="depth_image" value="$(arg depth_image)"/>
+        <arg name="depth_camera_info" value="$(arg depth_camera_info)"/>
+        <arg name="base_kinect_link" value="$(arg base_kinect_link)" />
+        <arg name="laserscan_topic" value="$(arg laserscan_topic)"/>
+    </include>
+
+    <!-- ********************************************************************* -->
+    <!--  Start rtabmap  -->
+    <!-- ********************************************************************* -->
+    <include file="$(find futurakart_2dnav)/launch/includes/rtabmapping.launch">
+        <arg name="localization" value="$(arg localization)"/>
+        <arg name="rgb_image" value="$(arg rgb_image)"/>
+        <arg name="rgb_camera_info" value="$(arg rgb_camera_info)"/>
+        <arg name="depth_image" value="$(arg depth_image)"/>
+        <arg name="depth_camera_info" value="$(arg depth_camera_info)"/>
+        <arg name="rtabmap_frame_id" value="$(arg rtabmap_frame_id)" />
+        <arg name="laserscan_topic" value="$(arg laserscan_topic)"/>
+        <arg name="database_path" value="$(arg database_path)"/>
+    </include>
+
+    <!-- ********************************************************************* -->
+    <!--  Start move_base  -->
+    <!-- ********************************************************************* -->
+    <include file="$(find kinect_nav)/launch/includes/move_base.launch">
+        <arg name="laserscan_topic" value="$(arg laserscan_topic)"/>
+        <arg name="laserscan_frame" value="$(arg laserscan_frame)"/>
+        <arg name="robot_base_frame" value="$(arg base_kinect_link)"/>
+    </include>
+
+
+</launch>

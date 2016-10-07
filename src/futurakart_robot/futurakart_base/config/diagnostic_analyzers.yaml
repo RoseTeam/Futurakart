@@ -1,0 +1,16 @@
+analyzers:
+  futurakart:
+    type: diagnostic_aggregator/AnalyzerGroup
+    path: Futurakart Base
+    analyzers:
+      general:
+        type: diagnostic_aggregator/GenericAnalyzer
+        path: General
+        remove_prefix: 'futurakart_node'
+        timeout: 5.0
+        expected: [
+          'futurakart_node: General',
+          'futurakart_node: Battery',
+          'futurakart_node: User voltage supplies',
+          'futurakart_node: Current consumption',
+          'futurakart_node: Power consumption' ]

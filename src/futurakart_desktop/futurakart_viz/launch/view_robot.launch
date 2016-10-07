@@ -1,0 +1,4 @@
+<launch>
+  <arg name="config" default="robot" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find futurakart_viz)/rviz/$(arg config).rviz" />
+</launch>

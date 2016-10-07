@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package>
+  <name>futurakart_2dnav</name>
+  <version>0.0.1</version>
+  <description>The futurakart_2dnav package</description>
+
+  <maintainer email="vfdev@todo.todo">vfdev</maintainer>
+
+  <license>MIT</license>
+
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>move_base</build_depend>
+  <build_depend>rtabmap_ros</build_depend>
+  <run_depend>move_base</run_depend>
+  <run_depend>rtabmap_ros</run_depend>
+
+  <export>
+
+  </export>
+</package>

@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package>
+  <name>futurakart_desktop</name>
+  <version>0.0.1</version>
+  <description>Packages for working with Futurakart from a ROS desktop.</description>
+
+  <maintainer email="vfdev@todo.todo">vfdev</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <run_depend version_gte="0.0.1">futurakart_viz</run_depend>
+
+  <export><metapackage/></export>
+</package>

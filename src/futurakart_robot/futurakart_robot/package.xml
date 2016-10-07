@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+  <name>futurakart_robot</name>
+  <version>0.0.1</version>
+  <description>Metapackage of software to install on Futurakart.</description>
+
+  <maintainer email="vfdev@todo.todo">vfdev</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <run_depend version_gte="0.0.1">futurakart_bringup</run_depend>
+  <!--<run_depend>futurakart_firmware</run_depend>-->
+
+  <export>
+    <metapackage />
+  </export>
+</package>
