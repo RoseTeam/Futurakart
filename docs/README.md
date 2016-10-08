@@ -1,16 +1,87 @@
 # Documentation
 
 
-### ROS packages 
 
-- Core : `futurakart_2dnav`, `futurakart_description`, `futurakart_control`
+## Futurakart ROS packages  
+
+- Core : `futurakart_control`, `futurakart_description`, `futurakart_msgs`, `futurakart_2dnav` 
 - Desktop : `futurakart_viz`
 - Robot : `futurakart_bringup`, `futurakart_base` 
 - Simulator : `futurakart_gazebo`
 
 
+#### Core packages
 
-## ROS dependencies
+These packages are destinated for the desktop (PC) and the robot (RPi).  
+
+**`futurakart_description`** package contains information about robot using URDF formalism. 
+This defines joints and links, robot caracteristics, dimensions etc and can also associate with meshes for gazebo simulation.
+
+**TODO: define proper robot dimensions and useful parts and sensors** 
+
+See docs on [robot_state_publisher](http://wiki.ros.org/robot_state_publisher/Tutorials/Using%20the%20robot%20state%20publisher%20on%20your%20own%20robot)
+
+
+**`futurakart_msgs`**
+
+
+**`futurakart_control`**  
+
+
+**`futurakart_2dnav`** package
+
+
+
+#### Robot packages 
+
+These packages are destinated for the robot (RPi) only.
+
+**`futurakart_bringup`** package is responsible to bringup the robot. 
+
+For instance, we use a simple bringup procedure: 
+- Connect with SSH to the robot
+- Run the following on the robot side:
+```
+roslaunch futurakart_bringup futurakart.launch
+```
+
+and it calls launch files from 
+- `futurakart_base` to initialize the main *futurakart* node 
+- `futurakart_description`
+- other drivers
+
+**TODO: Add config={base,vision} to futurakart.launch to distinguish RPi bringup**
+**TODO: There is another more 'pro' way to bringup a robot. See for example [here](http://wiki.ros.org/husky_bringup/Tutorials/Install%20Husky%20Software)**
+
+**`futurakart_base`** : hardware driver for communicating with the onboard MCU
+
+
+
+#### Desktop packages
+
+`futurakart_viz` package helps to display the robot using RViz: 
+ 
+In simulation mode:
+```
+$ roslaunch futurakart_gazebo futurakart_world.launch gui:=false
+$ roslaunch futurakart_viz view_robot.launch 
+``` 
+
+ 
+
+#### Simulator 
+
+The package `futurakart_gazebo` uses some of core packages and allows to run a gazebo simulation:
+```
+roslaunch futurakart_gazebo futurakart_world.launch
+```
+
+
+
+
+## Installation
+
+### ROS dependencies
 
 Install :
 

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package>
+  <name>futurakart_bringup</name>
+  <version>0.0.1</version>
+  <description>Startup for Futurakart</description>
+
+  <maintainer email="vfdev@todo.todo">vfdev</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roslaunch</build_depend>
+  <run_depend>futurakart_base</run_depend>
+  <run_depend>futurakart_description</run_depend>
+  <!--<run_depend>robot_pose_ekf</run_depend>-->
+  <!--<run_depend>robot_state_publisher</run_depend>-->
+  <run_depend>roslaunch</run_depend>
+  <run_depend>rostopic</run_depend>
+</package>
