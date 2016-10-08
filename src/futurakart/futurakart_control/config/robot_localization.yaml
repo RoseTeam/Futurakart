@@ -1,5 +1,5 @@
 #Configuation for robot odometry EKF
-#
+# http://wiki.ros.org/robot_localization
 frequency: 50
 
 odom0: /futurakart_velocity_controller/odom

@@ -14,7 +14,6 @@
   <run_depend>diff_drive_controller</run_depend>
   <run_depend>joint_state_controller</run_depend>
   <run_depend>robot_localization</run_depend>
-  <!--<run_depend>teleop_twist_joy</run_depend>-->
-  <!--<run_depend>topic_tools</run_depend>-->
+  <run_depend>topic_tools</run_depend>
 
 </package>
