@@ -2,6 +2,8 @@
 
 
 
+
+
 ## Futurakart ROS packages  
 
 - Core : `futurakart_control`, `futurakart_description`, `futurakart_msgs`, `futurakart_2dnav` 
@@ -12,7 +14,7 @@
 
 #### Core packages
 
-These packages are destinated for the desktop (PC) and the robot (RPi).  
+These packages are destinated for the desktop and the robot.  
 
 **`futurakart_description`** package contains information about robot using URDF formalism. 
 This defines joints and links, robot caracteristics, dimensions etc and can also associate with meshes for gazebo simulation.
@@ -34,27 +36,49 @@ See docs on [robot_state_publisher](http://wiki.ros.org/robot_state_publisher/Tu
 
 #### Robot packages 
 
-These packages are destinated for the robot (RPi) only.
+These packages are destinated for the robot only. 
+
+Futurakart robot is composed of two Raspberry Pi cards, reponsible for the *mobile* part and the *vision* part
+Both RPi cards should have *robot packages* and *core packages*, however the bringup procedure varies depending on the card.
 
 **`futurakart_bringup`** package is responsible to bringup the robot. 
 
 For instance, we use a simple bringup procedure: 
-- Connect with SSH to the robot
-- Run the following on the robot side:
+- Connect with SSH to the robot (*mobile* part RPi)
+- Run the following on the robot side to start mobile part
 ```
 roslaunch futurakart_bringup futurakart.launch
 ```
-
 and it calls launch files from 
-- `futurakart_base` to initialize the main *futurakart* node 
-- `futurakart_description`
-- other drivers
+* `futurakart_base` (base.launch) to initialize the main *futurakart* node
+* connect to the *vision* part RPi and run the following `roslaunch futurakart_base vision.launch`. See below for details
+* `futurakart_description`
+* other drivers
 
-**TODO: Add config={base,vision} to futurakart.launch to distinguish RPi bringup**
+
+When the *mobile* part RPi connects with SSH the *vision* part PRi, it uses ssh public keys. 
+In case of any errors, make sure that the ssh key is added. To check run on the *vision* part RPi
+```
+less ~/.ssh/authorized_keys
+```
+and find your user id.
+
+To add new ssh key, connect to the RPi and run the following, replacing "<key-part> and user@PC" by your data from `~/.ssh/id_rsa.pub`   
+```
+echo "ssh-rsa <key-part> user@PC" >> ~/.ssh/authorized_keys 
+```
+
 **TODO: There is another more 'pro' way to bringup a robot. See for example [here](http://wiki.ros.org/husky_bringup/Tutorials/Install%20Husky%20Software)**
 
 **`futurakart_base`** : hardware driver for communicating with the onboard MCU
 
+
+
+
+```
+roslaunch futurakart_base vision.launch
+```
+which initializes the Kinect sensor.
 
 
 #### Desktop packages
@@ -76,6 +100,21 @@ The package `futurakart_gazebo` uses some of core packages and allows to run a g
 roslaunch futurakart_gazebo futurakart_world.launch
 ```
 
+
+## Useful tools 
+
+#### setup_all.bash
+
+A script that sets an alias 'fkart' to perform 'cd ~/futurakart_ws/; source devel/setup.bash' and 
+variables ROS_MASTER_URI and ROS_HOSTNAME defined in `ros.conf`. Before the usage copy and rename ros.conf.example 
+to ros.conf and setup your value.    
+  
+Usage :
+```
+$ cd /path/to/repo/futurakart_ws/; source setup_all.bash [--local]
+```
+
+The option `--local` sets ROS_MASTER_URI and ROS_HOSTNAME as `localhost` to work standalone.
 
 
 

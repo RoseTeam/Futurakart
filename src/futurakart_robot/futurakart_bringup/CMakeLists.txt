@@ -14,3 +14,8 @@ install(DIRECTORY
 )
 
 roslaunch_add_file_check(launch/futurakart.launch)
+
+
+install(PROGRAMS scripts/start_vision.py
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)

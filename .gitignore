@@ -4,6 +4,8 @@
 # Custom 
 temp
 _*map*.db
+ros.conf
+
 
 ### C++ ###
 # Prerequisites

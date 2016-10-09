@@ -3,7 +3,7 @@
   <group ns="futurakart">
     <!--<rosparam command="load" file="$(find futurakart_bringup)/config/ports.yaml" />-->
 
-    <include file="$(find futurakart_base)/launch/base.launch" />
+    <!--<include file="$(find futurakart_base)/launch/base.launch" />-->
     <!--Start nodes for particular drivers -->
 
     <!--<node name="robot_pose_ekf" pkg="robot_pose_ekf" type="robot_pose_ekf" respawn="true" output="screen">-->
@@ -16,6 +16,16 @@
       <!--<remap from="imu_data" to="imu/data" />-->
     <!--</node>-->
 
-    <!--<node name="lidar_control" pkg="rostopic" type="rostopic" args="pub joint_trajectory trajectory_msgs/JointTrajectory &quot;{header: auto, joint_names: ['motor'],points: [{velocities: [-2000]}]}&quot; -l -r 20" output="screen"/>-->
+
+
+  <!-- Start vision part on the 2nd RPi (at ~/futurakart_ws) -->
+  <!--<arg name="ssh_ip" value="192.168.43.5"/>-->
+  <!--<arg name="ssh_username" value="ubuntu"/>-->
+  <!--<arg name="futurakart_ws_path" value="~/futurakart_ws"/>-->
+  <!--<node name="start_vision" pkg="futurakart_bringup"-->
+        <!--type="start_vision.py" output="screen"-->
+          <!--args="ip:=$(arg ssh_ip) username:=$(arg ssh_username) futurakart_ws_path:=$(arg futurakart_ws_path)">-->
+  <!--</node>-->
+
   </group>
 </launch>

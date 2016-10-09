@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+
+
+    <!--Start kinect and get rgb/depth image, pointclouds, laserscan etc-->
+    <include file="$(find futurakart_base)/launch/include/kinect_visual_odom.launch"/>
+
+
+
+</launch>

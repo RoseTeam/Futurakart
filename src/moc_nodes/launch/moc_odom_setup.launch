@@ -1,9 +1,0 @@
-<?xml version="1.0"?>
-<!--
-    MOC Sensors
--->
-<launch>
-
-	<node name="moc_odom" pkg="moc_nodes" type="moc_odom_node.py" output="screen"/>
-
-</launch>

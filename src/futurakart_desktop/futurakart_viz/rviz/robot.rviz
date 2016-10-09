@@ -59,56 +59,6 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        camera_depth_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        camera_depth_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        camera_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        camera_rgb_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        camera_rgb_optical_frame:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        chassis_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        front_left_wheel_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        front_right_wheel_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        rear_left_wheel_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        rear_right_wheel_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
       Name: RobotModel
       Robot Description: robot_description
       TF Prefix: ""
@@ -116,19 +66,38 @@ Visualization Manager:
       Value: true
       Visual Enabled: true
     - Class: rviz/TF
-      Enabled: false
+      Enabled: true
       Frame Timeout: 15
       Frames:
         All Enabled: true
+        camera_depth_frame:
+          Value: true
+        camera_depth_optical_frame:
+          Value: true
+        camera_link:
+          Value: true
+        camera_rgb_frame:
+          Value: true
+        camera_rgb_optical_frame:
+          Value: true
+        odom:
+          Value: true
       Marker Scale: 1
       Name: TF
       Show Arrows: true
       Show Axes: true
       Show Names: true
       Tree:
-        {}
+        odom:
+          camera_link:
+            camera_depth_frame:
+              camera_depth_optical_frame:
+                {}
+            camera_rgb_frame:
+              camera_rgb_optical_frame:
+                {}
       Update Interval: 0
-      Value: false
+      Value: true
     - Class: rviz/InteractiveMarkers
       Enable Transparency: true
       Enabled: true
@@ -153,22 +122,22 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 4.8859129
+      Distance: 6.72880554
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: -3.15470529
-        Y: -1.0574342
-        Z: 0.207809001
+        X: -1.77874959
+        Y: -1.38774383
+        Z: -1.79114926
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 0.419797212
+      Pitch: 0.654797077
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 1.487234
+      Yaw: 0.527234018
     Saved: ~
 Window Geometry:
   Displays:
