@@ -30,7 +30,16 @@ See docs on [robot_state_publisher](http://wiki.ros.org/robot_state_publisher/Tu
 **`futurakart_control`**  
 
 
-**`futurakart_2dnav`** package
+**`futurakart_2dnav`** package contains few launch files for mapping and localization purposes: 
+
+- `create_map.launch gmapping:={true|false} rtabmap:={true|false}` to create a map using `gmapping` or `rtabmap`. 
+If you use `gmapping` and want to save the map, run `rosrun map_server map_saver -f mymap` before killing the node or use the alias `save_gmap`.
+If you use `rtabmap`, the map is automatically saved as `futurakart/futurakart_2dnav/maps/_maps.db`. 
+
+- `odom_navigation.launch`
+
+
+
 
 
 
@@ -91,6 +100,11 @@ $ roslaunch futurakart_gazebo futurakart_world.launch gui:=false
 $ roslaunch futurakart_viz view_robot.launch 
 ``` 
 
+You can also use available configurations `navigation`, `localization`:
+```
+$ roslaunch futurakart_viz view_robot.launch config:=<config>
+```
+ 
  
 
 #### Simulator 
@@ -105,9 +119,14 @@ roslaunch futurakart_gazebo futurakart_world.launch
 
 #### setup_all.bash
 
-A script that sets an alias 'fkart' to perform 'cd ~/futurakart_ws/; source devel/setup.bash' and 
-variables ROS_MASTER_URI and ROS_HOSTNAME defined in `ros.conf`. Before the usage copy and rename ros.conf.example 
-to ros.conf and setup your value.    
+A script that sets few aliases :
+ 
+- `fkart` to perform 'cd ~/futurakart_ws/; source devel/setup.bash'
+- `save_gmap` to save map produced by gmapping (see `futurakart_2dnav` package)
+- `src` to source from current folder : `source devel/setup.bash`
+
+Also the script sets the variables ROS_MASTER_URI and ROS_HOSTNAME defined in `ros.conf`. 
+Before the usage copy and rename ros.conf.example to ros.conf and setup your value.    
   
 Usage :
 ```

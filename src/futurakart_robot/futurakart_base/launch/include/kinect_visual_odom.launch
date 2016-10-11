@@ -26,7 +26,7 @@
     <arg name="base_kinect_link" default="$(arg camera_name)_link" /> <!-- tf coordinate system name from Kinect -->
     <arg name="laserscan_topic" default="/$(arg camera_name)/laserscan"/>
     <arg name="laserscan_frame" default="$(arg base_kinect_link)"/>     <!-- depthimage_to_laserscan output frame id = The frame id of the laser scan. For point clouds coming from an "optical" frame with Z forward, this value should be set to the corresponding frame with X forward and Z up. -->
-    <arg name="rgbd_odometry_frame_id" default="$(arg base_kinect_link)"/> <!-- visual odom -> frame_id -->
+    <arg name="mobile_frame" default="$(arg base_kinect_link)"/> <!-- visual odom -> frame_id -->
 
     <!-- ********************************************************************* -->
     <!--   Setup sensors : image from Kinect, depth from Kinect, laserscan     -->
@@ -129,7 +129,17 @@
         <remap from="rgb/camera_info" to="$(arg rgb_camera_info)"/>
         <remap from="depth/image"     to="$(arg depth_image)"/>
         <param name="Reg/Force3DoF" type="string" value="true"/> <!-- (x, y, theta) instead of (x, y, z, roll, pitch, yaw) -->
-        <param name="frame_id" type="string" value="$(arg rgbd_odometry_frame_id)"/>
+        <param name="frame_id" type="string" value="$(arg mobile_frame)"/>
+
+        <!--See http://wiki.ros.org/rtabmap_ros/Tutorials/Advanced%20Parameter%20Tuning-->
+        <param name="Rtabmap/StartNewMapOnLoopClosure" value="true"/>
+        <param name="Odom/ResetCountdown"              value="5" />
+
+        <!-- 0=Frame-to-Map (F2M) 1=Frame-to-Frame (F2F) -->
+        <param name="Odom/Strategy" value="1"/>
+        <!-- Correspondences: 0=Features Matching, 1=Optical Flow . Optical flow may give more matches, but less robust correspondences-->
+        <param name="Vis/CorType" value="1"/>
+
     </node>
 
 </launch>

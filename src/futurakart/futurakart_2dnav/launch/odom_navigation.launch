@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+    Launch file to create a map
+-->
+<launch>
+
+    <!-- Setup default topic names from Kinect:  -->
+    <arg name="camera_name" default="camera"/> <!-- Kinect camera namespace name for output topics -->
+    <arg name="base_kinect_link" default="$(arg camera_name)_link" /> <!-- tf coordinate system name from Kinect -->
+    <arg name="laserscan_topic" default="/$(arg camera_name)/laserscan"/> <!-- Laserscan topic name for depth_to_laserscan output -->
+    <arg name="laserscan_frame" default="$(arg base_kinect_link)"/>
+    <arg name="base_frame_id" default="$(arg base_kinect_link)"/>
+
+    <!-- ********************************************************************* -->
+    <!--  Start move_base  -->
+    <!-- ********************************************************************* -->
+    <include file="$(find futurakart_2dnav)/launch/includes/move_base.launch">
+        <arg name="laserscan_topic" value="$(arg laserscan_topic)"/>
+        <arg name="laserscan_frame" value="$(arg laserscan_frame)"/>
+        <arg name="global_frame" value="odom"/>
+        <arg name="base_frame_id" value="$(arg base_frame_id)"/>
+    </include>
+
+
+</launch>

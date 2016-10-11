@@ -10,6 +10,7 @@ echo ""
 
 CURRENT_PATH="`pwd`"
 
+############ Useful functions ################################
 function create_backup() {
     local file_to_backup=$1
     if [ -f "${file_to_backup}" ] && [ ! -f "${file_to_backup}.save" ]; then
@@ -18,6 +19,13 @@ function create_backup() {
 }
 
 function search_and_add() {
+    #
+    # function to search $rx_grep_1 expression in $file
+    # - if not found -> add $line
+    # - if found, check if the 'exact' $rx_grep_2 expression is in the $file
+    # --- if not found -> apply $rx_sed expression to the $file
+    # --- else -> nothing to add, everything is in the $file
+    #
     local file=$1
     local rx_grep_1=$2
     local rx_grep_2=$3
@@ -45,15 +53,16 @@ function search_and_add() {
 
 }
 
+########### Setup aliases ################################
 
-############ Setup alias 'fkart' ################################
+alias_file="${HOME}/.bash_aliases"
+create_backup ${alias_file}
+
+############ alias 'fkart' ################################
 echo ""
 echo "Setup alias 'fkart'"
 
-alias_file="${HOME}/.bash_aliases"
 alias_cmd="alias fkart=\"cd ${CURRENT_PATH}; source devel/setup.bash\""
-
-create_backup ${alias_file}
 
 if [ -f "$alias_file" ]; then
 
@@ -63,11 +72,55 @@ if [ -f "$alias_file" ]; then
                 "^alias fkart=\"cd ${CURRENT_PATH}; source devel/setup.bash\"" \
                 "/^alias fkart=\"cd .*; source devel\/setup.bash\"/ s/^/#/" \
                 "'fkart' alias" \
-                ${alias_cmd}
+                "${alias_cmd}"
 else
     echo "$alias_cmd" > $alias_file
     echo "=> Created new file ~/.bash_aliases with 'fkart' alias"
 fi
+
+############ alias 'save_gmap' ################################
+echo ""
+echo "Setup alias 'save_gmap'"
+
+alias_cmd="alias save_gmap=\"rosrun map_server map_saver -f ${CURRENT_PATH}/src/futurakart/futurakart_2dnav/maps/_map\""
+
+if [ -f "$alias_file" ]; then
+
+    search_and_add \
+                $alias_file \
+                "^alias save_gmap=\"rosrun map_server map_saver -f .+\"" \
+                "^alias save_gmap=\"rosrun map_server map_saver -f ${CURRENT_PATH}/src/futurakart/futurakart_2dnav/maps/_map\"" \
+                "/^alias save_gmap=\"rosrun map_server map_saver -f .*\"/ s/^/#/" \
+                "'save_gmap' alias" \
+                "${alias_cmd}"
+else
+    echo "$alias_cmd" > $alias_file
+    echo "=> Created new file ~/.bash_aliases with 'save_gmap' alias"
+fi
+
+############ alias 'src' ################################
+echo ""
+echo "Setup alias 'src'"
+
+alias_cmd="alias src=\"source devel/setup.bash\""
+
+if [ -f "$alias_file" ]; then
+
+    search_and_add \
+                $alias_file \
+                "^alias src=\".+\"" \
+                "^alias src=\"source devel/setup.bash\"" \
+                "/^alias src=\".*\"/ s/^/#/" \
+                "'src' alias" \
+                "${alias_cmd}"
+else
+    echo "$alias_cmd" > $alias_file
+    echo "=> Created new file ~/.bash_aliases with 'save_gmap' alias"
+fi
+
+
+
+
 
 ############ Setup ROS_MASTER_URI, ROS_HOSTNAME ################################
 
@@ -77,7 +130,6 @@ bashrc_file="${HOME}/.bashrc"
 if [ -n "$1" ] && [ "$1" == "--local" ]; then
     ros_master_uri="ROS_MASTER_URI=http://localhost:11311"
     ros_hostname="ROS_HOSTNAME=localhost"
-    echo "USE LOCAL"
 else
     exec 5< ros.conf
     read ros_master_uri <&5

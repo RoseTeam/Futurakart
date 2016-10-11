@@ -14,7 +14,7 @@
     <arg name="rgb_camera_info" />
     <arg name="depth_image" />
     <arg name="depth_camera_info" />
-    <arg name="rtabmap_frame_id" />
+    <arg name="mobile_base" />
     <arg name="laserscan_topic" />
     <arg name="database_path" />
     <arg name="delete_db" default="false"/>
@@ -37,7 +37,7 @@
     <!-- ********************************************************************* -->
     <!-- SLAM : https://github.com/introlab/rtabmap_ros/blob/master/launch/rtabmap.launch -->
     <node name="rtabmap" pkg="rtabmap_ros" type="rtabmap" output="screen" args="$(arg rtabmap_args)">
-        <param name="frame_id" type="string" value="$(arg rtabmap_frame_id)"/> <!-- The frame attached to the mobile base. -->
+        <param name="frame_id" type="string" value="$(arg mobile_base)"/> <!-- The frame attached to the mobile base. -->
         <param name="wait_for_transform" type="bool" value="true"/>
         <param name="wait_for_transform_duration" type="double" value="0.5"/>
 
@@ -55,10 +55,6 @@
 
         <param name="database_path" value="$(arg database_path)"/>
 
-        <!--See http://wiki.ros.org/rtabmap_ros/Tutorials/Advanced%20Parameter%20Tuning-->
-        <param name="Rtabmap/StartNewMapOnLoopClosure" value="true"/>
-        <param name="Odom/ResetCountdown"              value="5" />
-
         <!-- localization mode -->
         <param     if="$(arg localization)" name="Mem/IncrementalMemory" type="string" value="false"/>
         <param unless="$(arg localization)" name="Mem/IncrementalMemory" type="string" value="true"/>
@@ -68,7 +64,9 @@
         <param name="RGBD/ProximityBySpace"     type="string" value="true"/>
         <param name="RGBD/AngularUpdate"        type="string" value="0.01"/>
         <param name="RGBD/LinearUpdate"         type="string" value="0.01"/>
+        <param name="RGBD/OptimizeStrategy" type="string" value="1"/>
         <param name="RGBD/OptimizeFromGraphEnd" type="string" value="false"/>
+        <param name="RGBD/OptimizeStrategy" type="string" value="1"/> <!-- g2o = 1, GTSAM = 2 -->
         <param name="Optimizer/Slam2D"          type="string" value="true"/>
         <param name="Reg/Strategy"              type="string" value="1"/> <!-- 1=ICP -->
         <param name="Reg/Force3DoF"             type="string" value="true"/>

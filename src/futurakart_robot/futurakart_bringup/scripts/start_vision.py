@@ -7,6 +7,7 @@
 # Python
 import sys
 import subprocess
+import signal
 
 
 def parse_args(argv):
@@ -28,23 +29,27 @@ def parse_args(argv):
     assert ip is not None and username is not None and path is not None, "Failed to parse given arguments : %s " % argv
     return ip, username, port, path
 
+
+def handle_signint(*args, **kwargs):
+    # Nothing to do
+    pass
+
+
 if __name__ == "__main__":
 
     # Script should be called with 5 arguments:
     # [script.py, ssh_ip, ssh_username, '__name:=...', '__log:=...']
     assert len(sys.argv) > 1, "Usage: script.py ip:=1.2.3.4 username:=temp path:=~/futurakart_ws [port:=22]"
 
+    print "Start 'start_vision' node : communicate on ssh *vision* part RPi"
     ip, username, port, path = parse_args(sys.argv[1:])
 
+    # Need to catch sigint otherwise node is not properly killed
+    signal.signal(signal.SIGINT, handle_signint)
+
     program = ["ssh", "-T", "-o", "VerifyHostKeyDNS no", "%s@%s" % (username, ip), "-p %s" % port]
-    proc = subprocess.Popen(program, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    out, err = proc.communicate("cd %s; xterm" % path)
-    # out, err = proc.communicate("cd %s; source devel/setup.bash; roslaunch futurakart_base vision.launch &" % path)
-    print out
-    returncode = proc.poll()
-    if proc.wait() == 0:
-        # everything is OK
-        print "Vision part is started"
-    else:
-        print err
-    print "Return code = ", returncode
+    proc = subprocess.Popen(program, stdin=subprocess.PIPE)
+    # proc.communicate("cd %s; ls; ping www.google.com" % path)
+    proc.communicate("cd %s; source devel/setup.bash; roslaunch futurakart_base vision.launch" % path)
+    returncode = proc.wait()
+    print "Node 'start_vision' is stopped"

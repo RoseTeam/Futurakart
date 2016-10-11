@@ -18,14 +18,17 @@
 
 
 
-  <!-- Start vision part on the 2nd RPi (at ~/futurakart_ws) -->
-  <!--<arg name="ssh_ip" value="192.168.43.5"/>-->
-  <!--<arg name="ssh_username" value="ubuntu"/>-->
-  <!--<arg name="futurakart_ws_path" value="~/futurakart_ws"/>-->
-  <!--<node name="start_vision" pkg="futurakart_bringup"-->
-        <!--type="start_vision.py" output="screen"-->
-          <!--args="ip:=$(arg ssh_ip) username:=$(arg ssh_username) futurakart_ws_path:=$(arg futurakart_ws_path)">-->
-  <!--</node>-->
+   <!--Start vision part on the 2nd RPi (at ~/futurakart_ws)-->
+  <arg name="ssh_ip" value="192.168.43.5"/>
+  <arg name="ssh_username" value="ubuntu"/>
+  <arg name="futurakart_ws_path" value="~/futurakart_ws"/>
+  <!--<arg name="ssh_ip" value="127.0.0.1"/>-->
+  <!--<arg name="ssh_username" value="vfdev"/>-->
+  <!--<arg name="futurakart_ws_path" value="~/Documents/ROS/futurakart_ws"/>-->
+  <node name="start_vision" pkg="futurakart_bringup"
+        type="start_vision.py" output="screen"
+          args="ip:=$(arg ssh_ip) username:=$(arg ssh_username) path:=$(arg futurakart_ws_path)">
+  </node>
 
   </group>
 </launch>

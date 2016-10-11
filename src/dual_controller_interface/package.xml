@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package>
+  <name>dual_controller_interface</name>
+  <version>0.1.0</version>
+  <description>Dual-Controller Interface</description>
+
+  <maintainer email="logans@cottsay.net">Scott K Logan</maintainer>
+
+  <license>BSD</license>
+
+  <!-- <url type="website">http://wiki.ros.org/dual_controller_interface</url> -->
+
+  <author email="logans@cottsay.net">Scott K Logan</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <run_depend>controller_interface</run_depend>
+
+  <export>
+    <architecture_independent />
+  </export>
+</package>
