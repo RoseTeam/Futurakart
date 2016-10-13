@@ -38,9 +38,13 @@ rotate([0,0,-12])
 translate([0,-.2,0]){
     union()
     {
-        cylindre(12,15);
+    translate([0,0,8]){ // butée
+    cylindre(19,6);
+    }
+        cylindre(12,14);
         pignon(height);
     }
+
 }
 }
 
@@ -64,8 +68,7 @@ module axe(sca=1.10, h=40)
         translate([0,-8.6,0]){
         carreau(9.7,h);
         }
-        
-    }
+}
 }
 
 difference()
@@ -78,5 +81,6 @@ difference()
         rotate([0,90,0])
             cylindre(r=2,h=35);
 }
+
 //cercle(ext_radius);
 
