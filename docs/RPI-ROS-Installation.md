@@ -13,42 +13,33 @@ rosdep update
 echo "source /opt/ros/kinetic/setup.bash" >> ~/.bashrc
 ```
 
-### Install Futurakart necessary packages :
-```
-sudo apt-get install libyaml-cpp-dev libfreenect 
-```
-
-Install `libfreenect` and `ros-kinetic-freenect-stack`. Instead of `apt-get` installation of the package `ros-kinetic-freenect-stack` which installs automatically `libfreenect` version 0.5.1, 
-we install the latest `libfreenect` (0.5.3) and build `ros-kinetic-freenect-stack` manually.
+### Install Futurakart necessary ROS packages using `apt-get` :
 
 ```
-mkdir -p ~/generic_ws/src; cd $_; catkin_init_workspace
-git clone https://github.com/ros-drivers/freenect_stack
-cd ../; catkin_make install -j1
+sudo apt-get install libyaml-cpp-dev libpcl-dev
+sudo apt-get install ros-kinetic-camera-info-manager ros-kinetic-diagnostic-updater ros-kinetic-rgbd-launch
+sudo apt-get install ros-kinetic-libg2o ros-kinetic-tf-conversions 
+sudo apt-get install ros-kinetic-freenect-stack ros-kinetic-depthimage-to-laserscan 
+sudo apt-get install ros-kinetic-navigation ros-kinetic-robot-localization ros-kinetic-controller-manager ros-kinetic-joint-state-controller ros-kinetic-diff-drive-controller ros-kinetic-gazebo-ros ros-kinetic-gazebo-ros-control ros-kinetic-gazebo-plugins             ros-kinetic-lms1xx ros-kinetic-pointgrey-camera-description ros-kinetic-roslint ros-kinetic-amcl ros-kinetic-gmapping      ros-kinetic-map-server ros-kinetic-move-base ros-kinetic-urdf ros-kinetic-xacro ros-kinetic-message-runtime ros-kinetic-topic-tools ros-kinetic-teleop-twist-joy
 ```
 
+### Build rtabmap library and rtabmap_ros
 ```
-sudo apt-get install ros-kinetic-libg2o ros-kinetic-tf-conversions
-
 cd ~/; git clone https://github.com/introlab/rtabmap.git rtabmap_source
 mkdir Build_rtabmap; cd $_
 cmake ../rtabmap_source
 sudo make install -j1
 ```
-
-### Install Futurakart necessary ROS packages using `apt-get`
+It is OK if Qt4 or Qt5 is not found and `RTAB-Map GUI lib is not built, some tools won't be built...`
 
 ```
-sudo apt-get install ros-kinetic-navigation ros-kinetic-robot-localization ros-kinetic-controller-manager ros-kinetic-joint-state-controller ros-kinetic-diff-drive-controller ros-kinetic-gazebo-ros ros-kinetic-gazebo-ros-control ros-kinetic-gazebo-plugins             ros-kinetic-lms1xx ros-kinetic-pointgrey-camera-description ros-kinetic-roslint ros-kinetic-amcl ros-kinetic-gmapping      ros-kinetic-map-server ros-kinetic-move-base ros-kinetic-urdf ros-kinetic-xacro ros-kinetic-message-runtime ros-kinetic-topic-tools ros-kinetic-teleop-twist-joy
+$ mkdir -p ~/generic_ws/src; cd $_; catkin_init_workspace 
+
+$ git clone https://github.com/introlab/rtabmap_ros.git
+
+$ cd ../; catkin_make 
+ 
 ```
-
-
-### Build custom ROS packages from source
-
-
-
-
-
 
 
 

@@ -1,6 +1,9 @@
 #ifndef FUTURAKART_HARDWARE_H
 #define FUTURAKART_HARDWARE_H
 
+// Boost
+#include <boost/scoped_ptr.hpp>
+
 // Ros controls
 #include <hardware_interface/robot_hw.h>
 #include <hardware_interface/actuator_command_interface.h>
@@ -22,8 +25,6 @@ public:
 	void write(ros::Time time, ros::Duration period);
 
 private:
-    void feedbackCallback(const futurakart_msgs::Feedback::ConstPtr& msg);
-
 	ros::NodeHandle nh_;
 	ros::NodeHandle nh_priv_;
 	std::string robot_description_;

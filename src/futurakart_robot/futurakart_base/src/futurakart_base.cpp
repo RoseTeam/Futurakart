@@ -29,7 +29,7 @@ void controlThread(ros::Rate rate, futurakart_base::FuturakartHardware* robot, c
         boost::chrono::duration<double> elapsed_duration = this_time - last_time;
         ros::Duration elapsed(elapsed_duration.count());
         last_time = this_time;
-        this_time_ros = ros::Time::now();
+        ros::Time this_time_ros = ros::Time::now();
 
 		robot->read(this_time_ros, elapsed);
 		cm->update(this_time_ros, elapsed);

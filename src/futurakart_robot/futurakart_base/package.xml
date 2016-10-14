@@ -12,7 +12,8 @@
   <build_depend>diagnostic_updater</build_depend>
   <build_depend>geometry_msgs</build_depend>
   <build_depend>hardware_interface</build_depend>
-  <build_depend>realtime_tools</build_depend>
+  <build_depend>ackermann_controller</build_depend>
+  <build_depend>transmission_interface</build_depend>
   <build_depend>roscpp</build_depend>
   <build_depend>roslaunch</build_depend>
   <build_depend>roslint</build_depend>
@@ -25,7 +26,8 @@
   <run_depend>controller_manager</run_depend>
   <run_depend>diagnostic_aggregator</run_depend>
   <run_depend>diagnostic_updater</run_depend>
-  <run_depend>diff_drive_controller</run_depend>
+  <run_depend>ackermann_controller</run_depend>
+  <run_depend>transmission_interface</run_depend>
   <run_depend>geometry_msgs</run_depend>
   <run_depend version_gte="0.0.1">futurakart_control</run_depend>
   <run_depend version_gte="0.0.1">futurakart_description</run_depend>

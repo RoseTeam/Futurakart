@@ -161,7 +161,7 @@ search_and_add \
 
 echo ""
 echo "Execute source ~/.bashrc"
-source ${HOME}/.bashrc
+source ${bashrc_file}
 echo ""
 echo "=> ROS_MASTER_URI=${ROS_MASTER_URI}"
 echo "=> ROS_HOSTNAME=${ROS_HOSTNAME}"

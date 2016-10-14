@@ -5,9 +5,9 @@
 <robot name="xacro_properties" xmlns:xacro="http://ros.org/wiki/xacro">
 
     <!-- Include common properties -->
-    <xacro:include filename="$(find futurakart_description)/urdf/common.urdf" />
+    <xacro:include filename="$(find futurakart_description)/urdf/macros/common.urdf" />
     <!-- Include dimensions -->
-    <xacro:include filename="$(find futurakart_description)/urdf/dimensions.urdf" />
+    <xacro:include filename="$(find futurakart_description)/urdf/macros/dimensions.urdf" />
 
     <!--**************************************************************************-->
     <!--Define macros to define wheels  -->

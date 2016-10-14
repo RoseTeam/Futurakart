@@ -3,7 +3,7 @@
   <group ns="futurakart">
     <!--<rosparam command="load" file="$(find futurakart_bringup)/config/ports.yaml" />-->
 
-    <!--<include file="$(find futurakart_base)/launch/base.launch" />-->
+    <include file="$(find futurakart_base)/launch/base.launch" />
     <!--Start nodes for particular drivers -->
 
     <!--<node name="robot_pose_ekf" pkg="robot_pose_ekf" type="robot_pose_ekf" respawn="true" output="screen">-->
