@@ -172,9 +172,14 @@ if [ -n "$1" ] && [ "$1" == "--local" ]; then
     ros_master_uri="ROS_MASTER_URI=http://localhost:11311"
     ros_hostname="ROS_HOSTNAME=localhost"
 else
+
+    if [ ! -f "ros.conf" ]; then
+        echo "INFO : Copy ros.conf.example to ros.conf"
+        cp ros.conf.example ros.conf
+    fi
     exec 5< ros.conf
     read ros_master_uri <&5
-    read ros_hostname <&5        
+    read ros_hostname <&5
 fi
 
 

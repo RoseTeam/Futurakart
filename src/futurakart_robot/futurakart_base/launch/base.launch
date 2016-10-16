@@ -1,31 +1,27 @@
 <launch>
-  <include file="$(find futurakart_description)/launch/description.launch" />
-  
-  <node pkg="futurakart_base" type="futurakart_node" name="futurakart_node">
-    <rosparam>
-      # TODO: Specify these in code rather than here.
-      require:
-        publishers:
-          - status
-          - feedback
-        subscribers:
-          - cmd_drive
-          - wifi_connected
-    </rosparam>
-  </node>
 
-  <!-- TODO: Eliminate this by compiling the necessary message definitions into futurakart_base. -->
-  <node pkg="rosserial_python" type="message_info_service.py" name="rosserial_message_info" />
+<!--    <include file="$(find futurakart_description)/launch/description.launch" />-->
 
-  <!-- Differential controller and basic localization -->
-  <include file="$(find futurakart_control)/launch/control.launch" />
 
-  <!-- Teleoperation via joystick and rviz interactive markers -->
-  <include file="$(find futurakart_control)/launch/teleop.launch" />
+    <!-- Open serial server vie rosserial_python -->
+    <node pkg="rosserial_python" type="serial_node" output="screen">
+        <param name="" value=""/>
+        <param name="" value=""/>
+    </node>
 
-  <!-- Diagnostic Aggregator for robot monitor usage -->
-  <node pkg="diagnostic_aggregator" type="aggregator_node" name="diagnostic_aggregator">
+    <node pkg="rosserial_python" type="message_info_service.py" name="rosserial_message_info" />
+
+    <node pkg="futurakart_base" type="futurakart_node" name="futurakart_node"/>
+
+    <!-- Differential controller and basic localization -->
+    <!--  <include file="$(find futurakart_control)/launch/control.launch" />-->
+
+    <!-- Teleoperation via joystick and rviz interactive markers -->
+    <!--  <include file="$(find futurakart_control)/launch/teleop.launch" />-->
+
+    <!-- Diagnostic Aggregator for robot monitor usage -->
+    <!--  <node pkg="diagnostic_aggregator" type="aggregator_node" name="diagnostic_aggregator">
     <rosparam command="load" file="$(find futurakart_base)/config/diagnostic_analyzers.yaml" />
-  </node>
+    </node>-->
 
 </launch>
