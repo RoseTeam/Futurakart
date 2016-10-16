@@ -7,8 +7,8 @@ find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   futurakart_msgs
   hardware_interface
-  transmission_interface
-  rosserial_server
+#  transmission_interface
+#  rosserial_server
   roscpp
   roslaunch
   roslint

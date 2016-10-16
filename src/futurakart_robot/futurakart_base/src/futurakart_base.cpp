@@ -8,7 +8,6 @@
 // ROS & ros controls
 #include <ros/ros.h>
 #include <controller_manager/controller_manager.h>
-#include "rosserial_server/serial_session.h"
 
 
 // Project
