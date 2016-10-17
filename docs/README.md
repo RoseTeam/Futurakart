@@ -1,12 +1,20 @@
 # Documentation
 
-
+Get sources from Github :
+```
+git clone --recursive https://github.com/RoseTeam/Futurakart.git
+```
+If you didn't clone with the --recursive flag, then you'll need to manually clone `ackermann_controller`:
+```
+git submodule update --init --recursive
+```
 
 
 
 ## Futurakart ROS packages  
 
-- Core : `futurakart_control`, `futurakart_description`, `futurakart_msgs`, `futurakart_2dnav` 
+- Core : `futurakart_control`, `futurakart_description`, `futurakart_msgs`, `futurakart_2dnav`
+- 3rdParty packages : `ackermann_controller`, `dual_controller_interface`
 - Desktop : `futurakart_viz`
 - Robot : `futurakart_bringup`, `futurakart_base` 
 - Simulator : `futurakart_gazebo`
@@ -39,8 +47,11 @@ If you use `rtabmap`, the map is automatically saved as `futurakart/futurakart_2
 - `odom_navigation.launch`
 
 
+### 3rdParty packages
 
+**`ackermann_controller`**, **`dual_controller_interface`** are packages developed for [blinky-robot](https://github.com/blinky-robot) and the code is taken from [github](https://github.com/blinky-robot/ackermann_controller) 
 
+We modified **`dual_controller_interface`** to adapt to the newer version of the `ros_control` modules.
 
 
 #### Robot packages 

@@ -1,0 +1,3 @@
+[submodule "src/ackermann_controller"]
+	path = src/ackermann_controller
+	url = https://github.com/blinky-robot/ackermann_controller.git
