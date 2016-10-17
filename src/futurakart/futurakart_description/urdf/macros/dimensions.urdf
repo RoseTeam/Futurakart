@@ -1,51 +1,49 @@
 <?xml version="1.0" ?>
- <!--************************************************-->
- <!--          Futurakart model dimensions           -->
- <!--************************************************-->
- <!-- base_link is the middle of the rear wheel axle -->
- <!-- x axis : from left to right                    -->
- <!-- y axis : from rear to front                    -->
- <!-- z axis : from floor to the sky                 -->
- <!--************************************************-->
-
 <robot name="xacro_properties" xmlns:xacro="http://ros.org/wiki/xacro">
 
-  <!-- Wheelbase_front = distance between wheels in meters -->
-  <xacro:property name="wheelbase_front" value="0.58" />
+    <!--************************************************-->
+    <!--          Futurakart model dimensions           -->
+    <!--************************************************-->
+    <!-- base_link is the middle of the rear wheel axle -->
+    <!-- x axis : from left to right                    -->
+    <!-- y axis : from rear to front                    -->
+    <!-- z axis : from floor to the sky                 -->
+    <!--************************************************-->
 
-  <!-- Wheelbase_rear = distance between wheels in meters -->
-  <xacro:property name="wheelbase_rear" value="0.51" />
+    <!-- Wheelbase_front = distance between wheels in meters -->
+    <xacro:property name="wheelbase_front" value="0.58" />
 
-  <!-- Wheelbase_front is equal to rot_axle_dist + 2 * wheel_arm -->
-  <!-- wheel_arm = distance between wheel and rotation axle -->
-  <xacro:property name="wheel_arm" value="0.12" />
-  <!-- rot_axle_dist = distance between the too wheel's rotation axle -->
-  <xacro:property name="rot_axle_dist" value="0.34">
+    <!-- Wheelbase_rear = distance between wheels in meters -->
+    <xacro:property name="wheelbase_rear" value="0.51" />
 
-  <!-- Track = distance between front and rear axles (when going straight)-->
-  <xacro:property name="track" value="1" />
+    <!-- Wheelbase_front is equal to rot_axle_dist + 2 * wheel_arm -->
+    <!-- wheel_arm = distance between wheel and rotation axle -->
+    <xacro:property name="wheel_arm" value="0.12" />
+    <!-- rot_axle_dist = distance between the too wheel's rotation axle -->
+    <xacro:property name="rot_axle_dist" value="0.34"/>
 
-  <!-- Wheel_vertical_offset = vertical distance between base_link and wheel center -->
-  <xacro:property name="wheel_vertical_offset" value="0" />
+    <!-- Track = distance between front and rear axles (when going straight)-->
+    <xacro:property name="track" value="1" />
 
-  <!-- Vertical_offset = vertical distance between base_link and the floor -->
-  <xacro:property name="vertical_offset" value="0.125" />
+    <!-- Wheel_vertical_offset = vertical distance between base_link and wheel center -->
+    <xacro:property name="wheel_vertical_offset" value="0" />
 
-  <!-- footprint_vertical_offset = z axis distance between floor footprint and base_link -->
-  <xacro:property name="footprint_vertical_offset" value="0.125" />
+    <!-- Vertical_offset = vertical distance between base_link and the floor -->
+    <xacro:property name="vertical_offset" value="0.125" />
 
-  <!-- Wheel dimensions -->
-  <xacro:property name="wheel_radius" value="0.125" />
-  <xacro:property name="wheel_width" value="0.085" />
+    <!-- footprint_vertical_offset = z axis distance between floor footprint and base_link -->
+    <xacro:property name="footprint_vertical_offset" value="0.125" />
 
-  <!-- Base plank dimensions -->
-  <xacro:property name="base_length" value="1,475" />
-  <xacro:property name="base_width" value="0.84" />
-  <xacro:property name="base_height" value="0.01" />
+    <!-- Wheel dimensions -->
+    <xacro:property name="wheel_radius" value="0.125" />
+    <xacro:property name="wheel_width" value="0.085" />
 
-  <xacro:property name="dummy_inertia" value="1e-09"/>
-  <xacro:property name="mount_spacing" value="0.120" />
+    <!-- Base plank dimensions -->
+    <xacro:property name="base_length" value="1.475" />
+    <xacro:property name="base_width" value="0.84" />
+    <xacro:property name="base_height" value="0.01" />
 
-
+    <xacro:property name="dummy_inertia" value="1e-09"/>
+    <xacro:property name="mount_spacing" value="0.120" />
 
 </robot>

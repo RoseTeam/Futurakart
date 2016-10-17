@@ -18,8 +18,10 @@
             <geometry>
                 <box size="${base_width} ${base_length} ${base_height}"/>
             </geometry>
+            <origin xyz="0 ${track/2} ${wheel_radius}"/>
             <material name="yellow" />
         </visual>
+
     </link>
 
     <!-- Center of the Kart projected on the floor-->
@@ -27,7 +29,7 @@
     <joint name="base_link_joint" type="fixed">
         <parent link="base_footprint"/>
         <child link="base_link"/>
-        <origin xyz="0 ${track/2} -${vertical_offset}"/>
+        <origin xyz="0 -${track/2} ${vertical_offset}"/>
     </joint>
 
 
