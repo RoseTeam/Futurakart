@@ -54,6 +54,19 @@ If you use `rtabmap`, the map is automatically saved as `futurakart/futurakart_2
 We modified **`dual_controller_interface`** to adapt to the newer version of the `ros_control` modules.
 
 
+Comment on `ackermann_controller` :
+
+`drive_joints={position, velocity}` : position and velocity of the propulsion rear wheels
+`steering_joints={position}` : angle in radians of the direction
+`steering_pos=steering_joints.position`
+`d_pos` : angle in radians driven by the vehicle
+`d_dist=d_pos * wheel_radius` : distance driven be the vehicle
+`base_length` : track distance between front and rear wheel axles ???
+
+`d_theta=tan(steering_pos) * d_dist / base_length` : angle ...
+
+
+
 #### Robot packages 
 
 These packages are destinated for the robot only. 
