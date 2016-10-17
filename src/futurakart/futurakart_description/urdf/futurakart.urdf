@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<robot name="futurakart" xmlns:xacro="http://ros.org/wiki/xacro">
+
+    <!-- Include macros -->
+    <xacro:include filename="$(find futurakart_description)/urdf/macros/model.urdf" />
+    <xacro:include filename="$(find futurakart_description)/urdf/macros/kinect.urdf" />
+
+    <!-- Bring in simulation data for Gazebo. -->
+    <xacro:include filename="$(find futurakart_description)/urdf/futurakart.gazebo" />
+
+    <!--**************************************************************************-->
+    <!--Define links and joints -->
+    <!--**************************************************************************-->
+
+    <!-- Center of the Kart -->
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <box size="${base_length} ${base_width} ${base_height}"/>
+            </geometry>
+            <material name="yellow" />
+        </visual>
+    </link>
+
+    <!-- Center of the Kart projected on the floor-->
+    <link name="base_footprint" />
+    <joint name="base_link_joint" type="fixed">
+        <parent link="base_footprint"/>
+        <child link="base_link"/>
+        <origin xyz="0 0 ${vertical_offset}"/>
+    </joint>
+
+    <!--**************************************************************************-->
+    <!--Define 4 wheels-->
+    <!--**************************************************************************-->
+
+    <xacro:wheel prefix="front_left">
+        <origin xyz="${wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+    </xacro:wheel>
+    <xacro:wheel prefix="front_right">
+        <origin xyz="${wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+    </xacro:wheel>
+    <xacro:wheel prefix="rear_left">
+        <origin xyz="${-wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+    </xacro:wheel>
+    <xacro:wheel prefix="rear_right">
+        <origin xyz="${-wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+    </xacro:wheel>
+
+    <!--**************************************************************************-->
+    <!--Define front steering transmission -->
+    <!--**************************************************************************-->
+
+<!--    <transmission name="front_steering_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="front_steering_joint">
+            <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="steering_servo">
+            <mechanicalReduction>1.0</mechanicalReduction>
+        </actuator>
+    </transmission>
+
+    <transmission name="rear_left_wheel_trans">
+        <type>transmission_interface/SimpleTransmission</type>
+        <joint name="rear_left_wheel_joint">
+            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+        </joint>
+        <actuator name="drive_motor">
+            <mechanicalReduction>1.0</mechanicalReduction>
+        </actuator>
+    </transmission>-->
+
+
+    <!--**************************************************************************-->
+    <!--Define sensors -->
+    <!--**************************************************************************-->
+    <xacro:sensor_kinect parent="base_link"/>
+
+</robot>

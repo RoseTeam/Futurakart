@@ -54,7 +54,7 @@ namespace dual_controller_interface
 		};
 
 	protected:
-		virtual bool initRequest(hardware_interface::RobotHW *robot_hw, ros::NodeHandle &root_nh, ros::NodeHandle &controller_nh, std::set<std::string> &claimed_resources)
+		virtual bool initRequest(hardware_interface::RobotHW *robot_hw, ros::NodeHandle &root_nh, ros::NodeHandle &controller_nh, controller_interface::ControllerBase::ClaimedResources &claimed_resources)
 		{
 			if (state_ != CONSTRUCTED)
 			{
@@ -83,9 +83,12 @@ namespace dual_controller_interface
 				ROS_ERROR("Failed to initialize the controller");
 				return false;
 			}
-			claimed_resources = hw_a->getClaims();
-			std::set<std::string> claimed_resources_b = hw_b->getClaims();
-			claimed_resources.insert(claimed_resources_b.begin(), claimed_resources_b.end());
+			// claimed_resources = hw_a->getClaims();
+			claimed_resources.assign(1, hardware_interface::InterfaceResources(getHardwareInterfaceTypeA(), hw_a->getClaims()));
+			//std::set<std::string> claimed_resources_b = hw_b->getClaims();
+			//claimed_resources.insert(claimed_resources_b.begin(), claimed_resources_b.end());
+			claimed_resources.push_back(hardware_interface::InterfaceResources(getHardwareInterfaceTypeB(), hw_b->getClaims()));
+
 			hw_a->clearClaims();
 			hw_b->clearClaims();
 

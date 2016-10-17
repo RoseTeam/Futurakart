@@ -1,14 +1,19 @@
-
+// STD
 #include <string>
-#include <boost/asio/io_service.hpp>
+
+// Boost
 #include <boost/thread.hpp>
 #include <boost/chrono.hpp>
 
-#include "controller_manager/controller_manager.h"
-#include "futurakart_base/futurakart_diagnostic_updater.h"
+// ROS & ros controls
+#include <ros/ros.h>
+#include <controller_manager/controller_manager.h>
+
+
+// Project
+//#include "futurakart_base/futurakart_diagnostic_updater.h"
 #include "futurakart_base/futurakart_hardware.h"
-#include "ros/ros.h"
-#include "rosserial_server/serial_session.h"
+
 
 typedef boost::chrono::steady_clock time_source;
 
@@ -16,48 +21,47 @@ typedef boost::chrono::steady_clock time_source;
 
 void controlThread(ros::Rate rate, futurakart_base::FuturakartHardware* robot, controller_manager::ControllerManager* cm)
 {
-    time_source::time_point last_time = time_source::now();
+  time_source::time_point last_time = time_source::now();
 
-    while (1)
-    {
-        // Calculate monotonic time elapsed
-        time_source::time_point this_time = time_source::now();
-        boost::chrono::duration<double> elapsed_duration = this_time - last_time;
-        ros::Duration elapsed(elapsed_duration.count());
-        last_time = this_time;
+  while (ros::ok())
+  {
+    // Calculate monotonic time elapsed
+    time_source::time_point this_time = time_source::now();
+    boost::chrono::duration<double> elapsed_duration = this_time - last_time;
+    ros::Duration elapsed(elapsed_duration.count());
+    last_time = this_time;
+    ros::Time this_time_ros = ros::Time::now();
 
-        robot->copyJointsFromHardware();
-        cm->update(ros::Time::now(), elapsed);
-        robot->publishDriveFromController();
-        rate.sleep();
-    }
+    robot->read(this_time_ros, elapsed);
+    cm->update(this_time_ros, elapsed);
+    robot->update(this_time_ros, elapsed);
+    robot->write(this_time_ros, elapsed);
+    rate.sleep();
+
+    boost::this_thread::interruption_point();
+  }
 }
 
 //*********************************************************************************************************************
 
 int main(int argc, char* argv[])
 {
-    // Initialize ROS node.
-    ros::init(argc, argv, "futurakart_node");
-    futurakart_base::FuturakartHardware futurakart;
+  // Initialize ROS node.
+  ros::init(argc, argv, "futurakart_node");
+  ros::NodeHandle controller_nh("");
 
-    // Create the serial rosserial server in a background ASIO event loop.
-    std::string port;
-    ros::param::param<std::string>("~port", port, "/dev/futurakart");
-    boost::asio::io_service io_service;
-    new rosserial_server::SerialSession(io_service, port, 115200);
-    boost::thread(boost::bind(&boost::asio::io_service::run, &io_service));
+  // Create instance of RobotHW and Controller manager
+  futurakart_base::FuturakartHardware futurakart;
+  controller_manager::ControllerManager cm(&futurakart, controller_nh);
 
-    // Background thread for the controls callback.
-    ros::NodeHandle controller_nh("");
-    controller_manager::ControllerManager cm(&futurakart, controller_nh);
-    boost::thread(boost::bind(controlThread, ros::Rate(50), &futurakart, &cm));
+  // Create a thread to control robot :
+  boost::thread(boost::bind(controlThread, ros::Rate(50), &futurakart, &cm));
 
-    // Create diagnostic updater, to update itself on the ROS thread.
-    futurakart_base::FuturakartDiagnosticUpdater futurakart_diagnostic_updater;
+  // Create diagnostic updater, to update itself on the ROS thread.
+  //futurakart_base::FuturakartDiagnosticUpdater futurakart_diagnostic_updater;
 
-    // Foreground ROS spinner for ROS callbacks, including rosserial, diagnostics
-    ros::spin();
+  // Foreground ROS spinner for ROS callbacks, including rosserial, diagnostics
+  ros::spin();
 
-    return 0;
+  return 0;
 }

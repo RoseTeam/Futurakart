@@ -1,15 +1,30 @@
 #ifndef FUTURAKART_HARDWARE_H
 #define FUTURAKART_HARDWARE_H
 
-#include "boost/thread.hpp"
+// Boost
+#include <boost/scoped_ptr.hpp>
+#include <boost/thread.hpp>
+
+// ROS
+#include <ros/ros.h>
+#include <geometry_msgs/Pose2D.h>
+
+// Ros controls
+#include <hardware_interface/robot_hw.h>
+
 #include "hardware_interface/joint_state_interface.h"
 #include "hardware_interface/joint_command_interface.h"
-#include "hardware_interface/robot_hw.h"
-#include "futurakart_msgs/Drive.h"
-#include "futurakart_msgs/Feedback.h"
 #include "realtime_tools/realtime_publisher.h"
-#include "ros/ros.h"
-#include "sensor_msgs/JointState.h"
+
+
+// Transmission mode : !!! NOT USED
+//#include <hardware_interface/actuator_command_interface.h>
+//#include <hardware_interface/actuator_state_interface.h>
+//#include <transmission_interface/robot_transmissions.h>
+//#include <transmission_interface/transmission_interface_loader.h>
+// END Transmission mode : !!! NOT USED
+
+
 
 
 namespace futurakart_base
@@ -19,37 +34,63 @@ class FuturakartHardware : public hardware_interface::RobotHW
 {
 
 public:
-    FuturakartHardware();
-    void copyJointsFromHardware();
-    void publishDriveFromController();
+  FuturakartHardware();
+  void read(ros::Time time, ros::Duration period);
+  void update(ros::Time time, ros::Duration period);
+  void write(ros::Time time, ros::Duration period);
 
 private:
-    void feedbackCallback(const futurakart_msgs::Feedback::ConstPtr& msg);
 
-    ros::NodeHandle nh_;
-    ros::Subscriber feedback_sub_;
-    realtime_tools::RealtimePublisher<futurakart_msgs::Drive> cmd_drive_pub_;
+  void feedbackCallback(const geometry_msgs::Pose2D::ConstPtr& msg);
 
-    hardware_interface::JointStateInterface joint_state_interface_;
-    hardware_interface::VelocityJointInterface velocity_joint_interface_;
+  ros::NodeHandle nh_;
+  ros::Subscriber feedback_sub_;
+  realtime_tools::RealtimePublisher<geometry_msgs::Pose2D> cmd_drive_pub_;
+  // This pointer is set from the ROS thread.
+  geometry_msgs::Pose2D::ConstPtr feedback_msg_;
+  boost::mutex feedback_msg_mutex_;
 
-    // These are mutated on the controls thread only.
-    struct Joint
-    {
-        double position;
-        double velocity;
-        double effort;
-        double velocity_command;
+  std::string robot_description_;
 
-        Joint() : position(0), velocity(0), effort(0), velocity_command(0)
-        {
-        }
-    }
-    joints_[4];
+  //diagnostic_updater::Updater diag;
+  //diagnostic_updater::FrequencyStatus diag_freq;
+  //double diag_freq_min;
+  //double diag_freq_max;
 
-    // This pointer is set from the ROS thread.
-    futurakart_msgs::Feedback::ConstPtr feedback_msg_;
-    boost::mutex feedback_msg_mutex_;
+  // Transmission mode : !!! NOT USED
+  //	transmission_interface::RobotTransmissions transmissions_;
+  //	boost::scoped_ptr<transmission_interface::TransmissionInterfaceLoader> transmission_loader_;
+  //	hardware_interface::PositionActuatorInterface actuator_position_interface_;
+  //	hardware_interface::ActuatorStateInterface actuator_state_interface_;
+  //	hardware_interface::VelocityActuatorInterface actuator_velocity_interface_;
+  // END Transmission mode : !!! NOT USED
+
+
+  // Direction joint model stores data to exchange between hardware and hardware interface
+  struct DirectionJoint
+  {
+    double pos;
+    double vel;
+    double eff;
+    double cmd;
+    DirectionJoint() : pos(0.0), vel(0.0), eff(0.0), cmd(0.0) {}
+  }
+  direction_joint_;
+
+  // Propulstion joint model stores data to exchange between hardware and hardware interface
+  struct PropulsionJoint
+  {
+    double pos;
+    double vel;
+    double eff;
+    double cmd;
+    PropulsionJoint() : pos(0.0), vel(0.0), eff(0.0), cmd(0.0) {}
+  }
+  propulsion_joint_;
+
+  hardware_interface::PositionJointInterface position_joint_interface_;
+  hardware_interface::JointStateInterface joint_state_interface_;
+  hardware_interface::VelocityJointInterface velocity_joint_interface_;
 
 };
 

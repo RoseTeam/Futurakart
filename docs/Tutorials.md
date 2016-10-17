@@ -1,6 +1,17 @@
 # Futurakart tutorials
 
 
+## Base part on the desktop
+ 
+ 
+ 
+```
+rostopic pub -r 1.0 /ackermann_cmd ackermann_msgs/AckermannDrive "{'steering_angle': 0.05, 'speed': 0.1}"
+``` 
+
+
+
+
 ## Vision part on the desktop
 
 You can test `futurakart` and its navigation part on the PC with a connected Kinect. 
