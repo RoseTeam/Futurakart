@@ -51,7 +51,7 @@
     <!--Define front steering transmission -->
     <!--**************************************************************************-->
 
-    <transmission name="front_steering_trans">
+<!--    <transmission name="front_steering_trans">
         <type>transmission_interface/SimpleTransmission</type>
         <joint name="front_steering_joint">
             <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
@@ -69,7 +69,7 @@
         <actuator name="drive_motor">
             <mechanicalReduction>1.0</mechanicalReduction>
         </actuator>
-    </transmission>
+    </transmission>-->
 
 
     <!--**************************************************************************-->

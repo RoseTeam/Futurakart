@@ -25,26 +25,32 @@ FuturakartHardware::FuturakartHardware() :
     hardware_interface::JointStateHandle dir_joint_state_handle(
           dir_joint_names[i],
           &direction_joint_.pos,
-          0, // null pointer for velocity
-          0 // null pointer for effort
-    );
+          &direction_joint_.vel,
+          &direction_joint_.eff
+          );
     joint_state_interface_.registerHandle(dir_joint_state_handle);
     hardware_interface::JointHandle dir_joint_handle(dir_joint_state_handle, &direction_joint_.cmd);
     position_joint_interface_.registerHandle(dir_joint_handle);
   }
 
   // Define and register propulsion interface:
-  hardware_interface::JointStateHandle prop_joint_state_handle(
-        "rear_right_wheel",
-        0, // null pointer for postion
-        &propulsion_joint_.vel,
-        0 // null pointer for effort
-  );
-  joint_state_interface_.registerHandle(prop_joint_state_handle);
-  hardware_interface::JointHandle prop_joint_handle(prop_joint_state_handle, &propulsion_joint_.cmd);
-  velocity_joint_interface_.registerHandle(prop_joint_handle);
+  ros::V_string prop_joint_names = boost::assign::list_of("rear_left_wheel")("rear_right_wheel");
+  for (unsigned int i = 0; i < prop_joint_names.size(); i++)
+  {
+
+    hardware_interface::JointStateHandle prop_joint_state_handle(
+          prop_joint_names[i],
+          &propulsion_joint_.pos,
+          &propulsion_joint_.vel,
+          &propulsion_joint_.eff
+          );
+    joint_state_interface_.registerHandle(prop_joint_state_handle);
+    hardware_interface::JointHandle prop_joint_handle(prop_joint_state_handle, &propulsion_joint_.cmd);
+    velocity_joint_interface_.registerHandle(prop_joint_handle);
+  }
 
   registerInterface(&joint_state_interface_);
+  registerInterface(&position_joint_interface_);
   registerInterface(&velocity_joint_interface_);
 
   feedback_sub_ = nh_.subscribe(hw_feedback_topic, 1, &FuturakartHardware::feedbackCallback, this);
@@ -53,12 +59,12 @@ FuturakartHardware::FuturakartHardware() :
   cmd_drive_pub_.init(nh_, cmd_vel_topic, 1);
 
 
-//  nh_.param("robot_description", robot_description_, robot_description_);
-//  registerInterface(&actuator_position_interface_);
-//  registerInterface(&actuator_state_interface_);
-//  registerInterface(&actuator_velocity_interface_);
-//  transmission_loader_.reset(new transmission_interface::TransmissionInterfaceLoader(this, &transmissions_));
-//  transmission_loader_->load(robot_description_);
+  //  nh_.param("robot_description", robot_description_, robot_description_);
+  //  registerInterface(&actuator_position_interface_);
+  //  registerInterface(&actuator_state_interface_);
+  //  registerInterface(&actuator_velocity_interface_);
+  //  transmission_loader_.reset(new transmission_interface::TransmissionInterfaceLoader(this, &transmissions_));
+  //  transmission_loader_->load(robot_description_);
 
 }
 //*********************************************************************************************************************
@@ -73,9 +79,9 @@ void FuturakartHardware::read(ros::Time time, ros::Duration period)
     propulsion_joint_.vel = feedback_msg_->x;
   }
 
-//  // Read actuator_vel, actuator_pos from MBED
-//  if(transmissions_.get<transmission_interface::ActuatorToJointStateInterface>())
-//    transmissions_.get<transmission_interface::ActuatorToJointStateInterface>()->propagate();
+  //  // Read actuator_vel, actuator_pos from MBED
+  //  if(transmissions_.get<transmission_interface::ActuatorToJointStateInterface>())
+  //    transmissions_.get<transmission_interface::ActuatorToJointStateInterface>()->propagate();
 }
 
 //*********************************************************************************************************************
@@ -89,10 +95,10 @@ void FuturakartHardware::update(ros::Time time, ros::Duration period)
 
 void FuturakartHardware::write(ros::Time time, ros::Duration period)
 {
-//  if(transmissions_.get<transmission_interface::JointToActuatorPositionInterface>())
-//    transmissions_.get<transmission_interface::JointToActuatorPositionInterface>()->propagate();
-//  if(transmissions_.get<transmission_interface::JointToActuatorVelocityInterface>())
-//    transmissions_.get<transmission_interface::JointToActuatorVelocityInterface>()->propagate();
+  //  if(transmissions_.get<transmission_interface::JointToActuatorPositionInterface>())
+  //    transmissions_.get<transmission_interface::JointToActuatorPositionInterface>()->propagate();
+  //  if(transmissions_.get<transmission_interface::JointToActuatorVelocityInterface>())
+  //    transmissions_.get<transmission_interface::JointToActuatorVelocityInterface>()->propagate();
 
 
   // Write cmd_vel to MBED

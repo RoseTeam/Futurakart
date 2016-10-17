@@ -70,17 +70,21 @@ private:
   struct DirectionJoint
   {
     double pos;
+    double vel;
+    double eff;
     double cmd;
-    DirectionJoint() : pos(0.0), cmd(0.0) {}
+    DirectionJoint() : pos(0.0), vel(0.0), eff(0.0), cmd(0.0) {}
   }
   direction_joint_;
 
   // Propulstion joint model stores data to exchange between hardware and hardware interface
   struct PropulsionJoint
   {
+    double pos;
     double vel;
+    double eff;
     double cmd;
-    PropulsionJoint() : vel(0.0), cmd(0.0) {}
+    PropulsionJoint() : pos(0.0), vel(0.0), eff(0.0), cmd(0.0) {}
   }
   propulsion_joint_;
 

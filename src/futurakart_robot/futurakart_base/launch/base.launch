@@ -1,23 +1,25 @@
 <launch>
 
-<!--    <include file="$(find futurakart_description)/launch/description.launch" />-->
+    <include file="$(find futurakart_description)/launch/description.launch" />
 
+    <!-- Open serial server via rosserial_python -->
+    <arg name="port" default="/dev/ttyACM0"/>
+    <!-- Enable port to be writable/readable -->
+    <!--<param name="chmod_tty_returncode" command="sudo chmod 666 '$(arg port)'"/>-->
 
-    <!-- Open serial server vie rosserial_python -->
-    <node pkg="rosserial_python" type="serial_node" output="screen">
-        <param name="~port" value="/dev/ttyACM0"/>
-        <param name="~baud" value="115200"/>
-    </node>
-
-    <node pkg="rosserial_python" type="message_info_service.py" name="rosserial_message_info" />
+    <!--<node name="rospy_serial_node" pkg="rosserial_python" type="serial_node.py" output="screen">-->
+        <!--<param name="~port" value="$(arg port)"/>-->
+        <!--<param name="~baud" value="115200"/>-->
+    <!--</node>-->
+    <!--<node pkg="rosserial_python" type="message_info_service.py" name="rosserial_message_info" />-->
 
     <node pkg="futurakart_base" type="futurakart_node" name="futurakart_node">
         <param name="cmd_vel_topic" value="cmd_vel"/>
-        <param name="hw_feedback_topic" value=""/>
+        <param name="hw_feedback_topic" value="state_pos_vel"/>
     </node>
 
     <!-- Differential controller and basic localization -->
-    <!--  <include file="$(find futurakart_control)/launch/control.launch" />-->
+    <include file="$(find futurakart_control)/launch/control.launch" />
 
     <!-- Teleoperation via joystick and rviz interactive markers -->
     <!--  <include file="$(find futurakart_control)/launch/teleop.launch" />-->

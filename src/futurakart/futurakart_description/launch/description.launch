@@ -1,5 +1,4 @@
 <launch>
-
     <param name="robot_description"
            command="$(find xacro)/xacro --inorder '$(find futurakart_description)/urdf/futurakart.urdf'" />
 
