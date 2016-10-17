@@ -38,7 +38,7 @@ rotate([0,0,-12])
 translate([0,-.2,0]){
     union()
     {
-    translate([0,0,8]){ // butee
+    translate([0,0,8]){ // but�e
     cylindre(19,6);
     }
         cylindre(12,14);
@@ -73,10 +73,7 @@ module axe(sca=1.10, h=40)
 
 difference()
 {
-    difference(){
-        dents();
-        axe();
-    };
+    dents();
     translate([0,0,4])
         rotate([0,90,0])
             cylindre(r=2,h=35);
