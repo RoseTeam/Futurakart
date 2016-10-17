@@ -9,14 +9,14 @@
     <xacro:include filename="$(find futurakart_description)/urdf/futurakart.gazebo" />
 
     <!--**************************************************************************-->
-    <!--Define links and joints -->
+    <!--                     Define links and joints                              -->
     <!--**************************************************************************-->
 
     <!-- Center of the Kart -->
     <link name="base_link">
         <visual>
             <geometry>
-                <box size="${base_length} ${base_width} ${base_height}"/>
+                <box size="${base_width} ${base_length} ${base_height}"/>
             </geometry>
             <material name="yellow" />
         </visual>
@@ -27,31 +27,34 @@
     <joint name="base_link_joint" type="fixed">
         <parent link="base_footprint"/>
         <child link="base_link"/>
-        <origin xyz="0 0 ${vertical_offset}"/>
+        <origin xyz="0 ${track/2} -${vertical_offset}"/>
     </joint>
+
+
 
     <!--**************************************************************************-->
     <!--Define 4 wheels-->
     <!--**************************************************************************-->
 
     <xacro:wheel prefix="front_left">
-        <origin xyz="${wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+        <origin xyz="${-wheelbase_front/2} ${track} ${wheel_vertical_offset}" rpy="0 0 0" />
     </xacro:wheel>
     <xacro:wheel prefix="front_right">
-        <origin xyz="${wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+        <origin xyz="${wheelbase_front/2} ${track} ${wheel_vertical_offset}" rpy="0 0 0" />
     </xacro:wheel>
     <xacro:wheel prefix="rear_left">
-        <origin xyz="${-wheelbase/2} ${track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+        <origin xyz="${-wheelbase_rear/2} 0 ${wheel_vertical_offset}" rpy="0 0 0" />
     </xacro:wheel>
     <xacro:wheel prefix="rear_right">
-        <origin xyz="${-wheelbase/2} ${-track/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+        <origin xyz="${wheelbase_rear/2} 0 ${wheel_vertical_offset}" rpy="0 0 0" />
     </xacro:wheel>
 
     <!--**************************************************************************-->
     <!--Define front steering transmission -->
     <!--**************************************************************************-->
 
-<!--    <transmission name="front_steering_trans">
+<!--
+    <transmission name="front_steering_trans">
         <type>transmission_interface/SimpleTransmission</type>
         <joint name="front_steering_joint">
             <hardwareInterface>hardware_interface/PositionJointInterface</hardwareInterface>
@@ -69,7 +72,8 @@
         <actuator name="drive_motor">
             <mechanicalReduction>1.0</mechanicalReduction>
         </actuator>
-    </transmission>-->
+    </transmission>
+-->
 
 
     <!--**************************************************************************-->
