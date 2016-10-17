@@ -21,6 +21,7 @@ sudo apt-get install ros-kinetic-camera-info-manager ros-kinetic-diagnostic-upda
 sudo apt-get install ros-kinetic-libg2o ros-kinetic-tf-conversions ros-kinetic-octomap-ros
 sudo apt-get install ros-kinetic-freenect-stack ros-kinetic-depthimage-to-laserscan ros-kinetic-ros-control
 sudo apt-get install ros-kinetic-navigation ros-kinetic-robot-localization ros-kinetic-controller-manager ros-kinetic-joint-state-controller ros-kinetic-diff-drive-controller ros-kinetic-gazebo-ros ros-kinetic-gazebo-ros-control ros-kinetic-gazebo-plugins             ros-kinetic-lms1xx ros-kinetic-pointgrey-camera-description ros-kinetic-roslint ros-kinetic-amcl ros-kinetic-gmapping      ros-kinetic-map-server ros-kinetic-move-base ros-kinetic-urdf ros-kinetic-xacro ros-kinetic-message-runtime ros-kinetic-topic-tools ros-kinetic-teleop-twist-joy
+sudo apt-get install ros-kinetic-ackermann-msgs
 ```
 
 ### Build rtabmap library and rtabmap_ros

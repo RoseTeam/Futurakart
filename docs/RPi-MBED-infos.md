@@ -36,9 +36,9 @@ sudo blkid
 
 Add to the `/etc/fstab` the following line:
 ```
-UUID="2702-1974" /home/ubuntu/mbed_repository vfat gid=ubuntu,uid=ubuntu 0 0
+UUID="2702-1974" /home/ubuntu/mbed_repository vfat nofail,gid=ubuntu,uid=ubuntu,x-systemd.device-timeout=10 0 0
 ```
-
+See [this](http://www.pclosmag.com/html/Issues/200709/page07.html) and [this](http://unix.stackexchange.com/questions/314271/automount-disk-connected-through-usb-when-the-pc-is-turned-on) for more info
 
 
 

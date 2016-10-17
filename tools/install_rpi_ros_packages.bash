@@ -42,7 +42,7 @@ function fk_deps() {
     sudo apt-get -y install ros-kinetic-navigation ros-kinetic-robot-localization ros-kinetic-roslint ros-kinetic-gmapping ros-kinetic-urdf ros-kinetic-xacro ros-kinetic-message-runtime ros-kinetic-teleop-twist-joy ros-kinetic-ros-control
     sudo apt-get -y install ros-kinetic-depthimage-to-laserscan
     sudo apt-get -y install ros-kinetic-libg2o ros-kinetic-tf-conversions ros-kinetic-octomap-ros
-
+    sudo apt-get -y install ros-kinetic-ackermann-msgs
 }
 
 function rtabmap() {
