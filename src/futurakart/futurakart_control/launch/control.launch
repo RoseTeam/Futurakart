@@ -9,8 +9,11 @@
           args="cmd_vel futurakart_velocity_controller/cmd_vel" />
 
 
+    // http://docs.ros.org/kinetic/api/robot_localization/html/state_estimation_nodes.html
+    // ukf_localization_node more stable but more computationally taxing than ekf_localization_node
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
         <rosparam command="load" file="$(find futurakart_control)/config/robot_localization.yaml" />
+        <remap from="/futurakart_velocity_controller/odom" to="/odom" />
     </node>
 
 

@@ -27,9 +27,9 @@
     <!-- Center of the Kart projected on the floor-->
     <link name="base_footprint" />
     <joint name="base_link_joint" type="fixed">
-        <parent link="base_footprint"/>
-        <child link="base_link"/>
-        <origin xyz="0 -${track/2} ${vertical_offset}"/>
+        <parent link="base_link"/>
+        <child link="base_footprint"/>
+        <origin xyz="0 ${track/2} -${vertical_offset}"/>
     </joint>
 
 

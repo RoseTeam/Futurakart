@@ -14,8 +14,8 @@
     <!--<node pkg="rosserial_python" type="message_info_service.py" name="rosserial_message_info" />-->
 
     <node pkg="futurakart_base" type="futurakart_node" name="futurakart_node">
-        <param name="cmd_vel_topic" value="cmd_vel"/>
-        <param name="hw_feedback_topic" value="state_pos_vel"/>
+        <param name="motordrive_cmd_topic" value="motordrive_cmd"/>
+        <param name="motorfeedback_topic" value="motorfeedback"/>
     </node>
 
     <!-- Differential controller and basic localization -->
