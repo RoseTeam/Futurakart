@@ -3,4 +3,4 @@
 	url = https://github.com/blinky-robot/ackermann_controller.git
 [submodule "mbed/futurakart_msgs"]
 	path = mbed/futurakart_msgs
-	url = ./mbed/futurakart_msgs
+	url = https://github.com/vfdev-5/futurakart_msgs_mbed.git
