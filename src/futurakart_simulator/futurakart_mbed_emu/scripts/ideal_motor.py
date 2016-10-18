@@ -6,8 +6,8 @@
 #
 # Our nucleo card controls direction / propulsion motors
 #
-# It subcribes to a geometry_msgs/Pose2D topic named 'cmd_vel'
-# It publishes a geometry_msgs/Pose2D message as a topic named 'state_pos_vel'
+# It subcribes to a futurakart_msgs/MotorDrive topic named 'motordrive_cmd'
+# It publishes a futurakart_msgs/MotorFeedback message as a topic named 'motorfeedback'
 #
 
 import signal

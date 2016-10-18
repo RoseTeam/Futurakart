@@ -14,10 +14,10 @@ Next, start `futurakart_base` base node:
 ```
 rosrun futurakart_base futurakart_node
 ```
-You can see that emulator start to print that it receives a zero `cmd_vel` messages.
+You can see that emulator start to print that it receives a zero `motordrive_cmd` messages.
 These messages are created from current state of the joints : direction and propulsion.
 
-Now we start `futurakart_description` and `futurakart_control` :
+Now we need to start `futurakart_description` and `futurakart_control` :
 ```
 roslaunch futurakart_description description.launch
 ```
@@ -26,7 +26,7 @@ and
 roslaunch futurakart_control control.launch
 ```
 
-Now we are ready to publish a driving command using Ackermann messages :  
+And finally, now we are ready to publish a driving command using Ackermann messages :
 ```
 rostopic pub -r 50.0 /ackermann_cmd ackermann_msgs/AckermannDrive "{'steering_angle': 0.05, 'speed': 0.1}"
 ``` 
@@ -36,6 +36,6 @@ Open rviz and observe the kart moving:
 roslaunch futurakart_viz view_robot.launch
 ```
 
-or going to the next step : publish `Twist` message, convert it 
+or going to the next step : publish `Twist` message, convert it with auxiliairy node `twist_to_ackermann`
 
 
