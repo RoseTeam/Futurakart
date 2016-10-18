@@ -1,3 +1,6 @@
 [submodule "src/ackermann_controller"]
 	path = src/ackermann_controller
 	url = https://github.com/blinky-robot/ackermann_controller.git
+[submodule "mbed/futurakart_msgs"]
+	path = mbed/futurakart_msgs
+	url = ./mbed/futurakart_msgs

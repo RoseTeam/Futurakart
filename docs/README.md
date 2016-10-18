@@ -73,7 +73,6 @@ Comments on `ackermann_controller` :
 - `d_theta=tan(steering_pos) * d_dist / base_length` : angle ...
 
 
-
 ### Robot packages 
 
 These packages are destinated for the robot only. 
