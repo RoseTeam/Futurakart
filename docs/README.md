@@ -20,25 +20,33 @@ git submodule update --init --recursive
 - Simulator : `futurakart_gazebo`
 
 
-#### Core packages
+### Core packages
 
 These packages are destinated for the desktop and the robot.  
 
-**`futurakart_description`** package contains information about robot using URDF formalism. 
+####`futurakart_description`
+Package contains information about robot using URDF formalism. 
 This defines joints and links, robot caracteristics, dimensions etc and can also associate with meshes for gazebo simulation.
 
-**TODO: define proper robot dimensions and useful parts and sensors** 
+**Launch files:**
+- `description.launch` starts `robot_state_publisher` node with `futurakart.urdf`
 
 See docs on [robot_state_publisher](http://wiki.ros.org/robot_state_publisher/Tutorials/Using%20the%20robot%20state%20publisher%20on%20your%20own%20robot)
 
 
-**`futurakart_msgs`**
+#### `futurakart_msgs`
+Package contains custom messages to exchange with motors hardware part:
+- MotorDrive
+- MotorFeedback
+
+#### `futurakart_control`
+
+TODO TODO TODO
 
 
-**`futurakart_control`**  
+#### `futurakart_2dnav`
 
-
-**`futurakart_2dnav`** package contains few launch files for mapping and localization purposes: 
+Package contains few launch files for mapping and localization purposes: 
 
 - `create_map.launch gmapping:={true|false} rtabmap:={true|false}` to create a map using `gmapping` or `rtabmap`. 
 If you use `gmapping` and want to save the map, run `rosrun map_server map_saver -f mymap` before killing the node or use the alias `save_gmap`.
@@ -49,32 +57,40 @@ If you use `rtabmap`, the map is automatically saved as `futurakart/futurakart_2
 
 ### 3rdParty packages
 
-**`ackermann_controller`**, **`dual_controller_interface`** are packages developed for [blinky-robot](https://github.com/blinky-robot) and the code is taken from [github](https://github.com/blinky-robot/ackermann_controller) 
+#### `ackermann_controller` and  `dual_controller_interface`
+are packages developed for [blinky-robot](https://github.com/blinky-robot) and the code is taken from [github](https://github.com/blinky-robot/ackermann_controller) 
 
 We modified **`dual_controller_interface`** to adapt to the newer version of the `ros_control` modules.
 
-
 Comments on `ackermann_controller` :
 
-`drive_joints={position, velocity}` : position and velocity of the propulsion rear wheels
-`steering_joints={position}` : angle in radians of the direction
-`steering_pos=steering_joints.position`
-`d_pos` : angle in radians driven by the vehicle
-`d_dist=d_pos * wheel_radius` : distance driven be the vehicle
-`base_length` : track distance between front and rear wheel axles ???
-
-`d_theta=tan(steering_pos) * d_dist / base_length` : angle ...
-
+- `drive_joints={position, velocity}` : position and velocity of the propulsion rear wheels
+- `steering_joints={position}` : angle in radians of the direction
+- `steering_pos=steering_joints.position`
+- `d_pos` : angle in radians driven by the vehicle
+- `d_dist=d_pos * wheel_radius` : distance driven be the vehicle
+- `base_length` : track distance between front and rear wheel axles ???
+- `d_theta=tan(steering_pos) * d_dist / base_length` : angle ...
 
 
-#### Robot packages 
+
+### Robot packages 
 
 These packages are destinated for the robot only. 
 
 Futurakart robot is composed of two Raspberry Pi cards, reponsible for the *mobile* part and the *vision* part
 Both RPi cards should have *robot packages* and *core packages*, however the bringup procedure varies depending on the card.
 
-**`futurakart_bringup`** package is responsible to bringup the robot. 
+#### `futurakart_bringup` 
+The package is responsible to bringup the robot. 
+
+**Nodes:** 
+- TODO
+- TODO
+
+**Launch files:**
+- TODO
+- TODO
 
 For instance, we use a simple bringup procedure: 
 - Connect with SSH to the robot (*mobile* part RPi)
@@ -100,17 +116,17 @@ echo "ssh-rsa <key-part> user@PC" >> ~/.ssh/authorized_keys
 
 **TODO: There is another more 'pro' way to bringup a robot. See for example [here](http://wiki.ros.org/husky_bringup/Tutorials/Install%20Husky%20Software)**
 
-**`futurakart_base`** : hardware driver for communicating with MBED card
+**`futurakart_base`** : package contains base code to communicate with
+- Nucleo card which commands propulsion and direction motors
+- Kinect sensor
+- ...
 
-The main part of the package is `FuturakartHardware` interface from `futurakart_hardware.h / futurakart_hardware.cpp` following Robot_HW paradigm of `ros_control` framework. 
+
+
+The hardware driver communicating with Nucleo card is `FuturakartHardware` interface from `futurakart_hardware.h / futurakart_hardware.cpp` following Robot_HW paradigm of `ros_control` framework. 
 It contains :
 - Propulsion Position / Velocity Joint Interfaces
 - Direction Position Joint Interface
-
-When *futurakart* node is started, it instantiates a `FuturakartHardware` ...
-
-
-
 
 
 ```
@@ -119,7 +135,7 @@ roslaunch futurakart_base vision.launch
 which initializes the Kinect sensor.
 
 
-#### Desktop packages
+### Desktop packages
 
 `futurakart_viz` package helps to display the robot using RViz: 
  
