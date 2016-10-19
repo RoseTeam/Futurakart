@@ -2,15 +2,19 @@
     <rosparam command="load" file="$(find futurakart_control)/config/control.yaml" />
 
     <node name="controller_spawner" pkg="controller_manager" type="spawner" output="screen"
-          args="futurakart_joint_publisher futurakart_velocity_controller --shutdown-timeout 1" />
+          args="futurakart_joint_publisher futurakart_velocity_controller --shutdown-timeout 1">
+    </node>
 
     <node pkg="topic_tools" type="relay" name="cmd_vel_relay" output="screen"
           args="cmd_vel futurakart_velocity_controller/cmd_vel" />
 
 
-<!--    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
+    // http://docs.ros.org/kinetic/api/robot_localization/html/state_estimation_nodes.html
+    // ukf_localization_node more stable but more computationally taxing than ekf_localization_node
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
         <rosparam command="load" file="$(find futurakart_control)/config/robot_localization.yaml" />
-    </node> -->
+        <remap from="/futurakart_velocity_controller/odom" to="/odom" />
+    </node>
 
 
     <!-- Convert the nav stack's twist msgs to AckermannDrive msgs -->

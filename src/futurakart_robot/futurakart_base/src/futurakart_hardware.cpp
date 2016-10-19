@@ -11,10 +11,10 @@ FuturakartHardware::FuturakartHardware() :
   robot_description_("")
 {
 
-  std::string hw_feedback_topic, cmd_vel_topic;
+  std::string motorfeedback_topic, motordrive_cmd_topic;
 
-  nh_.param("hw_feedback_topic", hw_feedback_topic, std::string("feedback"));
-  nh_.param("cmd_vel_topic", cmd_vel_topic, std::string("cmd_vel"));
+  nh_.param("motorfeedback_topic", motorfeedback_topic, std::string("motorfeedback"));
+  nh_.param("motordrive_cmd_topic", motordrive_cmd_topic, std::string("motordrive_cmd"));
 
 
   // Define and register direction interface:
@@ -53,18 +53,10 @@ FuturakartHardware::FuturakartHardware() :
   registerInterface(&position_joint_interface_);
   registerInterface(&velocity_joint_interface_);
 
-  feedback_sub_ = nh_.subscribe(hw_feedback_topic, 1, &FuturakartHardware::feedbackCallback, this);
+  feedback_sub_ = nh_.subscribe(motorfeedback_topic, 1, &FuturakartHardware::feedbackCallback, this);
 
   // Realtime publisher, initializes differently from regular ros::Publisher
-  cmd_drive_pub_.init(nh_, cmd_vel_topic, 1);
-
-
-  //  nh_.param("robot_description", robot_description_, robot_description_);
-  //  registerInterface(&actuator_position_interface_);
-  //  registerInterface(&actuator_state_interface_);
-  //  registerInterface(&actuator_velocity_interface_);
-  //  transmission_loader_.reset(new transmission_interface::TransmissionInterfaceLoader(this, &transmissions_));
-  //  transmission_loader_->load(robot_description_);
+  cmd_drive_pub_.init(nh_, motordrive_cmd_topic, 1);
 
 }
 //*********************************************************************************************************************
@@ -75,13 +67,10 @@ void FuturakartHardware::read(ros::Time time, ros::Duration period)
   boost::mutex::scoped_lock feedback_msg_lock(feedback_msg_mutex_, boost::try_to_lock);
   if (feedback_msg_ && feedback_msg_lock)
   {
-    direction_joint_.pos = feedback_msg_->theta;
-    propulsion_joint_.vel = feedback_msg_->x;
+    direction_joint_.pos = feedback_msg_->dir_pos;
+    propulsion_joint_.pos = feedback_msg_->prop_pos;
+    propulsion_joint_.vel = feedback_msg_->prop_vel;
   }
-
-  //  // Read actuator_vel, actuator_pos from MBED
-  //  if(transmissions_.get<transmission_interface::ActuatorToJointStateInterface>())
-  //    transmissions_.get<transmission_interface::ActuatorToJointStateInterface>()->propagate();
 }
 
 //*********************************************************************************************************************
@@ -95,25 +84,18 @@ void FuturakartHardware::update(ros::Time time, ros::Duration period)
 
 void FuturakartHardware::write(ros::Time time, ros::Duration period)
 {
-  //  if(transmissions_.get<transmission_interface::JointToActuatorPositionInterface>())
-  //    transmissions_.get<transmission_interface::JointToActuatorPositionInterface>()->propagate();
-  //  if(transmissions_.get<transmission_interface::JointToActuatorVelocityInterface>())
-  //    transmissions_.get<transmission_interface::JointToActuatorVelocityInterface>()->propagate();
-
-
   // Write cmd_vel to MBED
   if (cmd_drive_pub_.trylock())
   {
-    cmd_drive_pub_.msg_.x = propulsion_joint_.cmd;
-    cmd_drive_pub_.msg_.y = 0.0;
-    cmd_drive_pub_.msg_.theta = direction_joint_.cmd;
+    cmd_drive_pub_.msg_.dir_pos = direction_joint_.cmd;
+    cmd_drive_pub_.msg_.prop_vel = propulsion_joint_.cmd;
     cmd_drive_pub_.unlockAndPublish();
   }
 }
 
 //*********************************************************************************************************************
 
-void FuturakartHardware::feedbackCallback(const geometry_msgs::Pose2D::ConstPtr &msg)
+void FuturakartHardware::feedbackCallback(const futurakart_msgs::MotorFeedback::ConstPtr &msg)
 {
   // Update the feedback message pointer to point to the current message. Block
   // until the control thread is not using the lock.

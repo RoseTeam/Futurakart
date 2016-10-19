@@ -7,25 +7,16 @@
 
 // ROS
 #include <ros/ros.h>
-#include <geometry_msgs/Pose2D.h>
 
 // Ros controls
 #include <hardware_interface/robot_hw.h>
+#include <hardware_interface/joint_state_interface.h>
+#include <hardware_interface/joint_command_interface.h>
+#include <realtime_tools/realtime_publisher.h>
 
-#include "hardware_interface/joint_state_interface.h"
-#include "hardware_interface/joint_command_interface.h"
-#include "realtime_tools/realtime_publisher.h"
-
-
-// Transmission mode : !!! NOT USED
-//#include <hardware_interface/actuator_command_interface.h>
-//#include <hardware_interface/actuator_state_interface.h>
-//#include <transmission_interface/robot_transmissions.h>
-//#include <transmission_interface/transmission_interface_loader.h>
-// END Transmission mode : !!! NOT USED
-
-
-
+// Project
+#include <futurakart_msgs/MotorDrive.h>
+#include <futurakart_msgs/MotorFeedback.h>
 
 namespace futurakart_base
 {
@@ -41,13 +32,13 @@ public:
 
 private:
 
-  void feedbackCallback(const geometry_msgs::Pose2D::ConstPtr& msg);
+  void feedbackCallback(const futurakart_msgs::MotorFeedback::ConstPtr& msg);
 
   ros::NodeHandle nh_;
   ros::Subscriber feedback_sub_;
-  realtime_tools::RealtimePublisher<geometry_msgs::Pose2D> cmd_drive_pub_;
+  realtime_tools::RealtimePublisher<futurakart_msgs::MotorDrive> cmd_drive_pub_;
   // This pointer is set from the ROS thread.
-  geometry_msgs::Pose2D::ConstPtr feedback_msg_;
+  futurakart_msgs::MotorFeedback::ConstPtr feedback_msg_;
   boost::mutex feedback_msg_mutex_;
 
   std::string robot_description_;
@@ -56,15 +47,6 @@ private:
   //diagnostic_updater::FrequencyStatus diag_freq;
   //double diag_freq_min;
   //double diag_freq_max;
-
-  // Transmission mode : !!! NOT USED
-  //	transmission_interface::RobotTransmissions transmissions_;
-  //	boost::scoped_ptr<transmission_interface::TransmissionInterfaceLoader> transmission_loader_;
-  //	hardware_interface::PositionActuatorInterface actuator_position_interface_;
-  //	hardware_interface::ActuatorStateInterface actuator_state_interface_;
-  //	hardware_interface::VelocityActuatorInterface actuator_velocity_interface_;
-  // END Transmission mode : !!! NOT USED
-
 
   // Direction joint model stores data to exchange between hardware and hardware interface
   struct DirectionJoint

@@ -1,17 +1,5 @@
 # Futurakart tutorials
 
-
-## Base part on the desktop
- 
- 
- 
-```
-rostopic pub -r 1.0 /ackermann_cmd ackermann_msgs/AckermannDrive "{'steering_angle': 0.05, 'speed': 0.1}"
-``` 
-
-
-
-
 ## Vision part on the desktop
 
 You can test `futurakart` and its navigation part on the PC with a connected Kinect. 
@@ -26,7 +14,7 @@ Bus 001 Device 018: ID 045e:02ad Microsoft Corp. Xbox NUI Audio
 ```
 You can also check image reception using `freenect-glview`. 
 
-#### Common setup 
+#### Common setup s
 Next, start *vision* part of `futurakart`, assuming catkin workspace is at `~/futurakart_ws`. Open a terminal and run the following: 
 ```
 $ cd ~/futurakart_ws; source devel/setup.bash
@@ -97,9 +85,3 @@ and in another terminal execute (do not forget to `source devel/setup.bash` befo
 $ roslaunch futurakart_viz view_robot.launch  config:=localization
 ```
 ![img4](img/map_loc_gmapping.png)
-
-
-
-
-
-## Simulation

@@ -4,8 +4,8 @@
     <node name="start_mbed_emu" pkg="futurakart_mbed_emu"
         type="ideal_motor.py" output="screen">
 
-        <param name="cmd_vel_topic" value="cmd_vel"/>
-        <param name="hw_feedback_topic" value="state_pos_vel"/>
+        <param name="motordrive_cmd_topic" value="motordrive_cmd"/>
+        <param name="motorfeedback_topic" value="motorfeedback"/>
 
     </node>
 

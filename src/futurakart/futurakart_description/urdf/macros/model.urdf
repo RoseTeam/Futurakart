@@ -16,14 +16,15 @@
 
         <link name="${prefix}_wheel_link">
             <visual>
-                <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+                <origin xyz="0 0 0" rpy="${PI/2} 0 ${PI/2}"/>
                 <geometry>
-                    <mesh filename="package://futurakart_description/meshes/futurakart-wheel.stl"/>
+                    <!--mesh filename="package://futurakart_description/meshes/futurakart-wheel.stl"/-->
+                    <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
                 </geometry>
                 <material name="black" />
             </visual>
             <collision>
-                <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+                <origin xyz="0 0 0" rpy="${PI/2} 0 ${PI/2}"/>
                 <geometry>
                     <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
                 </geometry>
