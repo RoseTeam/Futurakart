@@ -11,7 +11,7 @@ See 'setup_all.bash' paragraphe in 'Useful tools' from [here](./README.md) to le
 
 ## Check communication between RPi and Nucleo
 
-Connect the *Nucleo* to the *RPi* and you should see a green led blinks under `reset` with about 2 seconds period. 
+Connect the *Nucleo* to the *RPi* and you should see a green led blinks under `reset` button with about 2 seconds period. 
 
 To exchange messages between motor controlling card *Nucleo* and the RPi, 
 you can simply open serial connection between the cards and check the list of topics.
@@ -51,4 +51,42 @@ prop_vel: 0.20000000298
 
 ## Drive the kart from desktop
 
-TODO
+Connect the *Nucleo* to the *RPi* and you should see a green led blinks under `reset` button with about 2 seconds period. 
+Ping *RPi* from your desktop and connect to it using SSH.
+
+
+At first, we need to configure properly ROS_MASTER_URI and ROS_HOSTNAME. Configure `ros.conf` and use `setup_all.bash`. 
+For more information about this, consult 'setup_all.bash' paragraphe in 'Useful tools' from [here](./README.md).
+```
+nano ros.conf
+source setup_all.bash
+```
+
+We will start the base node of `futurakart` on the RPi :
+```
+roslaunch futurakart_base base.launch
+```
+You should see the last messages like these :
+```
+[INFO] [WallTime: 1476914401.109845] ROS Serial Python Node
+[INFO] [WallTime: 1476914401.131534] Connecting to /dev/ttyACM0 at 115200 baud
+[INFO] [WallTime: 1476914401.467880] Controller Spawner: Waiting for service controller_manager/load_controller
+[INFO] [WallTime: 1476914401.475105] Controller Spawner: Waiting for service controller_manager/switch_controller
+[INFO] [WallTime: 1476914401.484267] Controller Spawner: Waiting for service controller_manager/unload_controller
+[INFO] [WallTime: 1476914401.492238] Loading controller: futurakart_joint_publisher
+[INFO] [WallTime: 1476914401.670108] Loading controller: futurakart_velocity_controller
+[INFO] [WallTime: 1476914401.909790] Controller Spawner: Loaded controllers: futurakart_joint_publisher, futurakart_velocity_controller
+[INFO] [WallTime: 1476914401.968209] Started controllers: futurakart_joint_publisher, futurakart_velocity_controller
+[INFO] [WallTime: 1476914403.279211] Note: publish buffer size is 512 bytes
+[INFO] [WallTime: 1476914403.282587] Setup publisher on motorfeedback [futurakart_msgs/MotorFeedback]
+[INFO] [WallTime: 1476914403.308983] Note: subscribe buffer size is 512 bytes
+[INFO] [WallTime: 1476914403.311611] Setup subscriber on motordrive_cmd [futurakart_msgs/MotorDrive]
+```
+
+Optionally, you can check topics `rostopic list`
+
+Next on the desktop, we can start rviz :
+```
+roslaunch futurakart_viz view_robot.launch
+```
+

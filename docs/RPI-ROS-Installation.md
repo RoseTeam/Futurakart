@@ -21,7 +21,7 @@ sudo apt-get install ros-kinetic-camera-info-manager ros-kinetic-diagnostic-upda
 sudo apt-get install ros-kinetic-libg2o ros-kinetic-tf-conversions ros-kinetic-octomap-ros
 sudo apt-get install ros-kinetic-freenect-stack ros-kinetic-depthimage-to-laserscan ros-kinetic-ros-control
 sudo apt-get install ros-kinetic-navigation ros-kinetic-robot-localization ros-kinetic-controller-manager ros-kinetic-joint-state-controller ros-kinetic-diff-drive-controller ros-kinetic-gazebo-ros ros-kinetic-gazebo-ros-control ros-kinetic-gazebo-plugins             ros-kinetic-lms1xx ros-kinetic-pointgrey-camera-description ros-kinetic-roslint ros-kinetic-amcl ros-kinetic-gmapping      ros-kinetic-map-server ros-kinetic-move-base ros-kinetic-urdf ros-kinetic-xacro ros-kinetic-message-runtime ros-kinetic-topic-tools ros-kinetic-teleop-twist-joy
-sudo apt-get install ros-kinetic-ackermann-msgs
+sudo apt-get install ros-kinetic-ackermann-msgs ros-kinetic-robot-state-publisher
 ```
 
 ### Build rtabmap library and rtabmap_ros
@@ -73,6 +73,15 @@ Copy `ros.conf.example` to `ros.conf` and edit `ros.conf` file to define your co
 cp ros.conf.example ros.conf
 nano ros.conf
 ```
+The master machine in our Ros network is RPi, thus : 
+- ROS_MASTER_URI should be something like `http://<hostname>:11311` where `<hostname>` can be found running in terminal : `$ hostname`
+- ROS_HOSTNAME should be `<hostname>`
+
+Any desktop machine should be configured as (let hostname of RPi master machine be `ubuntu-rpi`) :
+- ROS_MASTER_URI should be something like `http://ubuntu-rpi:11311`
+- ROS_HOSTNAME should be ip address in the network
+ 
+
 Setup the configuration to bash:
 ```
 source setup_all.bash

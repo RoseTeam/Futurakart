@@ -168,12 +168,13 @@ roslaunch futurakart_gazebo futurakart_world.launch
 
 A script that sets aliases :
  
-- `fkart` to perform 'cd ~/futurakart_ws/; source devel/setup.bash'
+- `fkart` to perform `cd ~/futurakart_ws/; source devel/setup.bash`
 - `save_gmap` to save map produced by gmapping (see `futurakart_2dnav` package)
 - `src` to source from current folder : `source devel/setup.bash`
+- Source from generic_ws path : add in `.bashrc` a line like `source ~/generic_ws/devel/setup.bash`
 
 Also the script sets the variables ROS_MASTER_URI and ROS_HOSTNAME defined in `ros.conf`. 
-**Before the usage copy and rename ros.conf.example to ros.conf and setup your value.**    
+Before the usage copy and rename ros.conf.example to ros.conf and setup your values.    
   
 Usage :
 ```
@@ -182,9 +183,49 @@ $ cd /path/to/repo/futurakart_ws/; source setup_all.bash [--local]
 
 The option `--local` sets ROS_MASTER_URI and ROS_HOSTNAME as `localhost` to work standalone.
 
+
+
 ## Troubleshooting
 
 ### Custom script does not start
 - If you want to start a python script from a file .launch as `<node name="myname" pkg="mypkg" type"myscript.py"/>`, do not forget `chmod +x myscript.py`  
 
 ### Cannot find `rosserial` package
+
+Make sure that you have `source`d the rosserial workspace. Check the ROS_PACKAGE_PATH and verify if the rosserial workspace path is present:
+```
+echo $ROS_PACKAGE_PATH
+```
+If it is not present, then execute:
+```
+source /path/to/rosserial_ws/devel/setup.bash
+```
+
+### Cannot find `ackermann_controller/AckermannController`
+
+Probably, when you cloned `futurakart` source the flag `--recursive` was not present.
+Do this to fix :
+```
+git submodule update --init --recursive
+```
+Then run `catkin_make` in `futurakart` workspace.
+
+### RPi fails to compile a module
+
+Probably, it is a memory problem. There are several ways to compile the module:
+
+- Use only one thread : `catkin_make -j1`. If does not work
+- Use `chroot` on your desktop on the RPi image. Google for more info or use [this](https://github.com/vfdev-5/qemu-rpi2-vexpress)
+- Use a qemu emulator on RPi. Google for more info or use [this](https://github.com/vfdev-5/qemu-rpi2-vexpress)
+
+
+### Network setup problem 
+
+The master machine in our Ros network is RPi, thus : 
+- ROS_MASTER_URI should be something like `http://<hostname>:11311` where `<hostname>` can be found running in terminal : `$ hostname`
+- ROS_HOSTNAME should be `<hostname>`
+
+Any desktop machine should be configured as (let hostname of RPi master machine be `ubuntu-rpi`) :
+- ROS_MASTER_URI should be something like `http://ubuntu-rpi:11311`
+- ROS_HOSTNAME should be ip address in the network
+
