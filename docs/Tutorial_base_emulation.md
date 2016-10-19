@@ -1,5 +1,13 @@
 # Futurakart tutorials
 
+Make sure you have builded `futurakart` catkin workspace and run `source devel/setup.bash` 
+before proceed the tutorial. To build `futurakart` package and its dependencies, please see [here](./RPI-ROS-Installation.md)
+If you have any trouble while launching some modules, please revisit installation part.
+
+To open `futurakart` location and `source` fast, you can use the alias `fkart`. 
+See 'setup_all.bash' paragraphe in 'Useful tools' from [here](./README.md) to learn more about.
+
+
 ## Base part emulation on the desktop
 
 You can test `futurakart` base part on the PC without any cards required.  

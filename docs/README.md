@@ -9,7 +9,7 @@ If you didn't clone with the --recursive flag, then you'll need to manually clon
 git submodule update --init --recursive
 ```
 
-
+Information on the installation on RPi, please see [here](./RPI-ROS-Installation.md)
 
 ## Futurakart ROS packages  
 
@@ -166,14 +166,14 @@ roslaunch futurakart_gazebo futurakart_world.launch
 
 #### setup_all.bash
 
-A script that sets few aliases :
+A script that sets aliases :
  
 - `fkart` to perform 'cd ~/futurakart_ws/; source devel/setup.bash'
 - `save_gmap` to save map produced by gmapping (see `futurakart_2dnav` package)
 - `src` to source from current folder : `source devel/setup.bash`
 
 Also the script sets the variables ROS_MASTER_URI and ROS_HOSTNAME defined in `ros.conf`. 
-Before the usage copy and rename ros.conf.example to ros.conf and setup your value.    
+**Before the usage copy and rename ros.conf.example to ros.conf and setup your value.**    
   
 Usage :
 ```
@@ -184,4 +184,7 @@ The option `--local` sets ROS_MASTER_URI and ROS_HOSTNAME as `localhost` to work
 
 ## Troubleshooting
 
+### Custom script does not start
 - If you want to start a python script from a file .launch as `<node name="myname" pkg="mypkg" type"myscript.py"/>`, do not forget `chmod +x myscript.py`  
+
+### Cannot find `rosserial` package

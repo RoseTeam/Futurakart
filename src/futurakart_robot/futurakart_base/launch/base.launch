@@ -5,13 +5,13 @@
     <!-- Open serial server via rosserial_python -->
     <arg name="port" default="/dev/ttyACM0"/>
     <!-- Enable port to be writable/readable -->
-    <!--<param name="chmod_tty_returncode" command="sudo chmod 666 '$(arg port)'"/>-->
+    <param name="chmod_tty_returncode" command="sudo chmod 666 '$(arg port)'"/>
 
-    <!--<node name="rospy_serial_node" pkg="rosserial_python" type="serial_node.py" output="screen">-->
-        <!--<param name="~port" value="$(arg port)"/>-->
-        <!--<param name="~baud" value="115200"/>-->
-    <!--</node>-->
-    <!--<node pkg="rosserial_python" type="message_info_service.py" name="rosserial_message_info" />-->
+    <node name="rospy_serial_node" pkg="rosserial_python" type="serial_node.py" output="screen">
+        <param name="~port" value="$(arg port)"/>
+        <param name="~baud" value="115200"/>
+    </node>
+    <node pkg="rosserial_python" type="message_info_service.py" name="rosserial_message_info" />
 
     <node pkg="futurakart_base" type="futurakart_node" name="futurakart_node">
         <param name="motordrive_cmd_topic" value="motordrive_cmd"/>

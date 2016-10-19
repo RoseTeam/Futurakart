@@ -42,15 +42,50 @@ $ cd ../; catkin_make
  
 ```
 
+### Build `rosserial` package
+We recommend you to build and install `rosserial` from sources. It is a critical part of communication between RPi and motor controlling card,
+therefore we build it separately of other custom packages.
+```
+$ mkdir -p ~/rosseri6.283185307179586al_ws/src; cd $_; catkin_init_workspace
+$ git clone https://github.com/ros-drivers/rosserial.git
+$ cd ../; catkin_make
+```
+
 ### Build `futurakart_ws`
 
-To build `futurakart_ws` with dependencies of `generic_ws` you need to `source` it before
+To build `futurakart_ws` with dependencies of `generic_ws` and `rosserial_ws` you need to add it in `ROS_PACKAGE_PATH` :
 ```
-$ cd ~/; git clone https://github.com/RoseTeam/Futurakart.git futurakart_ws 
-$ cd ~/generic_ws; source devel/setup.bash
+source ~/generic_ws/devel/setup.bash
+source ~/rosserial_ws/devel/setup.bash
+echo $ROS_PACKAGE_PATH
+```
+Make sure that you see the path to `generic_ws` and `rosserial_ws`. Otherwise, add it manually.
+```
+$ cd ~/; git clone --recursive https://github.com/RoseTeam/Futurakart.git futurakart_ws 
 $ cd ~/futurakart_ws; catkin_make
 ```
 
+### Configure ROS_MASTER_URI and ROS_HOSTNAME
+
+To export rapidly these variables and change between *local* and *remote* configurations we suggest to use `setup_all.bash` script.
+Copy `ros.conf.example` to `ros.conf` and edit `ros.conf` file to define your configuration.
+```
+cp ros.conf.example ros.conf
+nano ros.conf
+```
+Setup the configuration to bash:
+```
+source setup_all.bash
+```
+If you want temporarily to pass to a local configuration, then do
+```
+source setup_all.bash --local
+```
+To comeback to `ros.conf` defined configuration, run the previous command without `--local`. 
+
+
+
+  
 
 
 
