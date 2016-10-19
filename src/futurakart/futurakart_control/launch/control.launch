@@ -18,9 +18,9 @@
 
 
     <!-- Convert the nav stack's twist msgs to AckermannDrive msgs -->
-    <!--<node pkg="futurakart_control" type="twist_to_ackermann" respawn="true" name="twist_to_ackermann" output="screen">-->
+    <node pkg="futurakart_control" type="twist_to_ackermann" respawn="true" name="twist_to_ackermann" output="screen">
         <!--<remap from="nav_switch" to="pololu_smc_driver/analog1/scaled" />-->
-    <!--</node>-->
+    </node>
 
 
 </launch>

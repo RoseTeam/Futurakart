@@ -72,6 +72,9 @@ Comments on `ackermann_controller` :
 - `base_length` : track distance between front and rear wheel axles ???
 - `d_theta=tan(steering_pos) * d_dist / base_length` : angle ...
 
+#### `twist_to_ackermann` node
+is taken from `blinky_control` package
+
 
 ### Robot packages 
 
