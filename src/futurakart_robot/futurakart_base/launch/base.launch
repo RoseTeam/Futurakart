@@ -1,7 +1,5 @@
 <launch>
 
-    <include file="$(find futurakart_description)/launch/description.launch" />
-
     <!-- Open serial server via rosserial_python -->
     <arg name="port" default="/dev/ttyACM0"/>
     <!-- Enable port to be writable/readable -->
@@ -13,12 +11,15 @@
     </node>
     <node pkg="rosserial_python" type="message_info_service.py" name="rosserial_message_info" />
 
-    <node pkg="futurakart_base" type="futurakart_node" name="futurakart_node">
+    <node pkg="futurakart_base" type="futurakart_node" name="futurakart_node" output="screen">
         <param name="motordrive_cmd_topic" value="motordrive_cmd"/>
         <param name="motorfeedback_topic" value="motorfeedback"/>
     </node>
 
-    <!-- Differential controller and basic localization -->
+    <!--Start robot description-->
+    <include file="$(find futurakart_description)/launch/description.launch" />
+
+    <!-- Ackermann controller and basic localization -->
     <include file="$(find futurakart_control)/launch/control.launch" />
 
     <!-- Teleoperation via joystick and rviz interactive markers -->

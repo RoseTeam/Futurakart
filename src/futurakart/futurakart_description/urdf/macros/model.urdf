@@ -12,11 +12,11 @@
     <!--**************************************************************************-->
     <!--Define macros to define wheels  -->
     <!--**************************************************************************-->
-    <xacro:macro name="wheel" params="prefix *joint_pose">
+    <xacro:macro name="wheel" params="prefix *joint_pose *joint_axis">
 
         <link name="${prefix}_wheel_link">
             <visual>
-                <origin xyz="0 0 0" rpy="${PI/2} 0 ${PI/2}"/>
+                <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
                 <geometry>
                     <!--mesh filename="package://futurakart_description/meshes/futurakart-wheel.stl"/-->
                     <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
@@ -24,7 +24,7 @@
                 <material name="black" />
             </visual>
             <collision>
-                <origin xyz="0 0 0" rpy="${PI/2} 0 ${PI/2}"/>
+                <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
                 <geometry>
                     <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
                 </geometry>
@@ -47,7 +47,7 @@
             <parent link="base_link"/>
             <child link="${prefix}_wheel_link" />
             <xacro:insert_block name="joint_pose" />
-            <axis xyz="0 1 0" />
+            <xacro:insert_block name="joint_axis" />
             <origin xyz="0 0 0" rpy="0 0 0" />
         </joint>
     </xacro:macro>

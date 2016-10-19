@@ -14,7 +14,7 @@ import signal
 import rospy
 from futurakart_msgs.msg import MotorDrive, MotorFeedback
 
-
+verbose_ = True
 running_ = False
 
 dir_pos_ = 0.0 # Direction steering wheel angle in radians
@@ -26,9 +26,11 @@ cmd_prop_vel_ = 0.0 # Velocity command
 
 def motordrive_cmd_cb(cmd_msg):
     global cmd_prop_vel_, cmd_dir_pos_
-    rospy.loginfo("motordrive_cmd_cb : {}".format(cmd_msg))
+    if verbose_:
+        rospy.loginfo("motordrive_cmd_cb : {}".format(cmd_msg))
     cmd_prop_vel_ = cmd_msg.prop_vel
     cmd_dir_pos_ = cmd_msg.dir_pos
+
 
 def recompute(delta):
     global dir_pos_, prop_pos_, prop_vel_
@@ -37,6 +39,7 @@ def recompute(delta):
     prop_pos_ += cmd_prop_vel_ * delta
     prop_vel_ = cmd_prop_vel_
 
+
 def create_motorfeedback_msg():
     msg = MotorFeedback()
     msg.dir_pos = dir_pos_
@@ -44,13 +47,14 @@ def create_motorfeedback_msg():
     msg.prop_vel = prop_vel_
     return msg
 
+
 def stop_node_handler(*args, **kwargs):
     global running_
     running_ = False
     rospy.signal_shutdown("Shutdown...")
 
-if __name__ == "__main__":
 
+if __name__ == "__main__":
     signal.signal(signal.SIGINT, stop_node_handler)
     rospy.init_node('mbed_emu', anonymous=False, disable_signals=True)
     rospy.loginfo("Start mbed emulator : Ideal motor")
@@ -58,6 +62,7 @@ if __name__ == "__main__":
 
     motordrive_cmd_topic = rospy.get_param("~motordrive_cmd_topic")
     motorfeedback_topic = rospy.get_param("~motorfeedback_topic")
+    verbose_ = rospy.get_param("~verbose")
 
     sub = rospy.Subscriber(motordrive_cmd_topic, MotorDrive, motordrive_cmd_cb)
     pub = rospy.Publisher(motorfeedback_topic, MotorFeedback, queue_size=10)

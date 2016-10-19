@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+
+    <!--Start emulator -->
+    <include file="$(find futurakart_mbed_emu)/launch/emulator.launch">
+        <arg name="verbose" value="false"/>
+    </include>
+
+    <!--Start futurakart base node -->
+    <node name="futurakart_node" pkg="futurakart_base"
+          type="futurakart_node" output="screen">
+        <param name="motordrive_cmd_topic" value="motordrive_cmd"/>
+        <param name="motorfeedback_topic" value="motorfeedback"/>
+    </node>
+
+    <!--Start robot description-->
+    <include file="$(find futurakart_description)/launch/description.launch" />
+
+    <!-- Ackermann controller and basic localization -->
+    <include file="$(find futurakart_control)/launch/control.launch" />
+
+    <!-- Ackermann controller and basic localization -->
+    <include file="$(find futurakart_control)/launch/teleop.launch">
+        <arg name="config" value="linear"/>
+    </include>
+
+</launch>
