@@ -46,7 +46,7 @@ $ cd ../; catkin_make
 We recommend you to build and install `rosserial` from sources. It is a critical part of communication between RPi and motor controlling card,
 therefore we build it separately of other custom packages.
 ```
-$ mkdir -p ~/rosseri6.283185307179586al_ws/src; cd $_; catkin_init_workspace
+$ mkdir -p ~/rosserial_ws/src; cd $_; catkin_init_workspace
 $ git clone https://github.com/ros-drivers/rosserial.git
 $ cd ../; catkin_make
 ```
