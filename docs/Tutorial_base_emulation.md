@@ -5,7 +5,7 @@ before proceed the tutorial. To build `futurakart` package and its dependencies,
 If you have any trouble while launching some modules, please revisit installation part.
 
 To open `futurakart` location and `source` fast, you can use the alias `fkart`. 
-See 'setup_all.bash' paragraphe in 'Useful tools' from [here](./README.md) to learn more about.
+See 'setup_all.bash' paragraph in 'Useful tools' from [here](./README.md) to learn more about.
 
 
 ## Base part emulation on the desktop

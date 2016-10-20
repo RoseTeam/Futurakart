@@ -1,9 +1,12 @@
 <?xml version="1.0"?>
 <launch>
 
+    <arg name="teleop" default="false"/>
+    <arg name="emulator_verbose" default="true"/>
+
     <!--Start emulator -->
     <include file="$(find futurakart_mbed_emu)/launch/emulator.launch">
-        <arg name="verbose" value="true"/>
+        <arg name="verbose" value="$(arg emulator_verbose)"/>
     </include>
 
     <!--Start futurakart base node -->
@@ -20,7 +23,7 @@
     <include file="$(find futurakart_control)/launch/control.launch" />
 
     <!-- Ackermann controller and basic localization -->
-    <include file="$(find futurakart_control)/launch/teleop.launch">
+    <include if="$(arg teleop)" file="$(find futurakart_control)/launch/teleop.launch">
         <!--arg name="config" value="linear"/-->
         <arg name="config" value="ackermann"/>
     </include>

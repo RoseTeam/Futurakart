@@ -5,7 +5,7 @@ before proceed the tutorial. To build `futurakart` package and its dependencies,
 If you have any trouble while launching some modules, please revisit installation part.
 
 To open `futurakart` location and `source` fast, you can use the alias `fkart`. 
-See 'setup_all.bash' paragraphe in 'Useful tools' from [here](./README.md) to learn more about.
+See 'setup_all.bash' paragraph in 'Useful tools' from [here](./README.md) to learn more about.
 
 
 ## Vision part on the desktop
@@ -22,7 +22,7 @@ Bus 001 Device 018: ID 045e:02ad Microsoft Corp. Xbox NUI Audio
 ```
 You can also check image reception using `freenect-glview`. 
 
-#### Common setup s
+#### Common setup
 Next, start *vision* part of `futurakart`, assuming catkin workspace is at `~/futurakart_ws`. Open a terminal and run the following: 
 ```
 $ cd ~/futurakart_ws; source devel/setup.bash

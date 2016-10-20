@@ -5,7 +5,7 @@ To build `futurakart` package and its dependencies, please see [here](./RPI-ROS-
 If you have any trouble while launching some modules, please revisit the installation part.
 
 To open `futurakart` location and `source` fast, you can use the alias `fkart`. 
-See 'setup_all.bash' paragraphe in 'Useful tools' from [here](./README.md) to learn more about.
+See 'setup_all.bash' paragraph in 'Useful tools' from [here](./README.md) to learn more about.
 
 **Before proceeding make sure that you have flashed the latest firmware on the Nucleo card and has the latest `futurakart` package**
 
