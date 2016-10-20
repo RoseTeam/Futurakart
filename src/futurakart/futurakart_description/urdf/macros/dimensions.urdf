@@ -4,7 +4,7 @@
     <!--************************************************-->
     <!--          Futurakart model dimensions           -->
     <!--************************************************-->
-    <!-- base_link is the middle of the rear wheel axle -->
+    <!-- base_link is the middle of the front wheel axle -->
     <!-- x axis : from left to right                    -->
     <!-- y axis : from rear to front                    -->
     <!-- z axis : from floor to the sky                 -->

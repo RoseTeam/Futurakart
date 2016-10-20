@@ -18,7 +18,7 @@
             <geometry>
                 <box size="${base_length} ${base_width} ${base_height}"/>
             </geometry>
-            <origin xyz="${track/2} 0 ${wheel_radius}"/>
+            <origin xyz="-${track/2} 0 ${wheel_radius}"/>
             <material name="yellow" />
         </visual>
 
@@ -29,7 +29,7 @@
     <joint name="base_link_joint" type="fixed">
         <parent link="base_link"/>
         <child link="base_footprint"/>
-        <origin xyz="${track/2} 0 -${vertical_offset}"/>
+        <origin xyz="-${track/2} 0 -${vertical_offset}"/>
     </joint>
 
 
@@ -38,20 +38,20 @@
     <!--**************************************************************************-->
 
     <xacro:wheel prefix="front_left">
-        <origin xyz="${track} ${-wheelbase_front/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+        <origin xyz="0 ${-wheelbase_front/2} ${wheel_vertical_offset}" rpy="0 0 0" />
         <axis xyz="0 0 1" />
     </xacro:wheel>
     <xacro:wheel prefix="front_right">
-        <origin xyz="${track} ${wheelbase_front/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+        <origin xyz="0 ${wheelbase_front/2} ${wheel_vertical_offset}" rpy="0 0 0" />
         <axis xyz="0 0 1" />
     </xacro:wheel>
 
     <xacro:wheel prefix="rear_left">
-        <origin xyz="0 ${-wheelbase_rear/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+        <origin xyz="-${track} ${-wheelbase_rear/2} ${wheel_vertical_offset}" rpy="0 0 0" />
         <axis xyz="0 1 0" />
     </xacro:wheel>
     <xacro:wheel prefix="rear_right">
-        <origin xyz="0 ${wheelbase_rear/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+        <origin xyz="-${track} ${wheelbase_rear/2} ${wheel_vertical_offset}" rpy="0 0 0" />
         <axis xyz="0 1 0" />
     </xacro:wheel>
 

@@ -3,7 +3,7 @@
 
     <!--Start emulator -->
     <include file="$(find futurakart_mbed_emu)/launch/emulator.launch">
-        <arg name="verbose" value="false"/>
+        <arg name="verbose" value="true"/>
     </include>
 
     <!--Start futurakart base node -->
@@ -21,7 +21,8 @@
 
     <!-- Ackermann controller and basic localization -->
     <include file="$(find futurakart_control)/launch/teleop.launch">
-        <arg name="config" value="linear"/>
+        <!--arg name="config" value="linear"/-->
+        <arg name="config" value="ackermann"/>
     </include>
 
 </launch>
