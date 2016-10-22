@@ -13,8 +13,13 @@ find_package(catkin REQUIRED COMPONENTS
   sensor_msgs
   std_msgs
   topic_tools
+  dynamic_reconfigure
 )
 find_package(Boost REQUIRED COMPONENTS thread chrono)
+
+generate_dynamic_reconfigure_options(
+  cfg/PidCoeff.cfg
+)
 
 catkin_package()
 
@@ -25,7 +30,7 @@ add_executable(futurakart_node
   src/futurakart_hardware.cpp
   src/futurakart_diagnostic_updater.cpp)
 target_link_libraries(futurakart_node ${catkin_LIBRARIES} ${Boost_LIBRARIES})
-add_dependencies(futurakart_node futurakart_msgs_gencpp rosserial_msgs_gencpp)
+add_dependencies(futurakart_node futurakart_msgs_gencpp rosserial_msgs_gencpp ${PROJECT_NAME}_gencfg)
 
 install(DIRECTORY launch config
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})

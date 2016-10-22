@@ -4,6 +4,7 @@
     <node name="start_mbed_emu" pkg="futurakart_mbed_emu"
         type="ideal_motor.py" output="screen">
         <param name="motordrive_cmd_topic" value="motordrive_cmd"/>
+        <param name="pid_coeff_cmd_topic" value="pid_coeff_cmd"/>
         <param name="motorfeedback_topic" value="motorfeedback"/>
         <param name="verbose" value="$(arg verbose)"/>
     </node>

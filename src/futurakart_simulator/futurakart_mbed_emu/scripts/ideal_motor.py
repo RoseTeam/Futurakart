@@ -6,13 +6,15 @@
 #
 # Our nucleo card controls direction / propulsion motors
 #
-# It subcribes to a futurakart_msgs/MotorDrive topic named 'motordrive_cmd'
+# It subcribes to a futurakart_msgs/MotorDrive topic named 'motordrive_cmd' to receive motor commands
+# It subcribes to a std_msgs/Float32MultiArray topic named 'pid_coeff_cmd' to receive PID coefficients
 # It publishes a futurakart_msgs/MotorFeedback message as a topic named 'motorfeedback'
 #
 
 import signal
 import rospy
 from futurakart_msgs.msg import MotorDrive, MotorFeedback
+from std_msgs.msg import Float32MultiArray
 
 verbose_ = True
 running_ = False
@@ -30,6 +32,10 @@ def motordrive_cmd_cb(cmd_msg):
         rospy.loginfo("motordrive_cmd_cb : {}".format(cmd_msg))
     cmd_prop_vel_ = cmd_msg.prop_vel
     cmd_dir_pos_ = cmd_msg.dir_pos
+
+
+def pid_coeff_cmd_cb(pid_coeff_msg):
+    rospy.loginfo("pid_coeff_cmd_cb : {}".format(pid_coeff_msg))
 
 
 def recompute(delta):
@@ -61,16 +67,17 @@ if __name__ == "__main__":
     rate = rospy.Rate(50) # 50hz
 
     motordrive_cmd_topic = rospy.get_param("~motordrive_cmd_topic")
+    pid_coeff_cmd_topic = rospy.get_param("~pid_coeff_cmd_topic")
     motorfeedback_topic = rospy.get_param("~motorfeedback_topic")
     verbose_ = rospy.get_param("~verbose")
 
-    sub = rospy.Subscriber(motordrive_cmd_topic, MotorDrive, motordrive_cmd_cb)
+    sub_motordrive = rospy.Subscriber(motordrive_cmd_topic, MotorDrive, motordrive_cmd_cb)
+    sub_pid_coeff = rospy.Subscriber(pid_coeff_cmd_topic, Float32MultiArray, pid_coeff_cmd_cb)
     pub = rospy.Publisher(motorfeedback_topic, MotorFeedback, queue_size=10)
 
     running_ = True
     last_time = rospy.get_time()
-    while (running_):
-
+    while running_:
         current_time = rospy.get_time()
         delta = current_time - last_time
         last_time = current_time

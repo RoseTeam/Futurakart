@@ -2,7 +2,7 @@
 <launch>
 
     <arg name="teleop" default="false"/>
-    <arg name="emulator_verbose" default="true"/>
+    <arg name="emulator_verbose" default="false"/>
 
     <!--Start emulator -->
     <include file="$(find futurakart_mbed_emu)/launch/emulator.launch">
