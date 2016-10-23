@@ -1,10 +1,22 @@
 <?xml version="1.0"?>
 <launch>
 
+    <arg name="two_kinects" default="false"/>
 
     <!--Start kinect and get rgb/depth image, pointclouds, laserscan etc-->
-    <include file="$(find futurakart_base)/launch/include/kinect_visual_odom.launch"/>
+    <include file="$(find futurakart_base)/launch/include/kinect_visual_odom.launch">
+        <arg name="kinect_device_id" default="#1"/> <!--Use first device found-->
+        <!--<arg name="kinect_device_id" default="A00364908511046A"/> &lt;!&ndash;Use first device found&ndash;&gt;-->
+        <arg name="camera_name" default="camera"/>
+    </include>
 
+
+    <!--Start kinect and get rgb/depth image, pointclouds, laserscan etc-->
+    <!--<include if="$(arg two_kinects)" file="$(find futurakart_base)/launch/include/kinect_visual_odom.launch">-->
+        <!--<arg name="kinect_device_id" default="#2"/> &lt;!&ndash;Use second device found&ndash;&gt;-->
+        <!--&lt;!&ndash;<arg name="kinect_device_id" default="A00366941013034A"/> &lt;!&ndash;Use first device found&ndash;&gt;&ndash;&gt;-->
+        <!--<arg name="camera_name" default="camera_2"/>-->
+    <!--</include>-->
 
 
 </launch>

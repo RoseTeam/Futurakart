@@ -16,6 +16,10 @@
         <param name="motorfeedback_topic" value="motorfeedback"/>
     </node>
 
+    <node pkg="futurakart_base" type="pid_coeff_publisher.py" name="pid_coeff_publisher" output="screen">
+        <param name="pid_coeff_cmd_topic" value="pid_coeff_cmd"/>
+    </node>
+
     <!--Start robot description-->
     <include file="$(find futurakart_description)/launch/description.launch" />
 

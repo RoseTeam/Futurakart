@@ -28,6 +28,9 @@
     <arg name="laserscan_frame" default="$(arg base_kinect_link)"/>     <!-- depthimage_to_laserscan output frame id = The frame id of the laser scan. For point clouds coming from an "optical" frame with Z forward, this value should be set to the corresponding frame with X forward and Z up. -->
     <arg name="mobile_frame" default="$(arg base_kinect_link)"/> <!-- visual odom -> frame_id -->
 
+    <arg name="kinect_device_id" default="#1"/> <!--Use first device found-->
+
+
     <!-- ********************************************************************* -->
     <!--   Setup sensors : image from Kinect, depth from Kinect, laserscan     -->
     <!-- ********************************************************************* -->
@@ -36,13 +39,19 @@
     <include file="$(find freenect_launch)/launch/freenect.launch">
         <!-- https://github.com/ros-drivers/freenect_stack/blob/master/freenect_launch/launch/freenect.launch -->
 
+        <!-- device_id can have the following formats:
+        "B00367707227042B": Use device with given serial number
+        "#1"              : Use first device found
+        -->
+        <arg name="device_id" value="$(arg kinect_device_id)"/>
+
         <arg name="camera" value="$(arg camera_name)"/>
 
         <arg name="depth_registration" value="true" />
 
         <arg name="data_skip" value="1" />
 
-        <arg name="num_worker_threads" value="4" />
+        <arg name="num_worker_threads" value="1" />
 
         <arg name="publish_tf" value="true" />
 
@@ -105,7 +114,7 @@
 
     <!--RGBD to LaserScan-->
     <node pkg="depthimage_to_laserscan"
-          name="depthimage_to_laserscan"
+          name="$(arg camera_name)_depthimage_to_laserscan"
           type="depthimage_to_laserscan"
           output="screen">
         <remap from="image" to="$(arg depth_image)" />
@@ -124,12 +133,13 @@
     <!-- ********************************************************************* -->
     <!-- see http://wiki.ros.org/rtabmap_ros#rgbd_odometry  -->
     <!-- rosrun rtabmap_ros rgbd_odometry - -params -->
-    <node pkg="rtabmap_ros" type="rgbd_odometry" name="rgbd_odometry" output="screen">
+    <node pkg="rtabmap_ros" type="rgbd_odometry" name="$(arg camera_name)_rgbd_odometry" output="screen">
         <remap from="rgb/image"       to="$(arg rgb_image)"/>
         <remap from="rgb/camera_info" to="$(arg rgb_camera_info)"/>
         <remap from="depth/image"     to="$(arg depth_image)"/>
         <param name="Reg/Force3DoF" type="string" value="true"/> <!-- (x, y, theta) instead of (x, y, z, roll, pitch, yaw) -->
         <param name="frame_id" type="string" value="$(arg mobile_frame)"/>
+        <param name="odom_frame_id" type="string" value="$(arg camera_name)_odom"/>
 
         <!--See http://wiki.ros.org/rtabmap_ros/Tutorials/Advanced%20Parameter%20Tuning-->
         <param name="Rtabmap/StartNewMapOnLoopClosure" value="true"/>
