@@ -33,4 +33,8 @@ if __name__ == "__main__":
     pub = rospy.Publisher(pid_coeff_cmd_topic, Float32MultiArray, queue_size=1)
 
     srv = Server(PidCoeffConfig, callback)
+    
+    # Send once to initialize:
+    srv.update_configuration(PidCoeffConfig.defaults)
+    
     rospy.spin()
