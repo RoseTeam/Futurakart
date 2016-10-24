@@ -18,6 +18,7 @@
 
     <node pkg="futurakart_base" type="pid_coeff_publisher.py" name="pid_coeff_publisher" output="screen">
         <param name="pid_coeff_cmd_topic" value="pid_coeff_cmd"/>
+        <param name="default_pid_coeff_file" value="$(find futurakart_base)/config/PidCoeffDefault.yaml"/>
     </node>
 
     <!--Start robot description-->

@@ -11,7 +11,7 @@ DIR_RAD_OFFSET = 1.368429766
 DIR_MIN_LIMIT_RAD = -0.6
 DIR_MAX_LIMIT_RAD = 0.6
 
-DEBUG_PROP = True
+DEBUG_PROP = False
 DEBUG_DIR = False
 
 class Motor:
@@ -71,7 +71,8 @@ class KartMotorsController:
         self._last_time = rospy.Time()
         self._feedback = feedback  # [feedback_dir_pos_, feedback_prop_pos_, feedback_prop_vel_]
         
-        print "KMC : init fdb : ", self._feedback
+        if DEBUG_PROP or DEBUG_DIR:
+            print "KMC : init fdb : ", self._feedback
         
         self._prev_feedback = [0.0, 0.0]
         self._prop_wheel_encoder = prop_encoder
