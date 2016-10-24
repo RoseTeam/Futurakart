@@ -15,15 +15,15 @@ import signal
 import rospy
 from futurakart_msgs.msg import MotorDrive, MotorFeedback
 from std_msgs.msg import Float32MultiArray
-from kart_motors_controller import KartMotorsController, Motor, QEI, PotentioMeter
+from kart_motors_controller import KartMotorsController, Motor, QEI, PotentioMeter, DEBUG_PROP, DEBUG_DIR
 
 verbose_ = True
 running_ = False
 
-feedback_dir_pos_ = 0.0  # Direction steering wheel angle in rads
-feedback_prop_pos_ = 0.0  # Propulsion wheels rotation angle in rads
-feedback_prop_vel_ = 0.0  # Propulsion wheels velocity in rad/s
-feedback_ = [feedback_dir_pos_, feedback_prop_pos_, feedback_prop_vel_]
+#feedback_dir_pos_ = 0.0  # Direction steering wheel angle in rads
+#feedback_prop_pos_ = 0.0  # Propulsion wheels rotation angle in rads
+#feedback_prop_vel_ = 0.0  # Propulsion wheels velocity in rad/s
+feedback_ = [0.0, 0.0, 0.0]  # [feedback_dir_pos_, feedback_prop_pos_, feedback_prop_vel_]
 
 setpoint_prop_vel_ = 0.0  # Setpoint propulsion velocity in rad/s
 setpoint_dir_pos_ = 0.0  # Setpoint propulsion velocity in rads
@@ -32,14 +32,14 @@ cmd_dir_pos_ = 0.0  # Direction command in unitary values
 cmd_prop_vel_ = 0.0  # Velocity command in unitary values
 
 
-wait_time_ = 0.1  #
+wait_time_ = 2.0  #
 pulses_per_rev_ = 2048
 
 dir_motor_ = Motor()
 prop_motor_ = Motor()
 wheel_ = QEI(prop_motor_, pulses_per_rev_)
 dir_potmeter_ = PotentioMeter(dir_motor_)
-controller_ = KartMotorsController(0.01, feedback_, wheel_, pulses_per_rev_, dir_potmeter_)
+controller_ = KartMotorsController(1.0, feedback_, wheel_, pulses_per_rev_, dir_potmeter_)
 
 
 def motordrive_cmd_cb(cmd_msg):
@@ -57,9 +57,9 @@ def pid_coeff_cmd_cb(pid_coeff_msg):
 
 def publish_motorfeedback():
     msg = MotorFeedback()
-    msg.dir_pos = feedback_dir_pos_
-    msg.prop_pos = feedback_prop_pos_
-    msg.prop_vel = feedback_prop_vel_
+    msg.dir_pos = feedback_[0]
+    msg.prop_pos = feedback_[1]
+    msg.prop_vel = feedback_[2]
     pub.publish(msg)
 
 
@@ -74,8 +74,8 @@ if __name__ == "__main__":
     signal.signal(signal.SIGINT, stop_node_handler)
     rospy.init_node('mbed_emu', anonymous=False, disable_signals=True)
     rospy.loginfo("Start mbed emulator : Ideal motor")
-    rate = rospy.Rate(10) # wait 1/5 ms
-
+    rate = rospy.Rate(5) # wait 1/200 ms
+    
     motordrive_cmd_topic = rospy.get_param("~motordrive_cmd_topic")
     pid_coeff_cmd_topic = rospy.get_param("~pid_coeff_cmd_topic")
     motorfeedback_topic = rospy.get_param("~motorfeedback_topic")
@@ -92,12 +92,28 @@ if __name__ == "__main__":
         current_time = rospy.get_time()
         delta = current_time - last_time
         if delta > wait_time_:
+            if DEBUG_DIR or DEBUG_PROP:
+                print "------- publish /motorfeedback : ", feedback_
             publish_motorfeedback()
             last_time = current_time
 
-        cmd_dir_pos_, cmd_prop_vel_ = controller_.control(current_time, setpoint_dir_pos_, setpoint_prop_vel_, cmd_dir_pos_, cmd_prop_vel_)
-        dir_motor_.set_cmd_pos(cmd_dir_pos_)
-        prop_motor_.set_cmd_vel(cmd_prop_vel_, delta)
+        if DEBUG_DIR or DEBUG_PROP:
+            print "- before control : ", setpoint_dir_pos_, setpoint_prop_vel_, cmd_dir_pos_, cmd_prop_vel_
 
+        cmd_dir_pos_, cmd_prop_vel_ = controller_.control(current_time, setpoint_dir_pos_, setpoint_prop_vel_, cmd_dir_pos_, cmd_prop_vel_)
+
+        if DEBUG_DIR or DEBUG_PROP:
+            print "- after control : ", cmd_dir_pos_, cmd_prop_vel_
+            print "- before cmd : ", dir_motor_._pos, prop_motor_._vel 
+
+        dir_motor_.set_cmd_pos(cmd_dir_pos_)
+        prop_motor_.set_cmd_vel(cmd_prop_vel_, current_time)
+
+        if DEBUG_DIR or DEBUG_PROP:
+            print "-  after cmd : ", dir_motor_._pos, prop_motor_._vel 
+        
         rate.sleep()
+
+
+
 
