@@ -31,7 +31,6 @@ class Motor:
         self._last_time = current_time
         self._pos += self._prev_vel * delta
         self._prev_vel = self._vel
-        
 
     def set_cmd_pos(self, cmd_pos):
         """

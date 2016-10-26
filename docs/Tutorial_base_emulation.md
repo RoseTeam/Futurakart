@@ -12,9 +12,12 @@ See 'setup_all.bash' paragraph in 'Useful tools' from [here](./README.md) to lea
 
 You can test `futurakart` base part on the PC without any cards required.  
  
+There are two options: a) configure and start manually all nodes, b) automatic default configuration start  
+
+### Configure and start manually all nodes
 Start mbed card emulation : 
 ```
-roslaunch futurakart_mbed_emu start.launch
+roslaunch futurakart_mbed_emu emulator.launch
 ```
 which emulates an ideal motor, that receives commands and directly applies it to its state.
 There is no encoder emulation.
@@ -38,7 +41,26 @@ roslaunch futurakart_control control.launch
 ```
 The last launch file start also the node `twist_to_ackermann` which converts twist messages to ackermann messages.
 
+### Automatic default configuration start
+  
+All the previous commands can be executed using one file :
+```
+roslaunch futurakart_mbed_emu base_emu.launch
+```
+
 Now, you have to choices to drive with interactive markers or manually using terminal
+
+### Driving with `key_teleop`
+
+If needed, install `key_teleop` package with 
+```
+sudo apt-get install ros-kinetic-key-teleop  
+```
+
+Start
+
+
+
 
 ### Driving with interactive markers
 You need to have `interactive_markers_twist_server` package installed. See below the installation part.

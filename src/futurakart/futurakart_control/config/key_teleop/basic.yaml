@@ -1,0 +1,6 @@
+hz: 10
+steps: 4
+forward_rate: 1.0 # max forward velocity in m/s
+backward_rate: 0.5 # max backward velocity in m/s
+rotation_rate: 0.4 # max or -min angle in rads
+

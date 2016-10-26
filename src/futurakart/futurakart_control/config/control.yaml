@@ -16,3 +16,9 @@ futurakart_velocity_controller:
   twist_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 3.0]
   wheel_diameter: 0.250 # 2 * 0.125
 
+  # Propulsion speed and direction position limits:
+  drive_max_velocity: 0.6 # m/s
+  steering_min_angle: -0.45 # rad
+  steering_max_angle: 0.45 # rad
+
+

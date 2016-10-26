@@ -44,7 +44,8 @@ if __name__ == "__main__":
         rospy.logerr("Failed to setup default pid coefficients. Error : {}".format(e))
 
     # Send once to initialize:
-    print "!!!! PUBLISH DEFAULT VALUES : {}".format(PidCoeffConfig.defaults)
+    #print "!!!! PUBLISH DEFAULT VALUES : {}".format(PidCoeffConfig.defaults)
+    # !!! Probably, this does not work !!!
     srv.update_configuration(PidCoeffConfig.defaults)
     
     rospy.spin()
