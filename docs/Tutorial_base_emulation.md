@@ -62,6 +62,7 @@ And finally, now we are ready to publish a driving command using Ackermann messa
 ```
 rostopic pub -r 50.0 /ackermann_cmd ackermann_msgs/AckermannDrive "{'steering_angle': 0.05, 'speed': 0.1}"
 ``` 
+Ackermann commands are in *m/s* for `speed` (propulsion velocity) and *rad* for `steering_angle` (direction position).
 
 Open rviz and observe the kart moving:
 ```
