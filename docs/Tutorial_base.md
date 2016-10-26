@@ -31,6 +31,8 @@ And in the last terminal, send motor commands :
 ```
 rostopic pub -r 5.0 /motordrive_cmd futurakart_msgs/MotorDrive '{prop_vel: 0.2, dir_pos: 0.05}'
 ```
+Command values are in *rad/s* for `prop_vel` (propulsion velocity) and *rad* for `dir_pos` (direction position).
+
 You should see in the third terminal similar messages :
 ```
 ---
