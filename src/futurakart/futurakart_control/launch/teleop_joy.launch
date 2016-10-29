@@ -1,0 +1,19 @@
+<launch>
+  
+
+  #### Launch joy_node  ############################# 
+  
+  
+  <node name="joy_node" pkg="joy" type="joy_node" output="screen"  clear_params="true">
+  
+  <param name="joy_node/dev"  value="/dev/input/js0" /> 
+  #<param name="joy_interpreter_node/publish_topic"  value="/cmd_vel" /> 
+
+  </node>
+
+   <node name="joy_interpreter_node" pkg="joy_interpreter" type="joy_interpreter_node" output="screen"  clear_params="true">
+  
+
+  </node>
+
+</launch>
