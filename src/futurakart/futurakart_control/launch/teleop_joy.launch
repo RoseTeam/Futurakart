@@ -11,8 +11,8 @@
 
   </node>
 
-   <node name="joy_interpreter_node" pkg="joy_interpreter" type="joy_interpreter_node" output="screen"  clear_params="true">
-  
+   <node name="joy_interpreter_node" pkg="futurakart_control" type="joy_interpreter_node" output="screen"  clear_params="true">
+   #<remap from="futurakart/cmd_vel" to="cmd_vel" />
 
   </node>
 

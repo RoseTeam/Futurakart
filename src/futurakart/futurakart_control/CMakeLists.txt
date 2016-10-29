@@ -23,16 +23,18 @@ include_directories(
 
 ## Declare a cpp executable
 add_executable(twist_to_ackermann src/twist_to_ackermann.cpp)
-add_executable(twist_to_ackermann src/joy_interpreter_node.cpp)
+
 
 ## Specify libraries to link a library or executable target against
-target_link_libraries(twist_to_ackermann
-  ${catkin_LIBRARIES}
-  
-  target_link_libraries(joy_interpreter_node
+target_link_libraries(twist_to_ackermann 
   ${catkin_LIBRARIES}
 )
 
+add_executable(joy_interpreter_node src/joy_interpreter_node.cpp)
+
+target_link_libraries(joy_interpreter_node
+  ${catkin_LIBRARIES}
+)
 #############
 ## Install ##
 #############

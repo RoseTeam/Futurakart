@@ -44,8 +44,8 @@ TeleopTurtle::TeleopTurtle():  linear_(1),  angular_(0), a_scale_(0.4), l_scale_
 
  // client = nh_.serviceClient<joy_interpreter::ChangeState>("change_state_rose_bot");
 
-  srv.request.state = 0;
-  srv.request.start_stop = 0;
+  //srv.request.state = 0;
+  //srv.request.start_stop = 0;
   start_stop_state = false;
 
 }
@@ -80,7 +80,7 @@ void TeleopTurtle::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 int main(int argc, char** argv)
 {
   ros::init(argc, argv, "ps3_twist");
-  ROS_INFO("Launching PS3 Controller node");
+  ROS_INFO("Launching PS3 Controller node !!");
   TeleopTurtle teleop_turtle;
 
   ros::spin();
