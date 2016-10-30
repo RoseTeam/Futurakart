@@ -8,9 +8,10 @@
     <arg name="ssh_ip" value="10.42.1.120"/>
     <arg name="ssh_username" value="ubuntu"/>
     <arg name="futurakart_ws_path" value="~/futurakart_ws"/>
+    <arg name="verbose" value="false"/>
     <node name="start_vision" pkg="futurakart_bringup"
           type="start_vision.py" output="screen"
-          args="ip:=$(arg ssh_ip) username:=$(arg ssh_username) path:=$(arg futurakart_ws_path)">
+          args="ip:=$(arg ssh_ip) username:=$(arg ssh_username) path:=$(arg futurakart_ws_path) verbose:=$(arg verbose)">
     </node>
 
   </group>
