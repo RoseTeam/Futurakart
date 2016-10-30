@@ -1,0 +1,12 @@
+<launch>
+
+    <!-- Open serial server via rosserial_python -->
+    <arg name="port" default="/dev/ttyACM0"/>
+
+    <node name="SensorNode" pkg="futurakart_sensor" type="SensorRosNode.py" output="screen">
+        <param name="~port" value="$(arg port)"/>
+        <param name="~baud" value="115200"/>
+    </node>
+
+</launch>
+
