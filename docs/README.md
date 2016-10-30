@@ -225,7 +225,8 @@ The master machine in our Ros network is RPi, thus :
 - ROS_MASTER_URI should be something like `http://<hostname>:11311` where `<hostname>` can be found running in terminal : `$ hostname`
 - ROS_HOSTNAME should be `<hostname>`
 
-Any desktop machine should be configured as (let hostname of RPi master machine be `ubuntu-rpi`) :
+Any desktop or slave machine should be configured as (let hostname of RPi master machine be `ubuntu-rpi`) :
+- Edit /etc/hosts to add hostname resolution : `XX.XX.XX.XX    ubuntu-rpi`
 - ROS_MASTER_URI should be something like `http://ubuntu-rpi:11311`
 - ROS_HOSTNAME should be ip address in the network
 

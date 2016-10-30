@@ -51,7 +51,7 @@
 
         <arg name="data_skip" value="1" />
 
-        <arg name="num_worker_threads" value="1" />
+        <arg name="num_worker_threads" value="4" />
 
         <arg name="publish_tf" value="true" />
 
@@ -137,6 +137,7 @@
         <remap from="rgb/image"       to="$(arg rgb_image)"/>
         <remap from="rgb/camera_info" to="$(arg rgb_camera_info)"/>
         <remap from="depth/image"     to="$(arg depth_image)"/>
+        <remap from="odom" to="$(arg camera_name)/odom"/>
         <param name="Reg/Force3DoF" type="string" value="true"/> <!-- (x, y, theta) instead of (x, y, z, roll, pitch, yaw) -->
         <param name="frame_id" type="string" value="$(arg mobile_frame)"/>
         <param name="odom_frame_id" type="string" value="$(arg camera_name)_odom"/>
