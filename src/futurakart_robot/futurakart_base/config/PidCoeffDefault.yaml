@@ -1,10 +1,10 @@
 Prop_vel_Kp: 0.6
 Prop_vel_Ki: 0.0
-Prop_vel_Kd: 0.1
+Prop_vel_Kd: 0.0
 Prop_vel_sat_tot: 0.5
 Prop_vel_sat_Ki: 0.3
-Dir_pos_Kp: 4.5
+Dir_pos_Kp: 9.0
 Dir_pos_Ki: 0.5
-Dir_pos_Kd: 0.5
-Dir_pos_sat_tot: 0.5
+Dir_pos_Kd: 0.0
+Dir_pos_sat_tot: 1.0
 Dir_pos_sat_Ki: 0.3
