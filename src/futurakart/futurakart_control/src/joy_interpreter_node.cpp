@@ -53,7 +53,7 @@ TeleopTurtle::TeleopTurtle():  linear_(1),  angular_(0), a_scale_(0.4), l_scale_
 void TeleopTurtle::joyCallback(const sensor_msgs::Joy::ConstPtr& joy)
 {
   geometry_msgs::Twist vel;
-  vel.angular.z = a_scale_*joy->axes[angular_];
+  vel.angular.z = -a_scale_*joy->axes[angular_];
   vel.linear.x = l_scale_*joy->axes[linear_];
   vel_pub_.publish(vel);
 
