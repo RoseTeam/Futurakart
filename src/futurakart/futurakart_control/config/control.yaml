@@ -20,7 +20,7 @@ futurakart_velocity_controller:
 
   # Propulsion speed and direction position limits:
   drive_max_velocity: 0.6 # m/s
-  drive_min_velocity: 0.6 # m/s
+  drive_min_velocity: -0.6 # m/s
   steering_min_angle: -0.45 # rad
   steering_max_angle: 0.45 # rad
 
