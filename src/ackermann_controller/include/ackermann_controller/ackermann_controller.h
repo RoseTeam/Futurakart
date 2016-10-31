@@ -65,6 +65,7 @@ namespace ackermann_controller
 		double wheel_diameter;
 
 		double drive_max_velocity;
+		double drive_min_velocity;
 		double steering_min_angle;
 		double steering_max_angle;
 

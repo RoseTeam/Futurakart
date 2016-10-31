@@ -108,6 +108,7 @@ bool AckermannController::init(hardware_interface::PositionJointInterface *hw_a,
 
   // Drive and steering limits:
   nh_priv->param("drive_max_velocity", drive_max_velocity, drive_max_velocity);
+  nh_priv->param("drive_min_velocity", drive_min_velocity, drive_min_velocity);
   nh_priv->param("steering_min_angle", steering_min_angle, steering_min_angle);
   nh_priv->param("steering_max_angle", steering_max_angle, steering_max_angle);
 
@@ -252,7 +253,7 @@ void AckermannController::ackermannCmdCallback(const ackermann_msgs::AckermannDr
 {
   unsigned int i;
 
-  double speed = std::max(std::min(drive_max_velocity, (double) msg->speed), 0.0);
+  double speed = std::max(std::min(drive_max_velocity, (double) msg->speed), drive_min_velocity);
   double steering_angle = std::max(std::min(steering_max_angle, (double) msg->steering_angle), steering_min_angle);
 
   for (i = 0; i < drive_joints.size(); i++)
