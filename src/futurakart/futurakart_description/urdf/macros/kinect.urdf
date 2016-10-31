@@ -14,27 +14,33 @@
   <!--**************************************************************************-->
   <xacro:macro name="sensor_kinect" params="parent">
 
-    <joint name="camera_rgb_joint" type="fixed">
+    <!--<joint name="camera_rgb_joint" type="fixed">-->
+      <!--<origin xyz="${cam_px} ${kinect_cam_py} ${cam_pz}" rpy="${cam_or} ${cam_op} ${cam_oy}"/>-->
+      <!--<parent link="${parent}"/>-->
+      <!--<child link="camera_rgb_frame" />-->
+    <!--</joint>-->
+    <!--<link name="camera_rgb_frame"/>-->
+
+    <!--<joint name="camera_rgb_optical_joint" type="fixed">-->
+      <!--<origin xyz="0 0 0" rpy="${-PI/2} 0 ${-PI/2}" />-->
+      <!--<parent link="camera_rgb_frame" />-->
+      <!--<child link="camera_rgb_optical_frame" />-->
+    <!--</joint>-->
+
+    <!--<link name="camera_rgb_optical_frame"/>-->
+
+    <!--<joint name="camera_joint" type="fixed">-->
+      <!--<origin xyz="-0.031 ${-kinect_cam_py} -0.016" rpy="0 0 0"/>-->
+      <!--<parent link="camera_rgb_frame"/>-->
+      <!--<child link="camera_link"/>-->
+    <!--</joint>-->
+
+
+    <joint name="camera_link_joint" type="fixed">
       <origin xyz="${cam_px} ${kinect_cam_py} ${cam_pz}" rpy="${cam_or} ${cam_op} ${cam_oy}"/>
       <parent link="${parent}"/>
-      <child link="camera_rgb_frame" />
+      <child link="camera_link`" />
     </joint>
-    <link name="camera_rgb_frame"/>
-
-    <joint name="camera_rgb_optical_joint" type="fixed">
-      <origin xyz="0 0 0" rpy="${-PI/2} 0 ${-PI/2}" />
-      <parent link="camera_rgb_frame" />
-      <child link="camera_rgb_optical_frame" />
-    </joint>
-
-    <link name="camera_rgb_optical_frame"/>
-
-    <joint name="camera_joint" type="fixed">
-      <origin xyz="-0.031 ${-kinect_cam_py} -0.016" rpy="0 0 0"/>
-      <parent link="camera_rgb_frame"/>
-      <child link="camera_link"/>
-    </joint>
-
     <link name="camera_link">
       <visual>
         <origin xyz="0 0 0" rpy="0 0 ${PI/2}"/>
@@ -42,34 +48,34 @@
           <mesh filename="package://futurakart_description/meshes/kinect.dae"/>
         </geometry>
       </visual>
-      <collision>
-        <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
-        <geometry>
-          <box size="0.07271 0.27794 0.073"/>
-        </geometry>
-      </collision>
-      <inertial>
-        <mass value="0.564" />
-        <origin xyz="0 0 0" />
-        <inertia ixx="0.003881243" ixy="0.0" ixz="0.0"
-                 iyy="0.000498940" iyz="0.0"
-                 izz="0.003879257" />
-      </inertial>
+      <!--<collision>-->
+        <!--<origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>-->
+        <!--<geometry>-->
+          <!--<box size="0.07271 0.27794 0.073"/>-->
+        <!--</geometry>-->
+      <!--</collision>-->
+      <!--<inertial>-->
+        <!--<mass value="0.564" />-->
+        <!--<origin xyz="0 0 0" />-->
+        <!--<inertia ixx="0.003881243" ixy="0.0" ixz="0.0"-->
+                 <!--iyy="0.000498940" iyz="0.0"-->
+                 <!--izz="0.003879257" />-->
+      <!--</inertial>-->
     </link>
 
-    <joint name="camera_depth_joint" type="fixed">
-      <origin xyz="0 ${2 * -kinect_cam_py} 0" rpy="0 0 0" />
-      <parent link="camera_rgb_frame" />
-      <child link="camera_depth_frame" />
-    </joint>
-    <link name="camera_depth_frame"/>
+    <!--<joint name="camera_depth_joint" type="fixed">-->
+      <!--<origin xyz="0 ${2 * -kinect_cam_py} 0" rpy="0 0 0" />-->
+      <!--<parent link="camera_rgb_frame" />-->
+      <!--<child link="camera_depth_frame" />-->
+    <!--</joint>-->
+    <!--<link name="camera_depth_frame"/>-->
 
-    <joint name="camera_depth_optical_joint" type="fixed">
-      <origin xyz="0 0 0" rpy="${-PI/2} 0 ${-PI/2}" />
-      <parent link="camera_depth_frame" />
-      <child link="camera_depth_optical_frame" />
-    </joint>
-    <link name="camera_depth_optical_frame"/>
+    <!--<joint name="camera_depth_optical_joint" type="fixed">-->
+      <!--<origin xyz="0 0 0" rpy="${-PI/2} 0 ${-PI/2}" />-->
+      <!--<parent link="camera_depth_frame" />-->
+      <!--<child link="camera_depth_optical_frame" />-->
+    <!--</joint>-->
+    <!--<link name="camera_depth_optical_frame"/>-->
 
   </xacro:macro>
 

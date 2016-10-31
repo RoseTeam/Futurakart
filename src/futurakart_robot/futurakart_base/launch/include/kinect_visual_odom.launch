@@ -53,7 +53,7 @@
 
         <arg name="num_worker_threads" value="4" />
 
-        <arg name="publish_tf" value="false" />
+        <arg name="publish_tf" value="true" />
 
         <!-- Calibration files -->
         <!--arg name="rgb_camera_info_url"   value="" /-->
