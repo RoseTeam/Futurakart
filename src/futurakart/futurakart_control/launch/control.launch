@@ -1,25 +1,21 @@
 <launch>
+    # Convert the nav stack's twist msgs to AckermannDrive msgs
+    <node pkg="futurakart_control" type="twist_to_ackermann" respawn="true" name="twist_to_ackermann" output="screen">
+        <param name="ackermann_cmd_topic" value="/ackermann_cmd"/>
+        <param name="cmd_vel_topic" value="/cmd_vel"/>
+    </node>
+
+    # Setup control parameters
     <rosparam command="load" file="$(find futurakart_control)/config/control.yaml" />
 
     <node name="controller_spawner" pkg="controller_manager" type="spawner" output="screen"
           args="futurakart_joint_publisher futurakart_velocity_controller --shutdown-timeout 1">
     </node>
 
-    <node pkg="topic_tools" type="relay" name="cmd_vel_relay" output="screen"
-          args="cmd_vel futurakart_velocity_controller/cmd_vel" />
-
-
-    // http://docs.ros.org/kinetic/api/robot_localization/html/state_estimation_nodes.html
-    // ukf_localization_node more stable but more computationally taxing than ekf_localization_node
+    # http://docs.ros.org/kinetic/api/robot_localization/html/state_estimation_nodes.html
+    # ukf_localization_node more stable but more computationally taxing than ekf_localization_node
     <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization">
         <rosparam command="load" file="$(find futurakart_control)/config/robot_localization.yaml" />
-        <remap from="/futurakart_velocity_controller/odom" to="/odom" />
-    </node>
-
-
-    <!-- Convert the nav stack's twist msgs to AckermannDrive msgs -->
-    <node pkg="futurakart_control" type="twist_to_ackermann" respawn="true" name="twist_to_ackermann" output="screen">
-        <!--<remap from="nav_switch" to="pololu_smc_driver/analog1/scaled" />-->
     </node>
 
 

@@ -9,8 +9,9 @@ futurakart_velocity_controller:
   child_frame_id: base_footprint
   cmd_timeout: 0.25
   drive_joint_names: ['rear_left_wheel', 'rear_right_wheel']
-  frame_id: /ackermann_controller/odom_tf
+  frame_id: /ackermann_controller/odom # In pusblished odometry message header.frame_id
   odom_topic: /ackermann_controller/odom
+  ackermann_cmd_topic: /ackermann_cmd
   pose_covariance_diagonal: [0.001, 0.001, 0.001, 0.001, 0.001, 3.0]
   publish_rate: 50
   steering_joint_names: ['front_left_wheel', 'front_right_wheel']

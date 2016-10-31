@@ -57,15 +57,16 @@ namespace ackermann_controller
 		std::vector<std::string> drive_joint_names;
 		std::vector<hardware_interface::JointHandle> steering_joints;
 		std::vector<std::string> steering_joint_names;
-    	std::string odom_topic_name;
+    	std::string odom_topic;
+    	std::string ackermann_cmd_topic;
 
 
 		double base_length;
 		double wheel_diameter;
 
-    double drive_max_velocity;
-    double steering_min_angle;
-    double steering_max_angle;
+		double drive_max_velocity;
+		double steering_min_angle;
+		double steering_max_angle;
 
 		double last_theta;
 		double last_wheel_pos;

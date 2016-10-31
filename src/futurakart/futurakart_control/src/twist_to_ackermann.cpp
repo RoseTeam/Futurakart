@@ -35,11 +35,15 @@ namespace twist_to_ackermann
 	public:
 		TwistToAckermann(ros::NodeHandle &nh, ros::NodeHandle &nh_priv)
 			: nh(nh),
-			  nh_priv(nh_priv),
-			  ack_pub(nh.advertise<ackermann_msgs::AckermannDrive>("ackermann_cmd", 1)),
-			  disable_sub(nh.subscribe("nav_switch", 1, &TwistToAckermann::disableCallback, this)),
-			  twist_sub(nh.subscribe("cmd_vel", 1, &TwistToAckermann::twistCallback, this))
+			  nh_priv(nh_priv)
 		{
+			  std::string ackermann_cmd_topic, cmd_vel_topic;
+			  nh_priv.param("ackermann_cmd_topic", ackermann_cmd_topic, std::string("ackermann_cmd"));
+			  nh_priv.param("cmd_vel_topic", cmd_vel_topic, std::string("cmd_vel"));
+
+			  ack_pub = nh.advertise<ackermann_msgs::AckermannDrive>(ackermann_cmd_topic, 1);
+			  disable_sub = nh.subscribe("twist_to_ackermann_switch", 1, &TwistToAckermann::disableCallback, this);
+			  twist_sub = nh.subscribe(cmd_vel_topic, 1, &TwistToAckermann::twistCallback, this);
 		}
 
 		~TwistToAckermann()

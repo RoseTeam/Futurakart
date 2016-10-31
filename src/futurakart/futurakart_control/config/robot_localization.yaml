@@ -7,7 +7,7 @@ frequency: 50
 # 
 two_d_mode: true
 
-odom0: /futurakart_velocity_controller/odom
+odom0: /ackermann_controller/odom
 # (X,Y,Z, roll,pitch,yaw, VX,VY,VZ, Vroll,Vpitch,Vyaw, AX,AY,AZ)
 odom0_config: [true, true, false,
                false, false, true,

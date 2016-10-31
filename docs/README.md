@@ -30,6 +30,8 @@ This defines joints and links, robot caracteristics, dimensions etc and can also
 
 **Launch files:**
 - `description.launch` starts `robot_state_publisher` node with `futurakart.urdf`
+    * Published topics : `/tf, /tf_static`
+    * Subscribed topics : `/joint_states`
 
 See docs on [robot_state_publisher](http://wiki.ros.org/robot_state_publisher/Tutorials/Using%20the%20robot%20state%20publisher%20on%20your%20own%20robot)
 
@@ -41,8 +43,25 @@ Package contains custom messages to exchange with motors hardware part:
 
 #### `futurakart_control`
 
-TODO TODO TODO
+**Nodes:**
+- `twist_to_ackermann` : transforms twist messages to ackermann messages (twist.angular.z is directly set to ackermann.steering_angle)
+    * Published topics : `/ackermann_cmd`
+    * Subscribed topics : `/cmd_vel` (twist command), `/twist_to_ackermann_switch` (enable/disable by a message with integer value : 1 / -1)
+- `joy_interpreter_node`
 
+**Controllers:**
+- `ackermann_controller` following *ros_controller* formalism
+    * Published topics : `/ackermann_controller/odom` 
+    * Subscribed topics : `/ackermann_cmd`
+
+
+**Launch files:**
+- `control.launch` starts `twist_to_ackermann` node, indirectly loads `ackermann_controller`, and finally `ekf_localization_node`
+    * Published topics : `/ackermann_controller/odom` (by `ackermann_controller`), `/odometry/filtered` (by `ekf_localization_node`)
+    * Subscribed topics : `/cmd_vel` (twist command), `/twist_to_ackermann_switch` (enable/disable by a message with integer value : 1 / -1)
+    
+- `teleop.launch`
+- `teleop_joy.launch`
 
 #### `futurakart_2dnav`
 
@@ -118,10 +137,23 @@ echo "ssh-rsa <key-part> user@PC" >> ~/.ssh/authorized_keys
 
 **TODO: There is another more 'pro' way to bringup a robot. See for example [here](http://wiki.ros.org/husky_bringup/Tutorials/Install%20Husky%20Software)**
 
-**`futurakart_base`** : package contains base code to communicate with
+#### `futurakart_base`
+The package contains base code to communicate with
 - Nucleo card which commands propulsion and direction motors
 - Kinect sensor
 - ...
+
+**Nodes:** 
+- `futurakart_base` 
+    * Published topics : `/motorfeedback`
+    * Subscribed topics : `/motordrive_cmd`
+- `pid_coeff_publisher` (with dynamic reconfigure)
+    * Published topics : `/pid_coeff_cmd`
+
+**Launch files:**
+- `base.launch`
+- `vision.launch`
+
 
 
 
