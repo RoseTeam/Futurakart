@@ -57,6 +57,8 @@ namespace ackermann_controller
 		std::vector<std::string> drive_joint_names;
 		std::vector<hardware_interface::JointHandle> steering_joints;
 		std::vector<std::string> steering_joint_names;
+    	std::string odom_topic_name;
+
 
 		double base_length;
 		double wheel_diameter;

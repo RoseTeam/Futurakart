@@ -70,6 +70,7 @@ bool AckermannController::init(hardware_interface::PositionJointInterface *hw_a,
   nh_priv->param("frame_id", odom_msg.header.frame_id, std::string("odom"));
   nh_priv->param("steering_joint_names", steering_joint_names, steering_joint_names);
   nh_priv->param("wheel_diameter", wheel_diameter, wheel_diameter);
+  nh_priv->param("odom_topic", odom_topic_name, std::string("odom"));
 
   nh_priv->getParam("pose_covariance_diagonal", pose_cov_list);
   ROS_ASSERT(pose_cov_list.getType() == XmlRpc::XmlRpcValue::TypeArray);
@@ -150,7 +151,7 @@ void AckermannController::starting(const ros::Time &time)
 
   if (!odom_pub)
   {
-    odom_pub = nh->advertise<nav_msgs::Odometry>("odom", 1);
+    odom_pub = nh->advertise<nav_msgs::Odometry>(odom_topic_name, 1);
   }
 }
 

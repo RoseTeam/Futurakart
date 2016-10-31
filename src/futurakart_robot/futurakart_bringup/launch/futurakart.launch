@@ -5,7 +5,7 @@
     <include file="$(find futurakart_base)/launch/base.launch" />
     <!--Start vision part on the 2nd RPi (at ~/futurakart_ws)-->
     <!--<arg name="ssh_ip" value="192.168.43.5"/>-->
-    <arg name="ssh_ip" value="10.42.1.120"/>
+    <arg name="ssh_ip" value="10.42.0.120"/>
     <arg name="ssh_username" value="ubuntu"/>
     <arg name="futurakart_ws_path" value="~/futurakart_ws"/>
     <arg name="verbose" value="false"/>

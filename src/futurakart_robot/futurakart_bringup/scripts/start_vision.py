@@ -6,6 +6,7 @@
 
 # Python
 import sys
+import os
 import subprocess
 import signal
 
@@ -51,7 +52,7 @@ if __name__ == "__main__":
     signal.signal(signal.SIGINT, handle_signint)
 
     program = ["ssh", "-T", "-o", "VerifyHostKeyDNS no", "%s@%s" % (username, ip), "-p %s" % port]
-    proc = subprocess.Popen(program, stdin=None if not verbose else subprocess.PIPE)
+    proc = subprocess.Popen(program, stdin=subprocess.PIPE, stdout=None if verbose else open(os.devnull, 'w'))
     # proc.communicate("cd %s; ls; ping www.google.com" % path)
     # `tail -2 ~/.bashrc` IS A HACK TO GET ROS_MASTER_URI and ROS_HOSTNAME variables which should be 2 last lines in the ~/.bashrc
     proc.communicate("`tail -2 ~/.bashrc` && cd %s; source devel/setup.bash; roslaunch futurakart_base vision.launch" % path)
