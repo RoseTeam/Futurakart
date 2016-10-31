@@ -53,6 +53,7 @@ if __name__ == "__main__":
     program = ["ssh", "-T", "-o", "VerifyHostKeyDNS no", "%s@%s" % (username, ip), "-p %s" % port]
     proc = subprocess.Popen(program, stdin=None if not verbose else subprocess.PIPE)
     # proc.communicate("cd %s; ls; ping www.google.com" % path)
-    proc.communicate("cd %s; source devel/setup.bash; roslaunch futurakart_base vision.launch" % path)
+    # `tail -2 ~/.bashrc` IS A HACK TO GET ROS_MASTER_URI and ROS_HOSTNAME variables which should be 2 last lines in the ~/.bashrc
+    proc.communicate("`tail -2 ~/.bashrc` && cd %s; source devel/setup.bash; roslaunch futurakart_base vision.launch" % path)
     returncode = proc.wait()
     print "Node 'start_vision' is stopped"
