@@ -50,7 +50,7 @@ Choose the topic of the `Map` to be `/move_base/local_costmap/costmap`
 Assuming that `vision.launch` file is still running. Open another terminal and run the following:
 ```
 $ cd ~/futurakart_ws; source devel/setup.bash;
-$ roslaunch futurakart_2dnav create_map.launch gmapping:=true
+$ roslaunch futurakart_2dnav create_map.launch gmapping:=true odom_frame:=camera_odom
 ```
 and in another terminal execute (do not forget to `source devel/setup.bash` before) :
 ```
@@ -86,7 +86,7 @@ Map will be saved automatically in `~/futurakart_ws/src/futurakart/futurakart_2d
 Assuming that `vision.launch` file is still running. Open another terminal and run the following:
 ```
 $ cd ~/futurakart_ws; source devel/setup.bash;
-$ roslaunch futurakart_2dnav map_localization.launch gmapping:=true
+$ roslaunch futurakart_2dnav map_localization.launch gmapping:=true odom_frame:=camera_odom
 ```
 and in another terminal execute (do not forget to `source devel/setup.bash` before) :
 ```

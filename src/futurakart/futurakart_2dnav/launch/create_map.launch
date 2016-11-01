@@ -8,6 +8,7 @@
     <arg name="gmapping" default="false"/>
     <arg name="rtabmap" default="false"/>
     <arg name="from_new" default="false"/>
+    <arg name="odom_frame"  default="odom"/>
 
     <!-- Setup default topic names from Kinect:  -->
     <arg name="camera_name" default="camera"/> <!-- Kinect camera namespace name for output topics -->
@@ -25,9 +26,9 @@
     <!--  Start gmapping if selected  -->
     <!-- ********************************************************************* -->
     <include if="$(arg gmapping)" file="$(find futurakart_2dnav)/launch/includes/gmapping.launch">
-        <arg name="scan_topic"  default="$(arg laserscan_topic)" />
-        <arg name="base_frame"  default="$(arg base_frame_id)"/>
-        <arg name="odom_frame"  default="odom"/>
+        <arg name="scan_topic"  value="$(arg laserscan_topic)" />
+        <arg name="base_frame"  value="$(arg base_frame_id)"/>
+        <arg name="odom_frame"  value="$(arg odom_frame)"/>
     </include>
 
 
