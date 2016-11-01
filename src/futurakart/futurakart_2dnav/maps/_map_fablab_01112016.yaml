@@ -1,4 +1,4 @@
-image: /home/vfdev/Documents/ROS/futurakart_ws/src/futurakart/futurakart_2dnav/maps/_map.pgm
+image: _map.pgm
 resolution: 0.050000
 origin: [-12.200000, -12.200000, 0.000000]
 negate: 0

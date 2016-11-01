@@ -13,20 +13,36 @@
     <!--**************************************************************************-->
 
     <!-- Center of the Kart -->
-    <link name="base_link">
+    <link name="base_link"/>
+
+    <link name="chassis_link">
         <visual>
             <geometry>
                 <box size="${base_length} ${base_width} ${base_height}"/>
             </geometry>
-            <origin xyz="-${track/2} 0 ${wheel_radius}"/>
             <material name="yellow" />
         </visual>
-
+        <inertial>
+            <!-- Center of mass -->
+            <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+            <mass value="16.523"/>
+            <!-- Moments of inertia: ( chassis without wheels ) -->
+            <inertia
+                    ixx="0.3136" ixy="-0.0008" ixz="0.0164"
+                    iyy="0.3922" iyz="-0.0009"
+                    izz="0.4485"/>
+        </inertial>
     </link>
+    <joint name="chassis_link_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="chassis_link"/>
+        <origin xyz="-${track/2} 0 ${wheel_radius}"/>
+    </joint>
+
 
     <!-- Center of the Kart projected on the floor-->
     <link name="base_footprint" />
-    <joint name="base_link_joint" type="fixed">
+    <joint name="base_footprint_link_joint" type="fixed">
         <parent link="base_link"/>
         <child link="base_footprint"/>
         <origin xyz="-${track/2} 0 -${vertical_offset}"/>
@@ -40,19 +56,61 @@
     <xacro:wheel prefix="front_left">
         <origin xyz="0 ${-wheelbase_front/2} ${wheel_vertical_offset}" rpy="0 0 0" />
         <axis xyz="0 0 1" />
+        <!--For Gazebo only-->
+        <transmission name="front_left_wheel_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="front_left_wheel">
+                <hardwareInterface>PositionJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="front_left_actuator">
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
     </xacro:wheel>
+
     <xacro:wheel prefix="front_right">
         <origin xyz="0 ${wheelbase_front/2} ${wheel_vertical_offset}" rpy="0 0 0" />
         <axis xyz="0 0 1" />
+        <!--For Gazebo only-->
+        <transmission name="front_right_wheel_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="front_right_wheel">
+                <hardwareInterface>PositionJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="front_right_actuator">
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
     </xacro:wheel>
 
     <xacro:wheel prefix="rear_left">
         <origin xyz="-${track} ${-wheelbase_rear/2} ${wheel_vertical_offset}" rpy="0 0 0" />
         <axis xyz="0 1 0" />
+        <!--For Gazebo only-->
+        <transmission name="rear_left_wheel_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="rear_left_wheel">
+                <hardwareInterface>VelocityJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="rear_left_actuator">
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
     </xacro:wheel>
+
     <xacro:wheel prefix="rear_right">
         <origin xyz="-${track} ${wheelbase_rear/2} ${wheel_vertical_offset}" rpy="0 0 0" />
         <axis xyz="0 1 0" />
+        <!--For Gazebo only-->
+        <transmission name="rear_right_wheel_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="rear_right_wheel">
+                <hardwareInterface>VelocityJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="rear_right_actuator">
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
     </xacro:wheel>
 
 

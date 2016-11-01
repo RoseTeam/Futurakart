@@ -12,7 +12,7 @@
     <!--**************************************************************************-->
     <!--Define macros to define wheels  -->
     <!--**************************************************************************-->
-    <xacro:macro name="wheel" params="prefix *joint_pose *joint_axis">
+    <xacro:macro name="wheel" params="prefix *joint_pose *joint_axis *transmission">
 
         <link name="${prefix}_wheel_link">
             <visual>
@@ -50,6 +50,10 @@
             <xacro:insert_block name="joint_axis" />
             <origin xyz="0 0 0" rpy="0 0 0" />
         </joint>
+
+        <!--For Gazebo only-->
+        <xacro:insert_block name="transmission" />
+
     </xacro:macro>
 
 </robot>

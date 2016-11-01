@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<package>
+  <name>futurakart_stage</name>
+  <version>0.0.1</version>
+  <description>Launchfiles to use Futurakart in Stage ROS.</description>
+
+  <maintainer email="vfdev@todo.todo">vfdev</maintainer>
+  <license>MIT</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roslaunch</build_depend>
+  <run_depend>stage_ros</run_depend>
+</package>
