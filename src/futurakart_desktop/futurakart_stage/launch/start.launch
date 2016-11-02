@@ -15,11 +15,11 @@
     <arg name="laserscan_topic" default="/scan"/> <!-- Laserscan topic name for depth_to_laserscan output -->
     <arg name="laserscan_frame" default="base_laser_link"/>
     <arg name="base_frame_id" default="base_link"/>
-    <arg name="odom_topic_name" default="/odom"/>
+    <arg name="odom_topic_name" default="odom"/>
 
     <!--  ************** Stage Simulator ***************  -->
     <node pkg="stage_ros" type="stageros" name="stageros" args="$(find futurakart_stage)/stage/test_playground.world">
-        <remap from="base_scan" to="scan"/>
+        <remap from="base_scan" to="$(arg laserscan_topic)"/>
     </node>
 
     <!-- ********************************************************************* -->
@@ -47,10 +47,9 @@
         <arg name="scan_topic" value="$(arg laserscan_topic)" />
         <arg name="odom_model_type" value="diff"/>
         <arg name="base_frame_id" value="$(arg base_frame_id)"/>
-        <arg name="odom_frame_id" value="odom   "/>
-        <param name="initial_pose_x"            value="2"/>
-        <param name="initial_pose_y"            value="2"/>
-        <param name="initial_pose_a"            value="0"/>
+        <arg name="odom_frame_id" value="odom"/>
+        <arg name="initial_pose_x" value="2.0"/>
+        <arg name="initial_pose_y" value="2.0"/>
     </include>
 
 

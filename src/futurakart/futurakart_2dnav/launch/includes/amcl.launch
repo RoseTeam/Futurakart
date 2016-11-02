@@ -5,6 +5,8 @@
   <arg name="odom_model_type" default="diff"/>
   <arg name="base_frame_id" default="base_link"/>
   <arg name="odom_frame_id" default="odom"/>
+  <arg name="initial_pose_x" default="0.0"/>
+  <arg name="initial_pose_y" default="0.0"/>
 
   <node pkg="amcl" type="amcl" name="amcl">
     <param name="use_map_topic" value="$(arg use_map_topic)"/>
@@ -50,8 +52,8 @@
     <!--Exponential decay rate for the fast average weight filter, used in deciding when to recover by adding random poses. A good value might be 0.1. -->
     <param name="recovery_alpha_fast" value="0.1"/>
     <!-- Initial pose mean -->
-    <param name="initial_pose_x" value="0.0" />
-    <param name="initial_pose_y" value="0.0" />
+    <param name="initial_pose_x" value="$(arg initial_pose_x)" />
+    <param name="initial_pose_y" value="$(arg initial_pose_y)" />
     <param name="initial_pose_a" value="0.0" />
     <!-- When set to true, AMCL will subscribe to the map topic rather than making a service call to receive its map.-->
     <param name="receive_map_topic" value="true"/>
