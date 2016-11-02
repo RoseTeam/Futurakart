@@ -1,19 +1,15 @@
 <launch>
   
-
-  #### Launch joy_node  ############################# 
-  
-  
+<!--   Launch joy_node   -->
+    
   <node name="joy_node" pkg="joy" type="joy_node" output="screen"  clear_params="true">
   
   <param name="joy_node/dev"  value="/dev/input/js0" /> 
-  #<param name="joy_interpreter_node/publish_topic"  value="/cmd_vel" /> 
-
+<!--  <param name="joy_interpreter_node/publish_topic"  value="/cmd_vel" /> -->
   </node>
 
    <node name="joy_interpreter_node" pkg="futurakart_control" type="joy_interpreter_node" output="screen"  clear_params="true">
-   #<remap from="futurakart/cmd_vel" to="cmd_vel" />
-
+<!--   <remap from="futurakart/cmd_vel" to="cmd_vel" />-->
   </node>
 
 </launch>

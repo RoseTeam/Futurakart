@@ -21,7 +21,7 @@ map_type: costmap
 # base_length = 1.475
 # base_width = 0.84
 #
-footprint: [[0.7375, -0.42], [0.7375, 0.42], [-0.7375, 0.42], [0.7375, -0.42]]
+footprint: [[0.7375, 0.42], [0.7375, -0.42], [-0.7375, -0.42], [0.7375, -0.42]]
 footprint_padding: 0.25 # How much to pad (increase the size of) the footprint, in meters.
 
 

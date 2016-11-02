@@ -14,28 +14,34 @@ TebLocalPlannerROS:
   #
   # Synced with futurakart_control/config/control.yaml
   max_vel_x: 0.6
-  max_vel_x_backwards: -0.4
+  max_vel_x_backwards: 0.4
   max_vel_y: 0.0
-  max_vel_theta: 0.3 # the angular velocity is also bounded by min_turning_radius in case of a carlike robot (r = v / omega)
+  max_vel_theta: 0.45 # the angular velocity is also bounded by min_turning_radius in case of a carlike robot (r = v / omega)
   acc_lim_x: 0.5
   acc_lim_theta: 0.5
 
   # ********************** Carlike robot parameters ********************
-  min_turning_radius: 0.5        # Min turning radius of the carlike robot (compute value using a model or adjust with rqt_reconfigure manually)
-  wheelbase: 0.4                 # The distance between the drive shaft and steering axle (only required for a carlike robot with 'cmd_angle_instead_rotvel' enabled). The value might be negative for back-wheeled robots!",
+  #
+  # Synced with futurakart_description/urdf/macros/dimensions.urdf
+  #
+  # min_turning_radius = wheelbase / sin(dir_pos_max) = 1.0 / sin(0.45) = 2.2990327315089707
+  #
+  min_turning_radius: 2.2990327315089707 # Min turning radius of the carlike robot (compute value using a model or adjust with rqt_reconfigure manually)
+  wheelbase: 1.0                 # The distance between the drive shaft and steering axle (only required for a carlike robot with 'cmd_angle_instead_rotvel' enabled). The value might be negative for back-wheeled robots!",
   cmd_angle_instead_rotvel: True # stage simulator takes the angle instead of the rotvel as input (twist message)
   # ********************************************************************
 
   footprint_model: # types: "point", "circular", "two_circles", "line", "polygon"
-  type: "line"
-  radius: 0.2 # for type "circular"
-  line_start: [0.0, 0.0] # for type "line"
-  line_end: [0.4, 0.0] # for type "line"
-  front_offset: 0.2 # for type "two_circles"
-  front_radius: 0.2 # for type "two_circles"
-  rear_offset: 0.2 # for type "two_circles"
-  rear_radius: 0.2 # for type "two_circles"
-  vertices: [ [0.25, -0.05], [0.18, -0.05], [0.18, -0.18], [-0.19, -0.18], [-0.25, 0], [-0.19, 0.18], [0.18, 0.18], [0.18, 0.05], [0.25, 0.05] ] # for type "polygon"
+    type: "polygon"
+    # The footprint of the robot specified in the robot_base_frame (chassis_link in our case) coordinate frame as a
+    # list in the format: [ [x1, y1], [x2, y2], ...., [xn, yn] ]."
+    #
+    # Dimensions taken from dimensions.urdf
+    #
+    # base_length = 1.475
+    # base_width = 0.84
+    #
+    vertices: [[0.7375, 0.42], [0.7375, -0.42], [-0.7375, -0.42], [0.7375, -0.42]]
 
   # GoalTolerance
 
@@ -45,7 +51,7 @@ TebLocalPlannerROS:
 
   # Obstacles
 
-  min_obstacle_dist: 0.25 # This value must also include our robot's expansion, since footprint_model is set to "line".
+  min_obstacle_dist: 0.30 # This value must also include our robot's expansion, since footprint_model is set to "line".
   include_costmap_obstacles: True
   costmap_obstacles_behind_robot_dist: 1.0
   obstacle_poses_affected: 30

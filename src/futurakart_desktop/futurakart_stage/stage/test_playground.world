@@ -30,10 +30,10 @@ window
 
 floorplan
 (
-  name "maze"
-  bitmap "../maps/_map.pgm"
-  size [ 10.0 10.0 2.0 ]
-  pose [  5.0  5.0 0.0 0.0 ]
+  name "test_playground"
+  bitmap "../maps/test_playground.png"
+  size [ 14.0 11.5 2.0 ]
+  pose [ 7.0 5.75 0.0 0.0 ]
 )
 
 # throw in a robot
