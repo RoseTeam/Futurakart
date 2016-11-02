@@ -13,17 +13,19 @@
     <param name="/use_sim_time" value="true"/>
 
     <!--  ************** Stage Simulator ***************  -->
-    <node pkg="stage_ros" type="stageros" name="stageros" args="$(find teb_local_planner_tutorials)/stage/maze_carlike.world">
+    <node pkg="stage_ros" type="stageros" name="stageros" args="$(find futurakart_stage)/stage/fablab.world">
         <remap from="base_scan" to="scan"/>
     </node>
 
+
+
     <!--  ************** Navigation ***************  -->
     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-        <rosparam file="$(find teb_local_planner_tutorials)/cfg/carlike/costmap_common_params.yaml" command="load" ns="global_costmap" />
-        <rosparam file="$(find teb_local_planner_tutorials)/cfg/carlike/costmap_common_params.yaml" command="load" ns="local_costmap" />
-        <rosparam file="$(find teb_local_planner_tutorials)/cfg/carlike/local_costmap_params.yaml" command="load" />
-        <rosparam file="$(find teb_local_planner_tutorials)/cfg/carlike/global_costmap_params.yaml" command="load" />
-        <rosparam file="$(find teb_local_planner_tutorials)/cfg/carlike/teb_local_planner_params.yaml" command="load" />
+        <rosparam file="$(find futurakart_2dnav)/params/costmap_common_params.yaml" command="load" ns="global_costmap" />
+        <rosparam file="$(find futurakart_stage)/params/carlike/costmap_common_params.yaml" command="load" ns="local_costmap" />
+        <rosparam file="$(find futurakart_stage)/cfg/carlike/local_costmap_params.yaml" command="load" />
+        <rosparam file="$(find futurakart_stage)/cfg/carlike/global_costmap_params.yaml" command="load" />
+        <rosparam file="$(find futurakart_stage)/cfg/carlike/teb_local_planner_params.yaml" command="load" />
 
         <param name="base_global_planner" value="global_planner/GlobalPlanner" />
         <param name="planner_frequency" value="1.0" />

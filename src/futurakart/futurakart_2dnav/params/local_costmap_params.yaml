@@ -1,10 +1,13 @@
 local_costmap:
-   global_frame: global_frame_id
-   robot_base_frame: robot_base_frame_id
-   update_frequency: 20.0
-   publish_frequency: 5.0
-   width: 10.0
-   height: 10.0
-   resolution: 0.05
-   static_map: false
-   rolling_window: true
+    # Link : http://wiki.ros.org/costmap_2d
+    global_frame: global_frame_id
+    robot_base_frame: robot_base_frame_id
+    update_frequency: 20.0
+    publish_frequency: 5.0
+    width: 10.0
+    height: 10.0
+    resolution: 0.05
+    static_map: false
+    rolling_window: true
+    plugins:
+     - {name: obstacle_layer,      type: "costmap_2d::ObstacleLayer"}

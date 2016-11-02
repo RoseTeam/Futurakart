@@ -1,25 +1,66 @@
+# Links :
+# https://github.com/ros-planning/navigation/blob/jade-devel/costmap_2d/cfg/Costmap2D.cfg
+# https://github.com/ros-planning/navigation/blob/jade-devel/costmap_2d/launch/example_params.yaml
+
+
+#
+# All these parameters will be prefixed by 'global_costmap' or 'local_costmap'
+#
+
 map_type: costmap
-origin_z: 0.0
-z_resolution: 1
-z_voxels: 2
 
-obstacle_range: 2.5
-raytrace_range: 3.0
+#publish_voxel_map: false
+#transform_tolerance: 0.5
+#meter_scoring: true
 
-publish_voxel_map: false
-transform_tolerance: 0.5
-meter_scoring: true
+# The footprint of the robot specified in the robot_base_frame (chassis_link in our case) coordinate frame as a
+# list in the format: [ [x1, y1], [x2, y2], ...., [xn, yn] ]."
+#
+# Dimensions taken from dimensions.urdf
+#
+# base_length = 1.475
+# base_width = 0.84
+#
+footprint: [[0.7375, -0.42], [0.7375, 0.42], [-0.7375, 0.42], [0.7375, -0.42]]
+footprint_padding: 0.25 # How much to pad (increase the size of) the footprint, in meters.
 
-footprint: [[-0.21, -0.165], [-0.21, 0.165], [0.21, 0.165], [0.21, -0.165]]
-footprint_padding: 0.1
 
 plugins:
-- {name: obstacles_layer, type: "costmap_2d::ObstacleLayer"}
+- {name: static_layer,  type: "costmap_2d::StaticLayer"}
 - {name: inflater_layer, type: "costmap_2d::InflationLayer"}
 
+
+# This layer is defined differently for global costmap and local costmap
 obstacles_layer:
+  # Link : https://github.com/ros-planning/navigation/blob/jade-devel/costmap_2d/cfg/ObstaclePlugin.cfg
+  enabled: true
+  # Global all sensors filtering :
+  #obstacle_range: 2.5
+  #raytrace_range: 3.0
+  #inflation_radius: 0.2
+  track_unknown_space: false # Specifies whether or not to track what space in the costmap is unknown, meaning that no observation about a cell has been seen from any sensor source.
+
   observation_sources: scan
-  scan: {sensor_frame: scan_sensor_frame_id, data_type: LaserScan, topic: scan_topic, marking: true, clearing: true, min_obstacle_height: -2.0, max_obstacle_height: 2.0, obstacle_range: 2.5, raytrace_range: 3.0}
+  scan: {
+    sensor_frame: scan_sensor_frame_id,
+    data_type: LaserScan,
+    topic: scan_topic,
+    marking: true,
+    clearing: true,
+    min_obstacle_height: -2.0,
+    max_obstacle_height: 2.0,
+    obstacle_range: 2.5, # The maximum range in meters at which to insert obstacles into the costmap using sensor data.
+    raytrace_range: 3.0  # The maximum range in meters at which to raytrace out obstacles from the map using sensor data.
+  }
+
 
 inflater_layer:
-  inflation_radius: 0.30
+  # Link : https://github.com/ros-planning/navigation/blob/jade-devel/costmap_2d/cfg/InflationPlugin.cfg
+  enabled: true
+  cost_scaling_factor:  10.0  # exponential rate at which the obstacle cost drops off (default: 10)
+  inflation_radius: 0.30 # The radius in meters to which the map inflates obstacle cost values.
+
+
+static_layer:
+  enabled: true
+  map_topic: map_topic_name

@@ -2,11 +2,15 @@
 
 ## Installations:
 
-nav-core
-navfn
-global-planner
 
- 
+```
+sudo apt-get install ros-kinetic-nav-core ros-kinetic-navfn ros-kinetic-global-planner
+sudo apt-get install ros-kinetic-teb-local-planner
+```
+
+
+
+
 
 ## Useful links and info
 
@@ -55,7 +59,12 @@ Coordinate frame and tf parameters
 
 `~<name>/robot_base_frame` (string, default: "base_link") The name of the frame for the base link of the robot. 
 
-`~<name>/transform_tolerance` (double, default: 0.2) Specifies the delay in transform (tf) data that is tolerable in seconds. This parameter serves as a safeguard to losing a link in the tf tree while still allowing an amount of latency the user is comfortable with to exist in the system. For example, a transform being 0.2 seconds out-of-date may be tolerable, but a transform being 8 seconds out of date is not. If the tf transform between the coordinate frames specified by the global_frame and robot_base_frame parameters is transform_tolerance seconds older than ros::Time::now(), then the navigation stack will stop the robot. 
+`~<name>/transform_tolerance` (double, default: 0.2) Specifies the delay in transform (tf) data that is
+tolerable in seconds. This parameter serves as a safeguard to losing a link in the tf tree while still
+allowing an amount of latency the user is comfortable with to exist in the system. For example, a transform
+being 0.2 seconds out-of-date may be tolerable, but a transform being 8 seconds out of date is not.
+If the tf transform between the coordinate frames specified by the global_frame and robot_base_frame parameters
+is transform_tolerance seconds older than ros::Time::now(), then the navigation stack will stop the robot.
 
 #### Rate parameters
 
