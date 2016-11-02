@@ -19,15 +19,13 @@
         <rosparam file="$(find futurakart_2dnav)/params/local_costmap_params.yaml" command="load" />
         <rosparam file="$(find futurakart_2dnav)/params/$(arg global_frame)_nav_params/global_costmap_params.yaml" command="load" />
 
+        <rosparam file="$(find futurakart_2dnav)/params/move_base_params.yaml" command="load" />
+
         <rosparam file="$(find futurakart_2dnav)/params/teb_local_planner_params.yaml" command="load" />
 
         <param name="base_global_planner" value="global_planner/GlobalPlanner" />
-        <param name="planner_frequency" value="1.0" />
-        <param name="planner_patience" value="5.0" />
-
+        # Link : http://wiki.ros.org/teb_local_planner
         <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
-        <param name="controller_frequency" value="5.0" />
-        <param name="controller_patience" value="15.0" />
         <param name="clearing_rotation_allowed" value="false" /> <!-- Our carlike robot is not able to rotate in place -->
 
 

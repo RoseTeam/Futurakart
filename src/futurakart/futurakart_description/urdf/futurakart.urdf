@@ -36,7 +36,7 @@
     <joint name="chassis_link_joint" type="fixed">
         <parent link="base_link"/>
         <child link="chassis_link"/>
-        <origin xyz="-${track/2} 0 ${wheel_radius}"/>
+        <origin xyz="-${wheelbase/2} 0 ${wheel_radius}"/>
     </joint>
 
 
@@ -45,7 +45,7 @@
     <joint name="base_footprint_link_joint" type="fixed">
         <parent link="base_link"/>
         <child link="base_footprint"/>
-        <origin xyz="-${track/2} 0 -${vertical_offset}"/>
+        <origin xyz="-${wheelbase/2} 0 -${vertical_offset}"/>
     </joint>
 
 
@@ -54,7 +54,7 @@
     <!--**************************************************************************-->
 
     <xacro:wheel prefix="front_left">
-        <origin xyz="0 ${-wheelbase_front/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+        <origin xyz="0 ${-track_front/2} ${wheel_vertical_offset}" rpy="0 0 0" />
         <axis xyz="0 0 1" />
         <!--For Gazebo only-->
         <transmission name="front_left_wheel_trans">
@@ -69,7 +69,7 @@
     </xacro:wheel>
 
     <xacro:wheel prefix="front_right">
-        <origin xyz="0 ${wheelbase_front/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+        <origin xyz="0 ${track_front/2} ${wheel_vertical_offset}" rpy="0 0 0" />
         <axis xyz="0 0 1" />
         <!--For Gazebo only-->
         <transmission name="front_right_wheel_trans">
@@ -84,7 +84,7 @@
     </xacro:wheel>
 
     <xacro:wheel prefix="rear_left">
-        <origin xyz="-${track} ${-wheelbase_rear/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+        <origin xyz="-${wheelbase} ${-track_rear/2} ${wheel_vertical_offset}" rpy="0 0 0" />
         <axis xyz="0 1 0" />
         <!--For Gazebo only-->
         <transmission name="rear_left_wheel_trans">
@@ -99,7 +99,7 @@
     </xacro:wheel>
 
     <xacro:wheel prefix="rear_right">
-        <origin xyz="-${track} ${wheelbase_rear/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+        <origin xyz="-${wheelbase} ${track_rear/2} ${wheel_vertical_offset}" rpy="0 0 0" />
         <axis xyz="0 1 0" />
         <!--For Gazebo only-->
         <transmission name="rear_right_wheel_trans">
