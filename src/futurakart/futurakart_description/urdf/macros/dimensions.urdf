@@ -20,7 +20,7 @@
     <xacro:property name="rot_axle_dist" value="0.34"/>
     <!-- track_front = distance between wheels in meters -->
     <!-- track_front is equal to rot_axle_dist + 2 * track_arm -->
-    <xacro:property name="track_front" value="${rot_axle_dist + 2*track_arm}" />
+    <!--<xacro:property name="track_front" value="${rot_axle_dist + 2*track_arm}" />-->
 
     <!-- Wheelbase = distance between front and rear axles (when going straight)-->
     <xacro:property name="wheelbase" value="1" />

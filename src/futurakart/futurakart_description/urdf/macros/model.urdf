@@ -10,11 +10,102 @@
     <xacro:include filename="$(find futurakart_description)/urdf/macros/dimensions.urdf" />
 
     <!--**************************************************************************-->
-    <!--Define macros to define wheels  -->
+    <!-- Macros to define front wheels  -->
     <!--**************************************************************************-->
-    <xacro:macro name="wheel" params="prefix *joint_pose *joint_axis *transmission">
+    <xacro:macro name="front_wheel" params="prefix *arm_pose *wheel_pose">
 
-        <link name="${prefix}_wheel_link">
+        <link name="front_${prefix}_wheel_link">
+            <visual>
+                <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+                <geometry>
+                    <!--mesh filename="package://futurakart_description/meshes/futurakart-wheel.stl"/-->
+                    <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+                </geometry>
+                <material name="black" />
+            </visual>
+            <collision>
+                <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+                <geometry>
+                    <cylinder radius="${wheel_radius}" length="${wheel_width}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="0.477"/>
+                <inertia
+                        ixx="0.0013" ixy="0" ixz="0"
+                        iyy="0.0024" iyz="0"
+                        izz="0.0013"/>
+            </inertial>
+        </link>
+        <gazebo reference="front_${prefix}_wheel_link">
+            <material>Gazebo/DarkGrey</material>
+        </gazebo>
+
+        <link name="front_${prefix}_steering_arm_link">
+            <collision>
+                <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+                <geometry>
+                    <cylinder radius="${wheel_radius}" length="${track_arm}"/>
+                </geometry>
+            </collision>
+            <inertial>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <mass value="0.477"/>
+                <inertia
+                        ixx="0.0013" ixy="0" ixz="0"
+                        iyy="0.0024" iyz="0"
+                        izz="0.0013"/>
+            </inertial>
+
+        </link>
+
+        <gazebo reference="front_${prefix}_steering_arm_link">
+            <material>Gazebo/DarkGrey</material>
+        </gazebo>
+
+        <joint name="front_${prefix}_steering_arm" type="continuous">
+            <parent link="base_link"/>
+            <child link="front_${prefix}_steering_arm_link" />
+            <xacro:insert_block name="arm_pose"/>
+        </joint>
+
+        <joint name="${prefix}_front_wheel" type="continuous">
+            <parent link="front_${prefix}_steering_arm_link"/>
+            <child link="front_${prefix}_wheel_link" />
+            <xacro:insert_block name="wheel_pose"/>
+            <axis xyz="0 0 1" />
+        </joint>
+
+        <!--For Gazebo only-->
+        <transmission name="front_${prefix}_steering_arm_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="front_${prefix}_steering_arm">
+                <hardwareInterface>PositionJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="front_${prefix}_arm_actuator">
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+        <transmission name="front_${prefix}_wheel_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="front_${prefix}_wheel">
+                <hardwareInterface>VelocityJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="front_${prefix}_wheel_actuator">
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+
+    </xacro:macro>
+
+
+    <!--**************************************************************************-->
+    <!-- Macros to define rear wheels  -->
+    <!--**************************************************************************-->
+    <xacro:macro name="rear_wheel" params="prefix *joint_pose">
+
+        <link name="rear_${prefix}_wheel_link">
             <visual>
                 <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
                 <geometry>
@@ -39,21 +130,33 @@
             </inertial>
         </link>
 
-        <gazebo reference="${prefix}_wheel_link">
+        <gazebo reference="rear_${prefix}_wheel_link">
             <material>Gazebo/DarkGrey</material>
         </gazebo>
 
-        <joint name="${prefix}_wheel" type="continuous">
+        <joint name="rear_${prefix}_wheel" type="continuous">
             <parent link="base_link"/>
-            <child link="${prefix}_wheel_link" />
+            <child link="rear_${prefix}_wheel_link" />
             <xacro:insert_block name="joint_pose" />
-            <xacro:insert_block name="joint_axis" />
-            <origin xyz="0 0 0" rpy="0 0 0" />
+            <axis xyz="0 1 0" />
+            <!--<origin xyz="0 0 0" rpy="0 0 0" />-->
         </joint>
 
         <!--For Gazebo only-->
-        <xacro:insert_block name="transmission" />
+        <transmission name="rear_${prefix}_wheel_trans">
+            <type>transmission_interface/SimpleTransmission</type>
+            <joint name="rear_${prefix}_wheel">
+                <hardwareInterface>VelocityJointInterface</hardwareInterface>
+            </joint>
+            <actuator name="rear_${prefix}_actuator">
+                <mechanicalReduction>1</mechanicalReduction>
+            </actuator>
+        </transmission>
+
 
     </xacro:macro>
+
+
+
 
 </robot>

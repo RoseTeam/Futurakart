@@ -53,65 +53,41 @@
     <!--Define 4 wheels-->
     <!--**************************************************************************-->
 
-    <xacro:wheel prefix="front_left">
-        <origin xyz="0 ${-track_front/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-        <axis xyz="0 0 1" />
-        <!--For Gazebo only-->
-        <transmission name="front_left_wheel_trans">
-            <type>transmission_interface/SimpleTransmission</type>
-            <joint name="front_left_wheel">
-                <hardwareInterface>PositionJointInterface</hardwareInterface>
-            </joint>
-            <actuator name="front_left_actuator">
-                <mechanicalReduction>1</mechanicalReduction>
-            </actuator>
-        </transmission>
-    </xacro:wheel>
+    <xacro:front_wheel prefix="left">
+        <!--Steering arm position-->
+        <origin xyz="0 ${-rot_axle_dist/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+        <origin xyz="0 ${-track_arm} 0" rpy="0 0 0" />
+    </xacro:front_wheel>
 
-    <xacro:wheel prefix="front_right">
-        <origin xyz="0 ${track_front/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-        <axis xyz="0 0 1" />
-        <!--For Gazebo only-->
-        <transmission name="front_right_wheel_trans">
-            <type>transmission_interface/SimpleTransmission</type>
-            <joint name="front_right_wheel">
-                <hardwareInterface>PositionJointInterface</hardwareInterface>
-            </joint>
-            <actuator name="front_right_actuator">
-                <mechanicalReduction>1</mechanicalReduction>
-            </actuator>
-        </transmission>
-    </xacro:wheel>
+    <xacro:front_wheel prefix="right">
+        <!--Steering arm position-->
+        <origin xyz="0 ${rot_axle_dist/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+        <origin xyz="0 ${track_arm} 0" rpy="0 0 0" />
+    </xacro:front_wheel>
 
-    <xacro:wheel prefix="rear_left">
+    <!--<xacro:wheel prefix="front_right">-->
+        <!--<origin xyz="0 ${rot_axle_dist/2} ${wheel_vertical_offset}" rpy="0 0 0" />-->
+        <!--<axis xyz="0 0 1" />-->
+        <!--&lt;!&ndash;For Gazebo only&ndash;&gt;-->
+        <!--<transmission name="front_right_wheel_trans">-->
+            <!--<type>transmission_interface/SimpleTransmission</type>-->
+            <!--<joint name="front_right_wheel">-->
+                <!--&lt;!&ndash;<hardwareInterface>PositionJointInterface</hardwareInterface>&ndash;&gt;-->
+                <!--<hardwareInterface>VelocityJointInterface</hardwareInterface>-->
+            <!--</joint>-->
+            <!--<actuator name="front_right_actuator">-->
+                <!--<mechanicalReduction>1</mechanicalReduction>-->
+            <!--</actuator>-->
+        <!--</transmission>-->
+    <!--</xacro:wheel>-->
+
+    <xacro:rear_wheel prefix="left">
         <origin xyz="-${wheelbase} ${-track_rear/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-        <axis xyz="0 1 0" />
-        <!--For Gazebo only-->
-        <transmission name="rear_left_wheel_trans">
-            <type>transmission_interface/SimpleTransmission</type>
-            <joint name="rear_left_wheel">
-                <hardwareInterface>VelocityJointInterface</hardwareInterface>
-            </joint>
-            <actuator name="rear_left_actuator">
-                <mechanicalReduction>1</mechanicalReduction>
-            </actuator>
-        </transmission>
-    </xacro:wheel>
+    </xacro:rear_wheel>
 
-    <xacro:wheel prefix="rear_right">
+    <xacro:rear_wheel prefix="right">
         <origin xyz="-${wheelbase} ${track_rear/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-        <axis xyz="0 1 0" />
-        <!--For Gazebo only-->
-        <transmission name="rear_right_wheel_trans">
-            <type>transmission_interface/SimpleTransmission</type>
-            <joint name="rear_right_wheel">
-                <hardwareInterface>VelocityJointInterface</hardwareInterface>
-            </joint>
-            <actuator name="rear_right_actuator">
-                <mechanicalReduction>1</mechanicalReduction>
-            </actuator>
-        </transmission>
-    </xacro:wheel>
+    </xacro:rear_wheel>
 
 
     <!--**************************************************************************-->
