@@ -1,0 +1,4 @@
+GlobalPlanner:
+    # Link : http://wiki.ros.org/global_planner?distro=kinetic
+    use_quadratic: True
+    use_dijkstra: True

@@ -1,5 +1,7 @@
 <launch>
 
+<!--    Link : https://github.com/ros-planning/navigation/blob/jade-devel/amcl/cfg/AMCL.cfg-->
+
   <arg name="use_map_topic" default="false"/> <!-- When set to true, AMCL will subscribe to the map topic rather than making a service call to receive its map.-->
   <arg name="scan_topic" default="scan" />
   <arg name="odom_model_type" default="diff"/>

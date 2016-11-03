@@ -1,6 +1,6 @@
 TebLocalPlannerROS:
   # Link : https://github.com/rst-tu-dortmund/teb_local_planner/blob/kinetic-devel/cfg/TebLocalPlannerReconfigure.cfg
-  odom_topic: odom #odom_topic_name
+  odom_topic: odom_topic_name
 
   # Trajectory
   teb_autosize: True
@@ -74,8 +74,8 @@ TebLocalPlannerROS:
   weight_kinematics_forward_drive: 10
   weight_kinematics_turning_radius: 1
   weight_optimaltime: 1
-  weight_obstacle: 1
-  weight_dynamic_obstacle: 10 # not in use yet
+  weight_obstacle: 100
+  weight_dynamic_obstacle: 100 # not in use yet
 
   # Homotopy Class Planner
 

@@ -22,9 +22,13 @@
 
         <rosparam file="$(find futurakart_2dnav)/params/move_base_params.yaml" command="load" />
 
+        <rosparam file="$(find futurakart_2dnav)/params/global_planner_params.yaml" command="load" />
+
         <rosparam file="$(find futurakart_2dnav)/params/teb_local_planner_params.yaml" command="load" />
 
+
         <param name="base_global_planner" value="global_planner/GlobalPlanner" />
+<!--        <param name="base_global_planner" value="navfn/NavfnROS" />-->
 <!--         Link : http://wiki.ros.org/teb_local_planner-->
         <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
 

@@ -1,30 +1,18 @@
-#global_costmap:
-#    # Link : http://wiki.ros.org/costmap_2d
-#    global_frame: global_frame_id
-#    robot_base_frame: robot_base_frame_id
-#    update_frequency: 1.0 #5.0
-#    publish_frequency: 0.5 #1.0
-#    static_map: true
-#    rolling_window: false
-#    transform_tolerance: 0.5
-#
-#    plugins:
-#    - {name: static_layer,  type: "costmap_2d::StaticLayer"}
-#    - {name: obstacle_layer, type: "costmap_2d::VoxelLayer"}
-#    - {name: inflater_layer, type: "costmap_2d::InflationLayer"}
-
 global_costmap:
-  global_frame: /map
-  robot_base_frame: base_link
-  update_frequency: 1.0
-  publish_frequency: 0.5
-  static_map: true
+    # Link : http://wiki.ros.org/costmap_2d
+    global_frame: global_frame_id
+    robot_base_frame: robot_base_frame_id
+    update_frequency: 1.0 #5.0
+    publish_frequency: 0.5 #1.0
+    static_map: true
+    rolling_window: false
+    transform_tolerance: 0.5
 
-  transform_tolerance: 0.5
-  plugins:
-    - {name: static_layer,            type: "costmap_2d::StaticLayer"}
-    - {name: obstacle_layer,          type: "costmap_2d::VoxelLayer"}
-    - {name: inflation_layer,         type: "costmap_2d::InflationLayer"}
+    plugins:
+    - {name: static_layer,  type: "costmap_2d::StaticLayer"}
+    - {name: obstacle_layer, type: "costmap_2d::VoxelLayer"}
+    - {name: inflater_layer, type: "costmap_2d::InflationLayer"}
+
 
 
 
