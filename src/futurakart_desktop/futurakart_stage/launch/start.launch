@@ -18,7 +18,10 @@
     <arg name="odom_topic_name" default="odom"/>
 
     <!--  ************** Stage Simulator ***************  -->
-    <node pkg="stage_ros" type="stageros" name="stageros" args="$(find futurakart_stage)/stage/test_playground.world">
+    <!--<node pkg="stage_ros" type="stageros" name="stageros" args="$(find futurakart_stage)/stage/test_playground.world">-->
+        <!--<remap from="base_scan" to="$(arg laserscan_topic)"/>-->
+    <!--</node>-->
+    <node pkg="stage_ros" type="stageros" name="stageros" args="$(find futurakart_stage)/stage/maze_carlike.world">
         <remap from="base_scan" to="$(arg laserscan_topic)"/>
     </node>
 
@@ -34,9 +37,13 @@
     </include>
 
     <!--  ****** Maps *****  -->
-    <node name="map_server" pkg="map_server" type="map_server" args="$(find futurakart_stage)/maps/test_playground.yaml" output="screen">
+    <!--<node name="map_server" pkg="map_server" type="map_server" args="$(find futurakart_stage)/maps/test_playground.yaml" output="screen">-->
+        <!--<param name="frame_id" value="/map"/>-->
+    <!--</node>-->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find futurakart_stage)/maps/maze.yaml" output="screen">
         <param name="frame_id" value="/map"/>
     </node>
+
 
     <!-- ********************************************************************* -->
     <!--  Start AMCL  -->
