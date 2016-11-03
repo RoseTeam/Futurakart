@@ -26,7 +26,7 @@
     <xacro:property name="wheelbase" value="1" />
 
     <!-- Wheel_vertical_offset = vertical distance between base_link and wheel center -->
-    <xacro:property name="wheel_vertical_offset" value="0" />
+    <!--<xacro:property name="wheel_vertical_offset" value="0" />-->
 
     <!-- Vertical_offset = vertical distance between base_link and the floor -->
     <xacro:property name="vertical_offset" value="0.125" />
@@ -41,7 +41,7 @@
     <!-- Base plank dimensions -->
     <xacro:property name="base_length" value="1.475" />
     <xacro:property name="base_width" value="0.84" />
-    <xacro:property name="base_height" value="0.01" />
+    <xacro:property name="base_height" value="0.02" />
 
     <xacro:property name="dummy_inertia" value="1e-09"/>
     <xacro:property name="mount_spacing" value="0.120" />

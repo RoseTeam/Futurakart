@@ -25,14 +25,16 @@
         <inertial>
             <!-- Center of mass -->
             <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
-            <mass value="16.523"/>
+            <mass value="5.0"/>
             <!-- Moments of inertia: ( chassis without wheels ) -->
             <inertia
-                    ixx="0.3136" ixy="-0.0008" ixz="0.0164"
-                    iyy="0.3922" iyz="-0.0009"
-                    izz="0.4485"/>
+                    ixx="0.294166" ixy="0.0" ixz="0.0"
+                    iyy="0.906677" iyz="0.0"
+                    izz="1.2005104"/>
         </inertial>
     </link>
+
+    <!--Joint types : http://wiki.ros.org/urdf/XML/joint -->
     <joint name="chassis_link_joint" type="fixed">
         <parent link="base_link"/>
         <child link="chassis_link"/>
@@ -54,39 +56,55 @@
     <!--**************************************************************************-->
 
     <xacro:front_wheel prefix="left">
-        <!--Steering arm position-->
-        <origin xyz="0 ${-rot_axle_dist/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-        <origin xyz="0 ${-track_arm} 0" rpy="0 0 0" />
+        <arm_pose>
+            <origin xyz="0 ${-rot_axle_dist/2} 0" rpy="0 0 0"/><!--Steering arm position-->
+        </arm_pose>
+        <wheel_pose>
+            <origin xyz="0 ${-track_arm} 0" rpy="0 0 0" /><!--Wheel position relative to steering arm-->
+        </wheel_pose>
     </xacro:front_wheel>
 
     <xacro:front_wheel prefix="right">
-        <!--Steering arm position-->
-        <origin xyz="0 ${rot_axle_dist/2} ${wheel_vertical_offset}" rpy="0 0 0" />
-        <origin xyz="0 ${track_arm} 0" rpy="0 0 0" />
+        <arm_pose>
+            <origin xyz="0 ${rot_axle_dist/2} 0" rpy="0 0 0" /><!--Steering arm position-->
+        </arm_pose>
+        <wheel_pose>
+            <origin xyz="0 ${track_arm} 0" rpy="0 0 0" /><!--Wheel position relative to steering arm-->
+        </wheel_pose>
     </xacro:front_wheel>
 
-    <!--<xacro:wheel prefix="front_right">-->
-        <!--<origin xyz="0 ${rot_axle_dist/2} ${wheel_vertical_offset}" rpy="0 0 0" />-->
-        <!--<axis xyz="0 0 1" />-->
-        <!--&lt;!&ndash;For Gazebo only&ndash;&gt;-->
-        <!--<transmission name="front_right_wheel_trans">-->
-            <!--<type>transmission_interface/SimpleTransmission</type>-->
-            <!--<joint name="front_right_wheel">-->
-                <!--&lt;!&ndash;<hardwareInterface>PositionJointInterface</hardwareInterface>&ndash;&gt;-->
-                <!--<hardwareInterface>VelocityJointInterface</hardwareInterface>-->
-            <!--</joint>-->
-            <!--<actuator name="front_right_actuator">-->
-                <!--<mechanicalReduction>1</mechanicalReduction>-->
-            <!--</actuator>-->
-        <!--</transmission>-->
-    <!--</xacro:wheel>-->
+    <link name="rear_track_link">
+        <visual>
+            <geometry>
+                <cylinder radius="0.005" length="${track_rear}"/>
+            </geometry>
+            <material name="gray" />
+        </visual>
+        <inertial>
+            <!-- Center of mass -->
+            <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+            <mass value="0.3"/>
+            <!-- Moments of inertia: ( chassis without wheels ) -->
+            <inertia
+                    ixx="0.006504375" ixy="0.0" ixz="0.0"
+                    iyy="0.006504375" iyz="0.0"
+                    izz="0.0"/>
+        </inertial>
+    </link>
+    <joint name="rear_track_joint" type="fixed">
+        <parent link="base_link"/>
+        <child link="rear_track_link"/>
+        <origin xyz="-${wheelbase} 0 0"/>
+    </joint>
 
-    <xacro:rear_wheel prefix="left">
-        <origin xyz="-${wheelbase} ${-track_rear/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+    <xacro:rear_wheel prefix="left" parent_link="rear_track_link">
+        <!--Wheel position relative to rear_track_link-->
+        <origin xyz="0 ${-track_rear/2} 0" rpy="0 0 0" />
     </xacro:rear_wheel>
 
-    <xacro:rear_wheel prefix="right">
-        <origin xyz="-${wheelbase} ${track_rear/2} ${wheel_vertical_offset}" rpy="0 0 0" />
+    <xacro:rear_wheel prefix="right" parent_link="rear_track_link">
+        <!--Wheel position relative to rear_track_link-->
+        <origin xyz="0 ${track_rear/2} 0" rpy="0 0 0" />
     </xacro:rear_wheel>
 
 
