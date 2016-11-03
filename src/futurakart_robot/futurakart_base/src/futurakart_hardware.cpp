@@ -16,9 +16,10 @@ FuturakartHardware::FuturakartHardware() :
   nh_.param("motorfeedback_topic", motorfeedback_topic, std::string("motorfeedback"));
   nh_.param("motordrive_cmd_topic", motordrive_cmd_topic, std::string("motordrive_cmd"));
 
+  ros::V_string dir_joint_names = boost::assign::list_of("front_left_steering_arm")("front_right_steering_arm");
+  ros::V_string prop_joint_names = boost::assign::list_of("rear_left_wheel")("rear_right_wheel")("front_left_wheel")("front_right_wheel");
 
   // Define and register direction interface:
-  ros::V_string dir_joint_names = boost::assign::list_of("front_left_wheel")("front_right_wheel");
 
   for (unsigned int i = 0; i < dir_joint_names.size(); i++)
   {
@@ -34,7 +35,7 @@ FuturakartHardware::FuturakartHardware() :
   }
 
   // Define and register propulsion interface:
-  ros::V_string prop_joint_names = boost::assign::list_of("rear_left_wheel")("rear_right_wheel");
+
   for (unsigned int i = 0; i < prop_joint_names.size(); i++)
   {
 

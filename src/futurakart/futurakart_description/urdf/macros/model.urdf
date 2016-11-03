@@ -47,20 +47,20 @@
         <!--        Steering arm link-->
         <link name="front_${prefix}_steering_arm_link">
             <visual>
-                <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+                <origin xyz="0 ${track_arm/2} 0" rpy="${PI/2} 0 0"/>
                 <geometry>
                     <cylinder radius="0.005" length="${track_arm}"/>
                 </geometry>
                 <material name="black" />
             </visual>
             <collision>
-                <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+                <origin xyz="0 ${track_arm/2} 0" rpy="${PI/2} 0 0"/>
                 <geometry>
                     <cylinder radius="0.005" length="${track_arm}"/>
                 </geometry>
             </collision>
             <inertial>
-                <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
+                <origin xyz="0 ${track_arm/2} 0" rpy="${PI/2} 0 0"/>
                 <mass value="0.1"/>
                 <inertia
                         ixx="0.00012" ixy="0" ixz="0"
@@ -75,12 +75,12 @@
 
 
         <!--        Joint from base_link to steering arm-->
-        <joint name="front_${prefix}_steering_arm" type="continuous">
+        <joint name="front_${prefix}_steering_arm" type="revolute">
             <parent link="base_link"/>
             <child link="front_${prefix}_steering_arm_link" />
             <!--http://wiki.ros.org/pr2_controller_manager/safety_limits-->
-<!--            <limit lower="-0.5" upper="0.5" effort="10" velocity="1.0"/>-->
-<!--            <axis xyz="0 0 1" />-->
+            <limit lower="-0.5" upper="0.5" effort="10" velocity="1.0"/>
+            <axis xyz="0 0 1" />
             <xacro:insert_block name="arm_pose"/>
 
         </joint>

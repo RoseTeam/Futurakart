@@ -38,7 +38,7 @@
     <joint name="chassis_link_joint" type="fixed">
         <parent link="base_link"/>
         <child link="chassis_link"/>
-        <origin xyz="-${wheelbase/2} 0 ${wheel_radius}"/>
+        <origin xyz="-${wheelbase/2} 0 ${wheel_radius + base_height}"/>
     </joint>
 
 
@@ -57,10 +57,10 @@
 
     <xacro:front_wheel prefix="left">
         <arm_pose>
-            <origin xyz="0 ${-rot_axle_dist/2} 0" rpy="0 0 0"/><!--Steering arm position-->
+            <origin xyz="0 ${-rot_axle_dist/2} 0" rpy="${PI} 0 0"/><!--Steering arm position-->
         </arm_pose>
         <wheel_pose>
-            <origin xyz="0 ${-track_arm} 0" rpy="0 0 0" /><!--Wheel position relative to steering arm-->
+            <origin xyz="0 ${track_arm} 0" rpy="0 0 0" /><!--Wheel position relative to steering arm-->
         </wheel_pose>
     </xacro:front_wheel>
 
@@ -75,6 +75,7 @@
 
     <link name="rear_track_link">
         <visual>
+            <origin xyz="0 0 0" rpy="${PI/2} 0 0"/>
             <geometry>
                 <cylinder radius="0.005" length="${track_rear}"/>
             </geometry>
@@ -82,7 +83,7 @@
         </visual>
         <inertial>
             <!-- Center of mass -->
-            <origin xyz="0.0 0.0 0.0" rpy="0 0 0"/>
+            <origin xyz="0.0 0.0 0.0" rpy="${PI/2} 0 0"/>
             <mass value="0.3"/>
             <!-- Moments of inertia: ( chassis without wheels ) -->
             <inertia
