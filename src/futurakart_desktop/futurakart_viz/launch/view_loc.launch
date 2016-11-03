@@ -1,0 +1,8 @@
+
+<launch>
+
+    <!--  **************** Visualisation ****************  -->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find futurakart_stage)/rviz/rviz_navigation.rviz"/>
+
+
+</launch>

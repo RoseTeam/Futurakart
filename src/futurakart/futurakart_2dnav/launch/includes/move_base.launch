@@ -28,11 +28,11 @@
 
 
         <param name="base_global_planner" value="global_planner/GlobalPlanner" />
-<!--        <param name="base_global_planner" value="navfn/NavfnROS" />-->
-<!--         Link : http://wiki.ros.org/teb_local_planner-->
+
+        <!-- Link : http://wiki.ros.org/teb_local_planner-->
         <param name="base_local_planner" value="teb_local_planner/TebLocalPlannerROS" />
 
-<!--         Define params from YAML files-->
+        <!-- Define params from YAML files-->
         <param name="TebLocalPlannerROS/odom_topic" value="$(arg odom_topic_name)"/>
         <param name="local_costmap/static_layer/map_topic" value="$(arg map_topic_name)"/>
         <param name="global_costmap/static_layer/map_topic" value="$(arg map_topic_name)"/>
