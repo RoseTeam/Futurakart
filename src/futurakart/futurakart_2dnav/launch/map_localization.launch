@@ -7,7 +7,7 @@
     <!-- Choose configuration: -->
     <arg name="gmapping" default="true"/>
     <arg name="rtabmap" default="false"/>
-    <arg name="map_file" default="$(find futurakart_2dnav)/maps/_map.yaml"/>
+    <arg name="map_file" default="$(find futurakart_2dnav)/maps/map_stand_small.yaml"/>
     <arg name="odom_frame"  default="odom"/>
 
     <!-- Setup default topic names from Kinect:  -->

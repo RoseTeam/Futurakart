@@ -31,7 +31,7 @@ window
 floorplan
 (
   name "map_stand"
-  bitmap "../maps/map_stand.png"
+  bitmap "../maps/map_stand_small.png"
   size [ 8.75 5.8 2.0 ]
   pose [ 4.375 2.9 0.0 0.0 ]
 )

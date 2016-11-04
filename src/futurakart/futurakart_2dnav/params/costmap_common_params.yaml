@@ -21,7 +21,7 @@ transform_tolerance: 0.2
 # base_width = 0.84
 #
 footprint: [ [-0.7375, -0.42], [0.7375, -0.42], [0.7375, 0.42], [-0.7375, 0.42] ]
-footprint_padding: 0.15 # How much to pad (increase the size of) the footprint, in meters.
+footprint_padding: 0.10 # How much to pad (increase the size of) the footprint, in meters.
 
 
 # This layer is defined differently for global costmap and local costmap
@@ -31,7 +31,7 @@ obstacles_layer:
   # Global all sensors filtering :
   #obstacle_range: 2.5
   #raytrace_range: 3.0
-  inflation_radius: 0.1
+  inflation_radius: 0.2
   track_unknown_space: false # Specifies whether or not to track what space in the costmap is unknown, meaning that no observation about a cell has been seen from any sensor source.
   combination_method: 1
 
