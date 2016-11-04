@@ -4,10 +4,10 @@ TebLocalPlannerROS:
 
   # Trajectory
   teb_autosize: True
-  dt_ref: 0.3
-  dt_hysteresis: 0.1
+  dt_ref: 0.5
+  dt_hysteresis: 0.3
   global_plan_overwrite_orientation: True
-  global_plan_viapoint_sep: 0.4
+  #global_plan_viapoint_sep: 0.3
   max_global_plan_lookahead_dist: 5.0
   feasibility_check_no_poses: 2
 
@@ -33,7 +33,7 @@ TebLocalPlannerROS:
   # ********************************************************************
 
   footprint_model: # types: "point", "circular", "two_circles", "line", "polygon"
-    type: "polygon"
+    #type: "polygon"
     # The footprint of the robot specified in the robot_base_frame (chassis_link in our case) coordinate frame as a
     # list in the format: [ [x1, y1], [x2, y2], ...., [xn, yn] ]."
     #
@@ -42,7 +42,14 @@ TebLocalPlannerROS:
     # base_length = 1.475
     # base_width = 0.84
     #
-    vertices: [ [-0.7375, -0.42], [0.7375, -0.42], [0.7375, 0.42], [-0.7375, 0.42] ]
+    #    vertices: [ [-0.7375, -0.42], [0.7375, -0.42], [0.7375, 0.42], [-0.7375, 0.42] ]
+    # DOES NOT WORK
+    type: "two_circles"
+    front_offset: 0.36 # for type "two_circles"
+    front_radius: 0.42 # for type "two_circles"
+    rear_offset: 0.36 # for type "two_circles"
+    rear_radius: 0.42 # for type "two_circles"
+
 
   # GoalTolerance
 
@@ -52,7 +59,7 @@ TebLocalPlannerROS:
 
   # Obstacles
 
-  min_obstacle_dist: 0.4 # This value must also include our robot's expansion, since footprint_model is set to "line".
+  min_obstacle_dist: 0.25 # This value must also include our robot's expansion, since footprint_model is set to "line".
   include_costmap_obstacles: True
   costmap_obstacles_behind_robot_dist: 1.0
   obstacle_poses_affected: 30
@@ -67,17 +74,17 @@ TebLocalPlannerROS:
   optimization_activate: True
   optimization_verbose: False
   penalty_epsilon: 0.1
-  weight_max_vel_x: 10
+  weight_max_vel_x: 2
   weight_max_vel_theta: 1
   weight_acc_lim_x: 1
   weight_acc_lim_theta: 1
   weight_kinematics_nh: 1000
-  weight_kinematics_forward_drive: 10
+  weight_kinematics_forward_drive: 1
   weight_kinematics_turning_radius: 1
   weight_optimaltime: 1
-  weight_viapoint: 200
-  weight_obstacle: 100
-  weight_dynamic_obstacle: 100 # not in use yet
+  #weight_viapoint: 20
+  weight_obstacle: 50
+  weight_dynamic_obstacle: 10 # not in use yet
 
   # Homotopy Class Planner
 
@@ -88,8 +95,8 @@ TebLocalPlannerROS:
   selection_cost_hysteresis: 1.0
   selection_obst_cost_scale: 1.0
   selection_alternative_time_cost: False
-  roadmap_graph_no_samples: 15
-  roadmap_graph_area_width: 5
+  roadmap_graph_no_samples: 5
+  roadmap_graph_area_width: 3
   h_signature_prescaler: 0.5
   h_signature_threshold: 0.1
   obstacle_keypoint_offset: 0.1

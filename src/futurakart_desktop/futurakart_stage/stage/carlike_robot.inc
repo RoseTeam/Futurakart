@@ -28,7 +28,7 @@ define carlike_robot position
   #
   size [ 1.475 0.84 0.5 ]
   # correct center of rotation:
-  origin [ 0.7375 -0.3 0.0 0.0]
+  origin [ 0.0 0.0 0.0 0.0]
   gui_nose 1
   color "red"
 

@@ -2,8 +2,9 @@ global_costmap:
     # Link : http://wiki.ros.org/costmap_2d
     global_frame: global_frame_id
     robot_base_frame: robot_base_frame_id
-    update_frequency: 1.0 #5.0
-    publish_frequency: 0.5 #1.0
+    update_frequency: 5.0
+    publish_frequency: 1.0
+    resolution: 0.1
     static_map: true
     rolling_window: false
     transform_tolerance: 0.5
