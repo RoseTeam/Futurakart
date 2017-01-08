@@ -57,11 +57,6 @@ If needed, install `key_teleop` package with
 sudo apt-get install ros-kinetic-key-teleop  
 ```
 
-Start
-
-
-
-
 ### Driving with interactive markers
 You need to have `interactive_markers_twist_server` package installed. See below the installation part.
 Most probably, you need to `source`  from the path of `interactive_markers_twist_server` package. Once everything is OK, you can type:
@@ -77,6 +72,8 @@ To command the kart you can pull the blue circle around it and it will drive.
 Today, ackermann interactive markers controls is a hack of the original package [`interactive_markers_twist_server`](https://github.com/ros-visualization/interactive_marker_twist_server.git)
 so it does not work perfectly.
 
+![img1](img/robot_view_with_markers.png)
+
 
 ### Drive it manually like a real man
 
@@ -90,6 +87,8 @@ Open rviz and observe the kart moving:
 ```
 roslaunch futurakart_viz view_robot.launch
 ```
+
+
 
 
 ## Install `interactive_markers_twist_server`
